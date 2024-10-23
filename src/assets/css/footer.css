@@ -1,57 +1,57 @@
 #container {
-    position: absolute;
-    bottom: 0;
-    height: 212px;
-    width: 100%;
-    background: linear-gradient(to left, rgba(178, 34, 34), rgba(26, 26, 26));
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  bottom: 0;
+  height: 212px;
+  width: 100%;
+  background: linear-gradient(to left, rgba(178, 34, 34), rgba(26, 26, 26));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #content {
-    height: 100px;
-    position: relative;
-    flex-direction: column;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  height: 100px;
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .text {
-    color: rgba(252, 252, 253, 1);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    background: rgba(252, 252, 253, 1);
+  color: rgba(252, 252, 253, 1);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  background: rgba(252, 252, 253, 1);
 }
 
 #about-pricing {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0px;
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 16px;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
 }
 
 #about-pricing .text:not(:nth-child(2)) {
-    margin: 0 16px; 
+  margin: 0 16px;
 }
 
 #about-pricing .text:nth-child(2) {
-    margin: 0; 
+  margin: 0;
 }
 
 #logo {
-    height: 32px;
-    width: 130px;
+  height: 32px;
+  width: 130px;
 }
 
 #rights {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.0025em;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
 }
