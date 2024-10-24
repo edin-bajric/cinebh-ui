@@ -20,6 +20,7 @@ const Button: React.FC<Props> = ({ text, color, textColor }) => {
           fontSize: "16px",
           lineHeight: "24px",
           letterSpacing: "0.005em",
+          cursor: "pointer",
         }}
       >
         {text}
