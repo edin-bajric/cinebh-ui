@@ -4,15 +4,17 @@ type Props = {
   text: string;
   color: string;
   textColor: string;
+  borderColor: string;
 };
 
-const Button: React.FC<Props> = ({ text, color, textColor }) => {
+const Button: React.FC<Props> = ({ text, color, textColor, borderColor }) => {
   return (
     <div id="container">
       <button
         style={{
           backgroundColor: color,
-          border: "1px solid rgba(178, 34, 34, 1)",
+          border: "1px solid",
+          borderColor: borderColor,
           borderRadius: "8px",
           padding: "12px 20px 12px 20px",
           color: textColor,

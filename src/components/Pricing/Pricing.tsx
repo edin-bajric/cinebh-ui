@@ -40,7 +40,8 @@ const Pricing = () => {
               <Button
                 text={"Explore movies"}
                 color={"rgba(252, 252, 253, 1)"}
-                textColor="rgba(178, 34, 34, 1)"
+                textColor={"rgba(178, 34, 34, 1)"}
+                borderColor={"rgba(178, 34, 34, 1)"}
               ></Button>
             </div>
           </div>
@@ -72,6 +73,7 @@ const Pricing = () => {
                 text={"Explore movies"}
                 color={"rgba(178, 34, 34, 1)"}
                 textColor={"rgba(252, 252, 253, 1)"}
+                borderColor={"rgba(178, 34, 34, 1)"}
               ></Button>
             </div>
           </div>
@@ -102,7 +104,8 @@ const Pricing = () => {
               <Button
                 text={"Explore movies"}
                 color={"rgba(252, 252, 253, 1)"}
-                textColor="rgba(178, 34, 34, 1)"
+                textColor={"rgba(178, 34, 34, 1)"}
+                borderColor={"rgba(178, 34, 34, 1)"}
               ></Button>
             </div>
           </div>
