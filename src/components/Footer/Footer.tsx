@@ -12,7 +12,7 @@ const Footer = () => {
             ABOUT US
           </Link>
           <p className={s.text}>|</p>
-          <Link to="/pricing" className={s.text}>
+          <Link to="/tickets" className={s.text}>
             TICKETS
           </Link>
         </div>
