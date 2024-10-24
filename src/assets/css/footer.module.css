@@ -1,5 +1,5 @@
 #container {
-  position: absolute;
+  position: relative;
   bottom: 0;
   height: 212px;
   width: 100%;
@@ -25,7 +25,7 @@
   letter-spacing: 0.05em;
 }
 
-#about-pricing {
+#about_pricing {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,11 +35,11 @@
   line-height: 16px;
 }
 
-#about-pricing .text:not(:nth-child(2)) {
+#about_pricing .text:not(:nth-child(2)) {
   margin: 0 16px;
 }
 
-#about-pricing .text:nth-child(2) {
+#about_pricing .text:nth-child(2) {
   margin: 0;
 }
 
