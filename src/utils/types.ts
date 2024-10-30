@@ -21,3 +21,15 @@ export type Movie = {
   ratings: Array<{ id: string; name: string; rating: string; movie: string }>;
   projections: Array<any>;
 };
+
+export type Venue = {
+  id: string;
+  name: string;
+  phone: string;
+  street: string;
+  streetNumber: string;
+  city: string;
+  postCode: string;
+  imageURL: string;
+  projections: Array<any>;
+}
