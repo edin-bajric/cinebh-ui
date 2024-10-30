@@ -1,0 +1,27 @@
+#container {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 92px 40px 92px;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0.0075em;
+    color: rgba(29, 41, 57, 1);
+}
+
+#see_all {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.015em;
+    color: rgba(178, 34, 34, 1);
+    cursor: pointer;
+}
