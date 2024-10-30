@@ -1,3 +1,5 @@
+import React from "react";
+
 type Props = {
   text: string;
   color: string;
@@ -5,17 +7,17 @@ type Props = {
   borderColor: string;
 };
 
-const Button = (props: Props) => {
+const Button: React.FC<Props> = ({ text, color, textColor, borderColor }) => {
   return (
     <div id="container">
       <button
         style={{
-          backgroundColor: props.color,
+          backgroundColor: color,
           border: "1px solid",
-          borderColor: props.borderColor,
+          borderColor: borderColor,
           borderRadius: "8px",
           padding: "12px 20px 12px 20px",
-          color: props.textColor,
+          color: textColor,
           fontWeight: "600",
           fontSize: "16px",
           lineHeight: "24px",
@@ -23,7 +25,7 @@ const Button = (props: Props) => {
           cursor: "pointer",
         }}
       >
-        {props.text}
+        {text}
       </button>
     </div>
   );
