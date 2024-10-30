@@ -1,7 +1,5 @@
-import { Spin } from "antd";
-
 const Spinner = () => {
-  return <div>Spinner</div>;
+  return <div>Loading...</div>;
 };
 
 export default Spinner;

@@ -1,12 +1,20 @@
 import { Carousel } from "antd";
 import s from "../../assets/css/carousel.module.css";
-import { Movie } from "../../utils/types";
+import useFeaturedMovies from "../../hooks/useFeaturedMovies";
+import Spinner from "../Spinner";
+import Error from "../Error";
 
-type Props = {
-  movies: Movie[];
-};
+const CarouselComp = () => {
+  const { data: movies = [], isLoading, isError } = useFeaturedMovies();
 
-const CarouselComp = ({ movies }: Props) => {
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <Error />;
+  }
+
   return (
     <div id={s.container}>
       <Carousel>

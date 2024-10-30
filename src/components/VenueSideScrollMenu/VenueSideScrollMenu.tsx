@@ -1,11 +1,23 @@
 import s from "../../assets/css/venue-side-scroll-menu.module.css";
-import { Venue } from "../../utils/types";
+import useAllVenues from "../../hooks/useAllVenues";
+import Spinner from "../Spinner";
+import Error from "../Error";
 
-type Props = {
-  venues: Venue[];
-};
+const VenueSideScrollMenu = () => {
+  const {
+    data: venues = [],
+    isLoading: isLoading,
+    isError: isError,
+  } = useAllVenues();
 
-const VenueSideScrollMenu = ({ venues }: Props) => {
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <Error />;
+  }
+
   return (
     <div className={s.container}>
       <div className={s.scrollContainer}>
