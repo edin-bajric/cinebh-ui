@@ -18,11 +18,13 @@ const VenueSideScrollMenu = () => {
     return <Error />;
   }
 
+  const repeatedVenues = Array(6).fill(venues).flat();
+
   return (
     <div className={s.container}>
       <div className={s.scrollContainer}>
-        {venues.map((venue) => (
-          <div key={venue.id} className={s.venueItem}>
+        {repeatedVenues.map((venue, index) => (
+          <div key={`${venue.id}-${index}`} className={s.venueItem}>
             {venue.name}
           </div>
         ))}
