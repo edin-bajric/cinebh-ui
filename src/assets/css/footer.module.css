@@ -44,6 +44,10 @@
   margin: 0;
 }
 
+#about_pricing .text:hover {
+  text-decoration: underline;
+}
+
 #logo {
   height: 32px;
   width: 130px;

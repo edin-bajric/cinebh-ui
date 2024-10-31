@@ -28,6 +28,10 @@
   cursor: pointer;
 }
 
+#see_all:hover {
+  text-decoration: underline;
+}
+
 #content {
   display: flex;
   justify-content: space-between;
