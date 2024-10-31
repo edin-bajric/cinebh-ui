@@ -1,5 +1,5 @@
 import appAxios from "./appAxios";
-import { Movie } from "../utils/types";
+import { Movie, PaginatedResponse } from "../utils/types";
 
 const getFeatured = async (): Promise<Movie[]> => {
   return appAxios.get("/movies/featured").then((response) => {
@@ -11,21 +11,22 @@ const getFeatured = async (): Promise<Movie[]> => {
 const getCurrentlyShowing = async (
   page: number,
   size: number
-): Promise<Movie[]> => {
+): Promise<PaginatedResponse<Movie>> => {
   return appAxios
     .get(`/movies/currently-showing?page=${page}&size=${size}`)
     .then((response) => {
-      const data = response.data;
-      return data;
+      return response.data;
     });
 };
 
-const getUpcoming = async (page: number, size: number): Promise<Movie[]> => {
+const getUpcoming = async (
+  page: number,
+  size: number
+): Promise<PaginatedResponse<Movie>> => {
   return appAxios
     .get(`/movies/upcoming?page=${page}&size=${size}`)
     .then((response) => {
-      const data = response.data;
-      return data;
+      return response.data;
     });
 };
 
