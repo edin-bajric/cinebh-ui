@@ -1,18 +1,22 @@
+import { Link } from "react-router-dom";
 import s from "../../assets/css/footer.module.css";
 import logo from "../../assets/img/footer-logo.png";
-import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div id={s.container}>
       <div id={s.content}>
-        <img src={logo} id={s.logo}></img>
+        <img src={logo} id={s.logo} alt="footer logo" />
         <div id={s.about_pricing}>
-          <Link to="/about" className={s.text}>
+          <Link to="/about" className={s.text} onClick={scrollToTop}>
             ABOUT US
           </Link>
           <p className={s.text}>|</p>
-          <Link to="/tickets" className={s.text}>
+          <Link to="/tickets" className={s.text} onClick={scrollToTop}>
             TICKETS
           </Link>
         </div>
