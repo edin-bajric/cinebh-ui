@@ -33,6 +33,11 @@
   line-height: 32px;
   letter-spacing: -0.0015em;
   color: rgba(152, 162, 179, 1);
+  transition: background-color 0.3s ease;
+}
+
+.venueItem:hover {
+  background-color: rgba(228, 231, 236, 1);
 }
 
 @keyframes scroll {
