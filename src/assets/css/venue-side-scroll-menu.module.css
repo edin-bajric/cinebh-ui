@@ -4,6 +4,7 @@
   overflow-x: hidden;
   white-space: nowrap;
   box-sizing: border-box;
+  background-color: rgba(252, 252, 253, 1);
 }
 
 .scrollContainer {
