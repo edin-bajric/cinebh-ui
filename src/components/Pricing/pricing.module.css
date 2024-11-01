@@ -37,23 +37,27 @@ p {
 
 #title {
   padding-top: 48px;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.0025em;
 }
 
-#subtitle {
+.subtitle {
   width: 40%;
   padding-bottom: 48px;
   padding-top: 48px;
 }
 
-#regular,
-#vip {
+.regular,
+.vip {
   width: 408px;
   height: 564px;
   max-width: 408px;
   max-height: 564px;
 }
 
-#love {
+.love {
   width: 408px;
   height: 644px;
   max-width: 408px;
@@ -63,20 +67,9 @@ p {
   box-shadow: 0px 4px 6px -1px rgba(52, 64, 84, 0.08);
 }
 
-#title {
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 40px;
-  letter-spacing: -0.0025em;
-}
-
-#subtitle,
-#per_ticket,
-#feature1,
-#feature2,
-#feature3,
-#feature4,
-#feature5 {
+.subtitle,
+.per_ticket,
+.feature {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -97,7 +90,7 @@ p {
   letter-spacing: -0.0025em;
 }
 
-#love .price {
+.love .price {
   color: var(--Red-Dark, rgba(178, 34, 34, 1));
 }
 
