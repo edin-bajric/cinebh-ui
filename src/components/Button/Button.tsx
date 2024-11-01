@@ -1,29 +1,31 @@
 import React from "react";
+import styles from "./button.module.css";
 
 type Props = {
   text: string;
   color: string;
   textColor: string;
   borderColor: string;
+  className?: string; 
 };
 
-const Button: React.FC<Props> = ({ text, color, textColor, borderColor }) => {
+const Button: React.FC<Props> = ({
+  text,
+  color,
+  textColor,
+  borderColor,
+  className,
+}) => {
   return (
-    <div id="container">
+    <div className={styles.container}>
       <button
+        type="button"
         style={{
           backgroundColor: color,
-          border: "1px solid",
-          borderColor: borderColor,
-          borderRadius: "8px",
-          padding: "12px 20px 12px 20px",
           color: textColor,
-          fontWeight: "600",
-          fontSize: "16px",
-          lineHeight: "24px",
-          letterSpacing: "0.005em",
-          cursor: "pointer",
+          borderColor: borderColor,
         }}
+        className={`${styles.button} ${className || ""}`}
       >
         {text}
       </button>
