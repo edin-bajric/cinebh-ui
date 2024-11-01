@@ -1,22 +1,22 @@
-import s from "../../assets/css/footer.module.css";
+import style from "./footer.module.css";
 import logo from "../../assets/img/footer-logo.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div id={s.container}>
-      <div id={s.content}>
-        <img src={logo} id={s.logo} />
-        <div id={s.about_pricing}>
-          <Link to="/about" className={s.text}>
+    <div id={style.container}>
+      <div id={style.content}>
+        <img src={logo} id={style.logo} />
+        <div id={style.about_pricing}>
+          <Link to="/about" className={style.text}>
             ABOUT US
           </Link>
-          <p className={s.text}>|</p>
-          <Link to="/tickets" className={s.text}>
+          <p className={style.text}>|</p>
+          <Link to="/tickets" className={style.text}>
             TICKETS
           </Link>
         </div>
-        <p id={s.rights} className={s.text}>
+        <p id={style.rights} className={style.text}>
           Copyrights @Cinebh. Built with love in Sarajevo. All rights reserved.
         </p>
       </div>
