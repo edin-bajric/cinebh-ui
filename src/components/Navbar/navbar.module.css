@@ -9,12 +9,6 @@
     border-bottom: 1px solid rgba(102, 112, 133, 1);
 }
 
-#logo {
-    width: 129px;
-    height: 32px;
-    vertical-align: middle;
-}
-
 #nav {
     display: flex;
     justify-content: space-between;
