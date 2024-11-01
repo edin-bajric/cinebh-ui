@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div id={s.container}>
       <div id={s.content}>
-        <img src={logo} id={s.logo}></img>
+        <img src={logo} id={s.logo} />
         <div id={s.about_pricing}>
           <Link to="/about" className={s.text}>
             ABOUT US
