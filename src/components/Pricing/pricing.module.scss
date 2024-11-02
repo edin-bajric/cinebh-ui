@@ -1,7 +1,7 @@
-@import "../../assets/css/variables.scss";
+@use "../../assets/css/variables.scss";
 
 p {
-  color: $black;
+  color: variables.$black;
 }
 
 #container {
@@ -10,7 +10,7 @@ p {
   display: flex;
   flex-direction: column;
   padding-bottom: 100px;
-  background-color: $white;
+  background-color: variables.$white;
 }
 
 #content {
@@ -32,7 +32,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid $gray;
+  border: 1px solid variables.$gray;
   border-radius: 16px;
   margin: 16px;
 }
@@ -93,11 +93,11 @@ p {
 }
 
 .love .price {
-  color: var(--Red-Dark, $primary_color);
+  color: var(--Red-Dark, variables.$primary_color);
 }
 
 .check {
-  color: $primary_color;
+  color: variables.$primary_color;
   padding: 2px;
   margin-right: 8px;
 }

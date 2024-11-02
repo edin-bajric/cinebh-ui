@@ -1,4 +1,4 @@
-import style from "./pricing.module.css";
+import style from "./pricing.module.scss";
 import PriceBox from "../PriceBox.tsx/PriceBox";
 
 const Pricing = () => {

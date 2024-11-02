@@ -1,4 +1,4 @@
-import style from "./navbar.module.css";
+import style from "./navbar.module.scss";
 import Icon from "../Icon"; 
 import Button from "../Button";
 import { Link } from "react-router-dom";
