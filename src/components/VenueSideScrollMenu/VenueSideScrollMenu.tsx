@@ -3,11 +3,13 @@ import useAllVenues from "../../hooks/useAllVenues";
 import Spinner from "../Spinner";
 import Error from "../Error";
 
+const REPEAT_COUNT = 6;
+
 const VenueSideScrollMenu = () => {
   const {
     data: venues = [],
-    isLoading: isLoading,
-    isError: isError,
+    isLoading,
+    isError,
   } = useAllVenues();
 
   if (isLoading) {
@@ -18,7 +20,7 @@ const VenueSideScrollMenu = () => {
     return <Error />;
   }
 
-  const repeatedVenues = Array(6).fill(venues).flat();
+  const repeatedVenues = Array(REPEAT_COUNT).fill(venues).flat();
 
   return (
     <div className={style.container}>
