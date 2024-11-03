@@ -11,8 +11,7 @@ const DEFAULT_PAGE = 0;
 const DEFAULT_SIZE = 4;
 
 const Homepage = () => {
-  const [currentlyShowingPage, setCurrentlyShowingPage] =
-    useState(DEFAULT_PAGE);
+  const [currentlyShowingPage, setCurrentlyShowingPage] = useState(DEFAULT_PAGE);
   const [upcomingPage, setUpcomingPage] = useState(DEFAULT_PAGE);
   const [venuesPage, setVenuesPage] = useState(DEFAULT_PAGE);
 
@@ -46,7 +45,7 @@ const Homepage = () => {
         isError={isErrorCurrentlyShowing}
         totalItems={currentlyShowing?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
-        onPageChange={(page) => setCurrentlyShowingPage(page)}
+        onPageChange={setCurrentlyShowingPage}
       />
       <HomepageTile
         title="Upcoming Movies"
@@ -56,7 +55,7 @@ const Homepage = () => {
         isError={isErrorUpcoming}
         totalItems={upcoming?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
-        onPageChange={(page) => setUpcomingPage(page)}
+        onPageChange={setUpcomingPage} 
       />
       <HomepageTile
         title="Venues"
@@ -66,7 +65,7 @@ const Homepage = () => {
         isError={isErrorVenues}
         totalItems={venues?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
-        onPageChange={(page) => setVenuesPage(page)}
+        onPageChange={setVenuesPage}
       />
     </div>
   );
