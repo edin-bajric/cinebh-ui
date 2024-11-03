@@ -1,10 +1,12 @@
+@use "../../assets/css/variables.scss";
+
 .container {
   width: 100%;
   min-height: 164px;
   overflow-x: hidden;
   white-space: nowrap;
   box-sizing: border-box;
-  background-color: rgba(252, 252, 253, 1);
+  background-color: variables.$white;
 }
 
 .scrollContainer {
@@ -25,7 +27,7 @@
 .venueItem {
   display: inline-block;
   padding: 16px;
-  border: 1px solid rgba(228, 231, 236, 1);
+  border: 1px solid variables.$gray;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 700;
@@ -37,7 +39,7 @@
 }
 
 .venueItem:hover {
-  background-color: rgba(228, 231, 236, 1);
+  background-color: variables.$gray;
 }
 
 @keyframes scroll {

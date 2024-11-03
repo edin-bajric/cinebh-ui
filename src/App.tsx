@@ -8,7 +8,6 @@ function App() {
   return (
     <>
       <Navbar />
-      <div style={{ paddingTop: "80px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -16,7 +15,6 @@ function App() {
           <Route path="/tickets" element={<Tickets />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </div>
       <Footer />
     </>
   );

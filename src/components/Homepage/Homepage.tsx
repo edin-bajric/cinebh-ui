@@ -1,5 +1,5 @@
 import { useState } from "react";
-import s from "../../assets/css/carousel.module.css";
+import style from "./homepage.module.scss";
 import CarouselComp from "../CarouselComp";
 import VenueSideScrollMenu from "../VenueSideScrollMenu";
 import HomepageTile from "../HomepageTile";
@@ -35,7 +35,7 @@ const Homepage = () => {
   } = useVenues(venuesPage, DEFAULT_SIZE);
 
   return (
-    <div id={s.container}>
+    <div id={style.container}>
       <CarouselComp />
       <VenueSideScrollMenu />
       <HomepageTile

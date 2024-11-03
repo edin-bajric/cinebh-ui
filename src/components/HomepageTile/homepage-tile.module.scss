@@ -1,44 +1,46 @@
-#container {
+@use "../../assets/css/variables.scss";
+
+.container {
   display: flex;
   flex-direction: column;
   padding: 40px 92px 40px 92px;
-  background-color: rgba(252, 252, 253, 1);
+  background-color: variables.$white;
 }
 
-#header {
+.header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 32px;
 }
 
-#title {
+.title {
   font-weight: 700;
   font-size: 32px;
   line-height: 40px;
   letter-spacing: 0.0075em;
-  color: rgba(29, 41, 57, 1);
+  color: variables.$secondary_color;
 }
 
-#see_all {
+.see_all {
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.015em;
-  color: rgba(178, 34, 34, 1);
+  color: variables.$primary_color;
   cursor: pointer;
 }
 
-#see_all:hover {
+.see_all:hover {
   text-decoration: underline;
 }
 
-#content {
+.content {
   display: flex;
   justify-content: space-between;
   gap: 16px;
 }
 
-#pagination {
+.pagination {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -46,19 +48,19 @@
   margin-top: 16px;
 }
 
-#pagination p {
+.pagination p {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.005em;
-  color: rgba(29, 41, 57, 1);
+  color: variables.$secondary_color;
 }
 
 #prev,
 #next {
   width: 48px;
   height: 48px;
-  border: 1px solid rgba(228, 231, 236, 1);
+  border: 1px solid variables.$gray;
   border-radius: 8px;
   padding: 12px;
   display: flex;
@@ -70,10 +72,10 @@
 
 #prev:hover,
 #next:hover {
-  background-color: rgba(228, 231, 236, 1);
+  background-color: variables.$gray;
 }
 
 .disabled {
-  color: rgba(228, 231, 236, 1);
+  color: variables.$gray;
   pointer-events: none;
 }

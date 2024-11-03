@@ -12,7 +12,7 @@ const Footer = () => {
       <div className={style.content}>
         <img src={logo} className={style.logo} />
         <div className={style.about_pricing}>
-          <Link to="/about" className={style.text}>
+          <Link to="/about" className={style.text} onClick={scrollToTop}>
             ABOUT US
           </Link>
           <p className={style.text}>|</p>

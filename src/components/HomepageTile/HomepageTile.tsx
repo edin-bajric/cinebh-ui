@@ -1,5 +1,5 @@
 import { useState } from "react";
-import s from "../../assets/css/homepage-tile.module.css";
+import style from "./homepage-tile.module.scss";
 import Spinner from "../Spinner";
 import Error from "../Error";
 import Card from "../Card";
@@ -56,33 +56,33 @@ const HomepageTile: React.FC<Props> = ({
   }
 
   return (
-    <div id={s.container}>
-      <div id={s.header}>
-        <p id={s.title}>{title}</p>
-        <p id={s.see_all}>See All</p>
+    <div className={style.container}>
+      <div className={style.header}>
+        <p className={style.title}>{title}</p>
+        <p className={style.see_all}>See All</p>
       </div>
-      <div id={s.content}>
+      <div className={style.content}>
         {data.map((item, index) => (
           <Card key={index} type={type} data={item} />
         ))}
       </div>
-      <div id={s.pagination}>
+      <div className={style.pagination}>
         <p>
           Showing <b>{itemsToShow}</b> out of <b>{totalItems}</b>
         </p>
         <div
-          id={s.prev}
+          id={style.prev}
           onClick={handlePrevPage}
-          className={currentPage === 0 ? s.disabled : ""}
+          className={currentPage === 0 ? style.disabled : ""}
         >
-          <FaArrowLeft id={s.left} />
+          <FaArrowLeft className={style.left} />
         </div>
         <div
-          id={s.next}
+          id={style.next}
           onClick={handleNextPage}
-          className={end >= totalItems ? s.disabled : ""}
+          className={end >= totalItems ? style.disabled : ""}
         >
-          <FaArrowRight id={s.right} />
+          <FaArrowRight className={style.right} />
         </div>
       </div>
     </div>

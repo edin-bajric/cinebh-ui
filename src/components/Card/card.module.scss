@@ -1,9 +1,11 @@
-#container {
+@use "../../assets/css/variables.scss";
+
+.container {
   width: 302px;
   height: 395px;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(228, 231, 236, 1);
+  border: 1px solid variables.$gray;
   border-radius: 24px;
   box-shadow: 0px 2px 4px -2px rgba(52, 64, 84, 0.08);
   box-shadow: 0px 4px 6px -1px rgba(52, 64, 84, 0.08);
@@ -11,50 +13,50 @@
   cursor: pointer;
 }
 
-#container:hover {
-  background-color: rgba(228, 231, 236, 1);
+.container:hover {
+  background-color: variables.$gray;
 }
 
-#image {
+.image {
   width: 270px;
   height: 287px;
   border-radius: 16px;
   object-fit: cover;
 }
 
-#title {
+.title {
   font-weight: 700;
   font-size: 20px;
   list-style: 24px;
   letter-spacing: 0.0085em;
-  color: rgba(29, 41, 57, 1);
+  color: variables.$secondary_color;
   margin-top: 16px;
 }
 
-#length_genre {
+.length_genre {
   display: flex;
   justify-content: start;
   gap: 16px;
   margin-top: 8px;
 }
 
-#length_genre p {
+.length_genre p {
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.0125em;
-  color: rgba(102, 112, 133, 1);
+  color: variables.$dark_gray;
 }
 
-#location {
+.location {
   margin-top: 8px;
 }
 
-#location p {
+.location p {
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.0125em;
-  color: rgba(102, 112, 133, 1);
+  color: variables.$dark_gray;
   white-space: nowrap;
 }

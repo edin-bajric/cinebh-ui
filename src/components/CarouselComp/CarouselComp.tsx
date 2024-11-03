@@ -1,5 +1,5 @@
 import { Carousel, ConfigProvider } from "antd";
-import s from "../../assets/css/carousel.module.css";
+import style from "./carousel.module.scss";
 import useFeaturedMovies from "../../hooks/useFeaturedMovies";
 import Spinner from "../Spinner";
 import Error from "../Error";
@@ -30,7 +30,7 @@ const CarouselComp: React.FC = () => {
         },
       }}
     >
-      <div id={s.container}>
+      <div className={style.container}>
         <Carousel>
           {movies.map((movie, index) => {
             const coverImage =
@@ -40,14 +40,14 @@ const CarouselComp: React.FC = () => {
             const shortDescription = movie.description.split(".")[0] + ".";
 
             return (
-              <div key={index} className={s.item}>
-                <img src={coverImage} alt={movie.title} id={s.movie_image} />
-                <div className={s.overlay}>
-                  <div className={s.genre}>
+              <div key={index} className={style.item}>
+                <img src={coverImage} alt={movie.title} className={style.movie_image} />
+                <div className={style.overlay}>
+                  <div className={style.genre}>
                     <p>{genre}</p>
                   </div>
-                  <h2 className={s.title}>{movie.title}</h2>
-                  <p className={s.description}>{shortDescription}</p>
+                  <h2 className={style.title}>{movie.title}</h2>
+                  <p className={style.description}>{shortDescription}</p>
                   <Button
                     borderColor="rgba(178, 34, 34, 1)"
                     color="rgba(178, 34, 34, 1)"
