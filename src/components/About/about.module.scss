@@ -1,18 +1,20 @@
+@use "../../assets/css/variables.scss";
+
 .text {
-  color: rgba(29, 41, 57, 1);
+  color: variables.$black;
 }
 
-#container {
+.container {
   width: 100%;
   max-width: 100%;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-color: rgba(252, 252, 253, 1);
+  background-color: variables.$white;
 }
 
-#content {
+.content {
   display: flex;
   padding-bottom: 32px;
   justify-content: center;
@@ -20,14 +22,14 @@
   padding-right: 128px;
 }
 
-#left_content {
+.left_content {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-#left_content,
+.left_content,
 text {
   font-weight: 700;
   font-size: 24px;
@@ -35,7 +37,7 @@ text {
   letter-spacing: -0.0015em;
 }
 
-#right_content {
+.right_content {
   width: auto;
   padding-top: 120px;
   display: flex;
@@ -43,7 +45,7 @@ text {
   justify-content: center;
 }
 
-#about_us {
+.about_us {
   font-weight: 700;
   font-size: 64px;
   line-height: 76px;
@@ -52,12 +54,7 @@ text {
   top: -32px;
 }
 
-#first_text,
-#second_text,
-#third_text,
-#fourth_text,
-#fifth_text,
-#sixth_text {
+.paragraph {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -68,7 +65,7 @@ text {
   padding-bottom: 32px;
 }
 
-#image {
+.image {
   width: 100%;
   object-fit: cover;
   height: 452px;

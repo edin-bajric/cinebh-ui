@@ -1,17 +1,19 @@
+@use "../../assets/css/variables.scss";
+
 p {
-  color: rgba(29, 41, 57, 1);
+  color: variables.$black;
 }
 
-#container {
+.container {
   width: 100%;
   max-width: 100%;
   display: flex;
   flex-direction: column;
   padding-bottom: 100px;
-  background-color: rgba(252, 252, 253, 1);
+  background-color: variables.$white;
 }
 
-#content {
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,7 +21,7 @@ p {
   text-align: center;
 }
 
-#boxes {
+.boxes {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,30 +32,34 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(228, 231, 236, 1);
+  border: 1px solid variables.$gray;
   border-radius: 16px;
   margin: 16px;
 }
 
-#title {
+.title {
   padding-top: 48px;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.0025em;
 }
 
-#subtitle {
+.subtitle {
   width: 40%;
   padding-bottom: 48px;
   padding-top: 48px;
 }
 
-#regular,
-#vip {
+.regular,
+.vip {
   width: 408px;
   height: 564px;
   max-width: 408px;
   max-height: 564px;
 }
 
-#love {
+.love {
   width: 408px;
   height: 644px;
   max-width: 408px;
@@ -63,20 +69,9 @@ p {
   box-shadow: 0px 4px 6px -1px rgba(52, 64, 84, 0.08);
 }
 
-#title {
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 40px;
-  letter-spacing: -0.0025em;
-}
-
-#subtitle,
-#per_ticket,
-#feature1,
-#feature2,
-#feature3,
-#feature4,
-#feature5 {
+.subtitle,
+.per_ticket,
+.feature {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -97,12 +92,12 @@ p {
   letter-spacing: -0.0025em;
 }
 
-#love .price {
-  color: var(--Red-Dark, rgba(178, 34, 34, 1));
+.love .price {
+  color: var(--Red-Dark, variables.$primary_color);
 }
 
 .check {
-  color: rgba(178, 34, 34, 1);
+  color: variables.$primary_color;
   padding: 2px;
   margin-right: 8px;
 }
