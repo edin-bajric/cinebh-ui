@@ -4,7 +4,7 @@ p {
   color: variables.$black;
 }
 
-#container {
+.container {
   width: 100%;
   max-width: 100%;
   display: flex;
@@ -13,7 +13,7 @@ p {
   background-color: variables.$white;
 }
 
-#content {
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +21,7 @@ p {
   text-align: center;
 }
 
-#boxes {
+.boxes {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +37,7 @@ p {
   margin: 16px;
 }
 
-#title {
+.title {
   padding-top: 48px;
   font-weight: 700;
   font-size: 32px;

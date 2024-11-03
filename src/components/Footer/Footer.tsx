@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div id={style.container}>
-      <div id={style.content}>
-        <img src={logo} id={style.logo} />
-        <div id={style.about_pricing}>
+    <div className={style.container}>
+      <div className={style.content}>
+        <img src={logo} className={style.logo} />
+        <div className={style.about_pricing}>
           <Link to="/about" className={style.text}>
             ABOUT US
           </Link>

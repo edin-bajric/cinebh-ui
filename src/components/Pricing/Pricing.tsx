@@ -3,16 +3,16 @@ import PriceBox from "../PriceBox.tsx/PriceBox";
 
 const Pricing = () => {
   return (
-    <div id={style.container}>
-      <div id={style.content}>
-        <p id={style.title}>Pricing</p>
+    <div className={style.container}>
+      <div className={style.content}>
+        <p className={style.title}>Pricing</p>
         <p className={style.subtitle}>
           Welcome to our cinema ticket pricing options! We offer three tiers to
           suit everyone's preferences. Explore our pricing options below and
           treat yourself to a cinematic adventure like never before!
         </p>
       </div>
-      <div id={style.boxes}>
+      <div className={style.boxes}>
         <PriceBox
           name="Regular Seats"
           price="7 KM"

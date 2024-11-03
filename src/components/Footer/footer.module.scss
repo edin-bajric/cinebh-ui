@@ -1,6 +1,6 @@
 @use "../../assets/css/variables.scss";
 
-#container {
+.container {
   position: relative;
   bottom: 0;
   height: 212px;
@@ -13,7 +13,7 @@
   align-items: center;
 }
 
-#content {
+.content {
   height: 100px;
   position: relative;
   flex-direction: column;
@@ -28,7 +28,7 @@
   letter-spacing: 0.05em;
 }
 
-#about_pricing {
+.about_pricing {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,15 +38,15 @@
   line-height: 16px;
 }
 
-#about_pricing .text:not(:nth-child(2)) {
+.about_pricing .text:not(:nth-child(2)) {
   margin: 0 16px;
 }
 
-#about_pricing .text:nth-child(2) {
+.about_pricing .text:nth-child(2) {
   margin: 0;
 }
 
-#logo {
+.logo {
   height: 32px;
   width: 130px;
 }
