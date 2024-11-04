@@ -14,9 +14,7 @@ const Navbar = () => {
       </div>
       <Button
         text="Sign In"
-        color="rgba(29, 41, 57, 1)"
-        textColor="rgba(252, 252, 253, 1)"
-        borderColor="rgba(252, 252, 253, 1)"
+        variant="navbar"
       />
     </div>
   );

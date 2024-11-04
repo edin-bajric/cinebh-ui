@@ -24,9 +24,7 @@ const Pricing = () => {
             "Suitable for everyone",
           ]}
           buttonText="Explore movies"
-          buttonColor="rgba(252, 252, 253, 1)"
-          buttonTextColor="rgba(178, 34, 34, 1)"
-          buttonBorderColor="rgba(178, 34, 34, 1)"
+          variant="outlined"
           containerStyle={style.regular}
         ></PriceBox>
         <PriceBox
@@ -40,9 +38,7 @@ const Pricing = () => {
             "Reserved for couples",
           ]}
           buttonText="Explore movies"
-          buttonColor="rgba(178, 34, 34, 1)"
-          buttonTextColor="rgba(252, 252, 253, 1)"
-          buttonBorderColor="rgba(178, 34, 34, 1)"
+          variant="solid"
           containerStyle={style.love}
         />
         <PriceBox
@@ -56,9 +52,7 @@ const Pricing = () => {
             "Luxury extras",
           ]}
           buttonText="Explore movies"
-          buttonColor="rgba(252, 252, 253, 1)"
-          buttonTextColor="rgba(178, 34, 34, 1)"
-          buttonBorderColor="rgba(178, 34, 34, 1)"
+          variant="outlined"
           containerStyle={style.vip}
         />
       </div>

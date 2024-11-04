@@ -1,32 +1,18 @@
 import React from "react";
-import styles from "./button.module.css";
+import styles from "./button.module.scss";
+import classNames from "classnames";
 
 type Props = {
   text: string;
-  color: string;
-  textColor: string;
-  borderColor: string;
-  className?: string; 
+  variant?: "solid" | "outlined" | "navbar";
+  className?: string;
 };
 
-const Button: React.FC<Props> = ({
-  text,
-  color,
-  textColor,
-  borderColor,
-  className,
-}) => {
+const Button: React.FC<Props> = ({ text, variant = "solid", className }) => {
+  const buttonClass = classNames(styles.button, styles[variant], className);
   return (
     <div className={styles.container}>
-      <button
-        type="button"
-        style={{
-          backgroundColor: color,
-          color: textColor,
-          borderColor: borderColor,
-        }}
-        className={`${styles.button} ${className || ""}`}
-      >
+      <button type="button" className={buttonClass}>
         {text}
       </button>
     </div>
