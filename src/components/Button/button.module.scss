@@ -33,3 +33,7 @@
   color: variables.$white;
   border-color: variables.$white;
 }
+
+.button:hover {
+  filter: brightness(1.2);
+}

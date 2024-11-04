@@ -1,0 +1,81 @@
+@use "../../assets/css/variables.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 92px 40px 92px;
+  background-color: variables.$white;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0.0075em;
+  color: variables.$secondary_color;
+}
+
+.see_all {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.015em;
+  color: variables.$primary_color;
+  cursor: pointer;
+}
+
+.see_all:hover {
+  text-decoration: underline;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.pagination p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$secondary_color;
+}
+
+#prev,
+#next {
+  width: 48px;
+  height: 48px;
+  border: 1px solid variables.$gray;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#prev:hover,
+#next:hover {
+  background-color: variables.$gray;
+}
+
+.disabled {
+  color: variables.$gray;
+  pointer-events: none;
+}

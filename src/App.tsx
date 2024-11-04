@@ -8,13 +8,13 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/tickets" element={<Tickets />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/tickets" element={<Tickets />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       <Footer />
     </>
   );

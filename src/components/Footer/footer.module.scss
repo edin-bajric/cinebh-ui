@@ -38,6 +38,10 @@
   line-height: 16px;
 }
 
+.about_pricing .text:hover {
+  text-decoration: underline;
+}
+
 .about_pricing .text:not(:nth-child(2)) {
   margin: 0 16px;
 }

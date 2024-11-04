@@ -1,9 +1,7 @@
-import Pricing from '../components/Pricing';
+import Pricing from "../components/Pricing";
 
 const Tickets = () => {
-  return (
-    <Pricing />
-  )
-}
+  return <Pricing />;
+};
 
-export default Tickets
+export default Tickets;
