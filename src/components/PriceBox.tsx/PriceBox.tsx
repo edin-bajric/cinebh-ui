@@ -8,9 +8,7 @@ interface PriceBoxProps {
   price: string;
   features: string[];
   buttonText: string;
-  buttonColor: string;
-  buttonTextColor: string;
-  buttonBorderColor: string;
+  variant: "solid" | "outlined",
   containerStyle?: string;
 }
 
@@ -19,9 +17,7 @@ const PriceBox: React.FC<PriceBoxProps> = ({
   price,
   features,
   buttonText,
-  buttonColor,
-  buttonTextColor,
-  buttonBorderColor,
+  variant,
   containerStyle,
 }) => {
   return (
@@ -40,9 +36,7 @@ const PriceBox: React.FC<PriceBoxProps> = ({
         <div className={style.button_container}>
           <Button
             text={buttonText}
-            color={buttonColor}
-            textColor={buttonTextColor}
-            borderColor={buttonBorderColor}
+            variant={variant}
           />
         </div>
       </div>

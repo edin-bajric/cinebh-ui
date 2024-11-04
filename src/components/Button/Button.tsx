@@ -1,31 +1,31 @@
 import React from "react";
-import styles from "./button.module.css";
+import styles from "./button.module.scss";
+import classNames from "classnames";
 
 type Props = {
   text: string;
-  color: string;
-  textColor: string;
-  borderColor: string;
-  className?: string; 
+  variant?: "solid" | "outlined" | "navbar";
+  width?: string; 
+  onClick?: () => void;
+  className?: string;
 };
 
 const Button: React.FC<Props> = ({
   text,
-  color,
-  textColor,
-  borderColor,
+  variant = "solid",
+  width = "auto",
+  onClick,
   className,
 }) => {
+  const buttonClass = classNames(styles.button, styles[variant], className);
+
   return (
     <div className={styles.container}>
       <button
         type="button"
-        style={{
-          backgroundColor: color,
-          color: textColor,
-          borderColor: borderColor,
-        }}
-        className={`${styles.button} ${className || ""}`}
+        className={buttonClass}
+        style={{ width }}
+        onClick={onClick}
       >
         {text}
       </button>
