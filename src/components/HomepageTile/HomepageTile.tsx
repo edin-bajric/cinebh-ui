@@ -4,6 +4,7 @@ import Spinner from "../Spinner";
 import Error from "../Error";
 import Card from "../Card";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 type Props = {
   title: string;
@@ -14,6 +15,7 @@ type Props = {
   totalItems: number;
   pageSize: number;
   onPageChange: (page: number) => void;
+  linkTo: string;
 };
 
 const HomepageTile: React.FC<Props> = ({
@@ -25,6 +27,7 @@ const HomepageTile: React.FC<Props> = ({
   totalItems,
   pageSize,
   onPageChange,
+  linkTo,
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -59,7 +62,7 @@ const HomepageTile: React.FC<Props> = ({
     <div className={style.container}>
       <div className={style.header}>
         <p className={style.title}>{title}</p>
-        <p className={style.see_all}>See All</p>
+        <Link to={linkTo} className={style.see_all}>See All</Link>
       </div>
       <div className={style.content}>
         {data.map((item, index) => (
