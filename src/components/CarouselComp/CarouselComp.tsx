@@ -49,10 +49,8 @@ const CarouselComp: React.FC = () => {
                   <h2 className={style.title}>{movie.title}</h2>
                   <p className={style.description}>{shortDescription}</p>
                   <Button
-                    borderColor="rgba(178, 34, 34, 1)"
-                    color="rgba(178, 34, 34, 1)"
+                    variant="solid"
                     text="Buy Ticket"
-                    textColor="rgba(250, 250, 250, 1)"
                   />
                 </div>
               </div>
