@@ -1,0 +1,127 @@
+@use "../../assets/css/variables.scss";
+
+p {
+  color: variables.$black;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 100px;
+  background-color: variables.$white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.boxes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid variables.$gray;
+  border-radius: 16px;
+  margin: 16px;
+}
+
+.title {
+  padding-top: 48px;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.0025em;
+}
+
+.subtitle {
+  width: 40%;
+  padding-bottom: 48px;
+  padding-top: 48px;
+}
+
+.regular,
+.vip {
+  width: 408px;
+  height: 564px;
+  max-width: 408px;
+  max-height: 564px;
+}
+
+.love {
+  width: 408px;
+  height: 644px;
+  max-width: 408px;
+  max-height: 644px;
+  border-color: rgba(152, 162, 179, 1);
+  box-shadow: 0px 2px 4px -2px rgba(52, 64, 84, 0.08);
+  box-shadow: 0px 4px 6px -1px rgba(52, 64, 84, 0.08);
+}
+
+.subtitle,
+.per_ticket,
+.feature {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+}
+
+.price {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.0025em;
+}
+
+.love .price {
+  color: var(--Red-Dark, variables.$primary_color);
+}
+
+.check {
+  color: variables.$primary_color;
+  padding: 2px;
+  margin-right: 8px;
+}
+
+.first_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.second_info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px;
+}
+
+.box p {
+  padding: 12px;
+}
+
+.button_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 86px;
+}

@@ -1,0 +1,73 @@
+@use "../../assets/css/variables.scss";
+
+.text {
+  color: variables.$black;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: variables.$white;
+}
+
+.content {
+  display: flex;
+  padding-bottom: 32px;
+  justify-content: center;
+  padding-left: 128px;
+  padding-right: 128px;
+}
+
+.left_content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left_content,
+text {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.0015em;
+}
+
+.right_content {
+  width: auto;
+  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about_us {
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 76px;
+  letter-spacing: -0.01em;
+  position: relative;
+  top: -32px;
+}
+
+.paragraph {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+}
+
+#fourth_text {
+  padding-bottom: 32px;
+}
+
+.image {
+  width: 100%;
+  object-fit: cover;
+  height: 452px;
+  padding-top: 8px;
+}
