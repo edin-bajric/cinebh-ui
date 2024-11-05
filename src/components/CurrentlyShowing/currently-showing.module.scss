@@ -3,3 +3,11 @@
 .container {
     padding: 40px 92px 40px 92px;
 }
+
+.filters {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}

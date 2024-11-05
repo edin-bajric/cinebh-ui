@@ -1,6 +1,7 @@
 import style from "./currently-showing.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
+import Filter from "../Filter";
 
 const CurrentlyShowing = () => {
   return (
@@ -13,6 +14,12 @@ const CurrentlyShowing = () => {
       </div>
       <div className={style.search}>
         <Search />
+      </div>
+      <div className={style.filters}>
+        <Filter />
+        <Filter />
+        <Filter />
+        <Filter />
       </div>
     </div>
   );
