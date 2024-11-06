@@ -1,0 +1,7 @@
+@use "../../assets/css/variables.scss";
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 32px;
+}
