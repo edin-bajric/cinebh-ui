@@ -3,6 +3,7 @@ import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitl
 import Search from "../Search";
 import Filter from "../Filter";
 import CurrentlyShowingDateTile from "../CurrentlyShowingDateTile";
+import CurrentlyShowingTile from "../CurrentlyShowingTile";
 
 const CurrentlyShowing = () => {
   return (
@@ -22,11 +23,16 @@ const CurrentlyShowing = () => {
         <Filter />
         <Filter />
       </div>
-      <div className={style.dates} >
+      <div className={style.dates}>
         <CurrentlyShowingDateTile />
       </div>
-      <div className={style.reminder} >
-        <p>Quick reminder that our cinema schedule is on a ten-day update cycle.</p>
+      <div className={style.reminder}>
+        <p>
+          Quick reminder that our cinema schedule is on a ten-day update cycle.
+        </p>
+      </div>
+      <div className={style.showing}>
+        <CurrentlyShowingTile />
       </div>
     </div>
   );
