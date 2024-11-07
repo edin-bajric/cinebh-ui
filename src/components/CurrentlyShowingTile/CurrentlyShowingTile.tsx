@@ -1,16 +1,35 @@
 import style from "./currently-showing-tile.module.scss";
 import CurrentlyShowingCard from "../CurrentlyShowingCard";
+import { Movie } from "../../utils/types";
 
-const CurrentlyShowingTile = () => {
-  const cards = Array(10).fill(null); 
+type CurrentlyShowingTileProps = {
+  movies: Movie[];
+  onLoadMore: () => void;
+  totalItems: number;
+};
+
+const CurrentlyShowingTile: React.FC<CurrentlyShowingTileProps> = ({
+  movies,
+  onLoadMore,
+  totalItems,
+}) => {
+  const isLoadMoreDisabled = movies.length >= totalItems;
 
   return (
     <div className={style.container}>
       <div className={style.content}>
-        {cards.map((_, index) => (
-          <CurrentlyShowingCard key={index} />
+        {movies.map((movie) => (
+          <CurrentlyShowingCard
+            key={movie.id}
+            movie={movie}
+          />
         ))}
-        <div className={style.load_more}>
+        <div
+          className={`${style.load_more} ${
+            isLoadMoreDisabled ? style.disabled : ""
+          }`}
+          onClick={!isLoadMoreDisabled ? onLoadMore : undefined}
+        >
           <p className={style.load_more_text}>Load more</p>
         </div>
       </div>

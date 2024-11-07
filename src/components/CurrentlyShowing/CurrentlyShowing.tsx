@@ -1,17 +1,37 @@
+import { useState, useEffect } from "react";
 import style from "./currently-showing.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
 import Filter from "../Filter";
 import CurrentlyShowingDateTile from "../CurrentlyShowingDateTile";
 import CurrentlyShowingTile from "../CurrentlyShowingTile";
+import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
+
+const DEFAULT_PAGE = 0;
+const INITIAL_PAGE_SIZE = 2;
+const PAGE_INCREMENT = 2;
 
 const CurrentlyShowing = () => {
+  const [size, setSize] = useState(INITIAL_PAGE_SIZE);
+  const { data, isLoading, error, refetch } = useCurrentlyShowing(DEFAULT_PAGE, size);
+
+  useEffect(() => {
+    refetch();
+  }, [size, refetch]);
+
+  const handleLoadMore = () => {
+    setSize((prevSize) => prevSize + PAGE_INCREMENT);
+  };
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading movies.</p>;
+
   return (
     <div className={style.container}>
       <div className={style.title}>
         <CurrentlyShowingAndUpcomingTitle
           type="currentlyShowing"
-          totalItems={10}
+          totalItems={data?.totalElements || 0}
         />
       </div>
       <div className={style.search}>
@@ -32,7 +52,11 @@ const CurrentlyShowing = () => {
         </p>
       </div>
       <div className={style.showing}>
-        <CurrentlyShowingTile />
+        <CurrentlyShowingTile
+          movies={data?.content || []}
+          onLoadMore={handleLoadMore}
+          totalItems={data?.totalElements || 0}
+        />
       </div>
     </div>
   );

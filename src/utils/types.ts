@@ -19,7 +19,10 @@ export type Movie = {
     url: string;
   }>;
   ratings: Array<{ id: string; name: string; rating: string; movie: string }>;
-  projections: Array<any>;
+  projections: Array<{
+    id: string;
+    projectionTimes: Array<{ id: string; time: string }>;
+  }>;
 };
 
 export type Venue = {
