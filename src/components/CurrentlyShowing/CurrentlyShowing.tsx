@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import style from "./currently-showing.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
@@ -6,6 +6,7 @@ import Filter from "../Filter";
 import CurrentlyShowingDateTile from "../CurrentlyShowingDateTile";
 import CurrentlyShowingTile from "../CurrentlyShowingTile";
 import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
+import useCurrentlyShowingSearch from "../../hooks/useCurrentlyShowingSearch";
 
 const DEFAULT_PAGE = 0;
 const INITIAL_PAGE_SIZE = 2;
@@ -13,17 +14,24 @@ const PAGE_INCREMENT = 2;
 
 const CurrentlyShowing = () => {
   const [size, setSize] = useState(INITIAL_PAGE_SIZE);
-  const { data, isLoading, error, refetch } = useCurrentlyShowing(DEFAULT_PAGE, size);
-
-  useEffect(() => {
-    refetch();
-  }, [size, refetch]);
+  const [query, setQuery] = useState<string>("");
+  const { data, isLoading, error } = useCurrentlyShowing(DEFAULT_PAGE, size);
+  const searchResults = useCurrentlyShowingSearch(query, DEFAULT_PAGE, size);
 
   const handleLoadMore = () => {
     setSize((prevSize) => prevSize + PAGE_INCREMENT);
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const searchInput = (e.target as HTMLFormElement).querySelector("input") as HTMLInputElement;
+    setQuery(searchInput.value);
+  };
+
+  const moviesData = query ? searchResults.data : data;
+  const isFetching = query ? searchResults.isLoading : isLoading;
+
+  if (isFetching) return <p>Loading...</p>;
   if (error) return <p>Error loading movies.</p>;
 
   return (
@@ -31,11 +39,11 @@ const CurrentlyShowing = () => {
       <div className={style.title}>
         <CurrentlyShowingAndUpcomingTitle
           type="currentlyShowing"
-          totalItems={data?.totalElements || 0}
+          totalItems={moviesData?.totalElements || 0}
         />
       </div>
       <div className={style.search}>
-        <Search />
+        <Search onSearch={handleSearch} />
       </div>
       <div className={style.filters}>
         <Filter />
@@ -47,15 +55,13 @@ const CurrentlyShowing = () => {
         <CurrentlyShowingDateTile />
       </div>
       <div className={style.reminder}>
-        <p>
-          Quick reminder that our cinema schedule is on a ten-day update cycle.
-        </p>
+        <p>Quick reminder that our cinema schedule is on a ten-day update cycle.</p>
       </div>
       <div className={style.showing}>
         <CurrentlyShowingTile
-          movies={data?.content || []}
+          movies={moviesData?.content || []}
           onLoadMore={handleLoadMore}
-          totalItems={data?.totalElements || 0}
+          totalItems={moviesData?.totalElements || 0}
         />
       </div>
     </div>

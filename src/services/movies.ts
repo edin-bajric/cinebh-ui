@@ -30,8 +30,15 @@ const getUpcoming = async (
     });
 };
 
+const searchMovies = async (query: string, page: number, size: number): Promise<PaginatedResponse<Movie>> => {
+  return appAxios
+    .get(`/movies/currently-showing/search?query=${query}&page=${page}&size=${size}`)
+    .then((response) => response.data);
+};
+
 export default {
   getFeatured,
   getCurrentlyShowing,
   getUpcoming,
+  searchMovies,
 };
