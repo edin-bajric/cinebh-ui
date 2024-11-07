@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import style from "./currently-showing.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
@@ -8,15 +9,29 @@ import CurrentlyShowingTile from "../CurrentlyShowingTile";
 import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
 import useCurrentlyShowingSearch from "../../hooks/useCurrentlyShowingSearch";
 
-const DEFAULT_PAGE = 0;
 const INITIAL_PAGE_SIZE = 2;
 const PAGE_INCREMENT = 2;
+const PAGE_DEFAULT = 0;
 
 const CurrentlyShowing = () => {
-  const [size, setSize] = useState(INITIAL_PAGE_SIZE);
-  const [query, setQuery] = useState<string>("");
-  const { data, isLoading, error } = useCurrentlyShowing(DEFAULT_PAGE, size);
-  const searchResults = useCurrentlyShowingSearch(query, DEFAULT_PAGE, size);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
+  const sizeFromUrl = parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10);
+  const [size, setSize] = useState(sizeFromUrl);
+
+  const { data, isLoading, error } = useCurrentlyShowing(PAGE_DEFAULT, size);
+  const searchResults = useCurrentlyShowingSearch(query, PAGE_DEFAULT, size);
+
+  useEffect(() => {
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("size", size.toString());
+      if (query) {
+        newParams.set("query", query);
+      }
+      return newParams;
+    });
+  }, [size, query, setSearchParams]);
 
   const handleLoadMore = () => {
     setSize((prevSize) => prevSize + PAGE_INCREMENT);
@@ -25,7 +40,16 @@ const CurrentlyShowing = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const searchInput = (e.target as HTMLFormElement).querySelector("input") as HTMLInputElement;
-    setQuery(searchInput.value);
+    const newQuery = searchInput.value;
+    setSearchParams({ size: `${INITIAL_PAGE_SIZE}` }); 
+    setSize(INITIAL_PAGE_SIZE);
+    if (newQuery) {
+      setSearchParams((prevParams) => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.set("query", newQuery); 
+        return newParams;
+      });
+    }
   };
 
   const moviesData = query ? searchResults.data : data;
@@ -43,7 +67,7 @@ const CurrentlyShowing = () => {
         />
       </div>
       <div className={style.search}>
-        <Search onSearch={handleSearch} />
+        <Search onSearch={handleSearch} query={query} />
       </div>
       <div className={style.filters}>
         <Filter />
