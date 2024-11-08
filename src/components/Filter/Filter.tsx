@@ -5,26 +5,30 @@ type FilterProps = {
   title: string;
   data: string[];
   onSelect: (value: string) => void;
+  selectedValue: string;
 };
 
-const Filter: React.FC<FilterProps> = ({ title, data, onSelect }) => {
+const Filter: React.FC<FilterProps> = ({ title, data, onSelect, selectedValue }) => {
   return (
     <div className={style.container}>
       <div className={style.filter_container}>
         <div className={style.filter}>
           <FaFilter className={style.icon} />
-          <p className={style.title}>All {title}</p>
         </div>
         <div className={style.dropdown}>
-          <select onChange={(e) => onSelect(e.target.value)}>
-            <option value="">Select {title}</option>
+          <select
+            onChange={(e) => onSelect(e.target.value)}
+            value={selectedValue}
+            className={style.select}
+          >
+            <option value="">{`All ${title}`}</option>
             {data.map((item, index) => (
               <option key={index} value={item}>
                 {item}
               </option>
             ))}
           </select>
-          <FaChevronDown className={style.icon} />
+          <FaChevronDown className={style.dropdown_icon} />
         </div>
       </div>
     </div>
@@ -32,4 +36,3 @@ const Filter: React.FC<FilterProps> = ({ title, data, onSelect }) => {
 };
 
 export default Filter;
-

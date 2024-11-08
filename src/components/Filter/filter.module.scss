@@ -9,7 +9,6 @@
   width: 100%;
   height: 48px;
   box-shadow: 0px 1px 2px -2px rgba(52, 64, 84, 0.08);
-  box-shadow: 0px 1px 3px -1px rgba(52, 64, 84, 0.08);
   border: 1px solid variables.$gray;
   border-radius: 8px;
   display: flex;
@@ -38,4 +37,35 @@
   width: 18px;
   padding: 1px;
   vertical-align: middle;
+}
+
+.dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%; 
+}
+
+.select {
+  display: block;
+  width: 100%; 
+  padding: 8px 32px 8px 12px;  
+  font-size: 16px;
+  border: none;
+  background: transparent;
+  color: variables.$dark_gray;
+  appearance: none;  
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;  
+}
+
+.dropdown_icon {
+  position: absolute;
+  right: 12px;
+  color: variables.$dark_gray;
+  font-size: 18px;
+  pointer-events: none; 
 }

@@ -8,12 +8,25 @@ const getFeatured = async (): Promise<Movie[]> => {
 const getCurrentlyShowing = async (
   page: number,
   size: number,
-  title = "",
-  city = ""
+  title?: string,
+  city?: string,
+  venue?: string,
+  genre?: string,
+  projectionTime?: string
 ): Promise<PaginatedResponse<Movie>> => {
-  const url = `/movies/currently-showing?page=${page}&size=${size}&title=${title}&city=${city}`;
-  return appAxios.get(url).then((response) => response.data);
+  const params = new URLSearchParams();
+  params.append("page", page.toString());
+  params.append("size", size.toString());
+  if (title) params.append("title", title);
+  if (city) params.append("city", city);
+  if (venue) params.append("cinema", venue);
+  if (genre) params.append("genres", genre);
+  if (projectionTime) params.append("projectionTime", projectionTime);
+
+  return appAxios.get(`/movies/currently-showing?${params.toString()}`)
+    .then((response) => response.data);
 };
+
 
 const getUpcoming = async (
   page: number,
