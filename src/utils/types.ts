@@ -50,3 +50,13 @@ export type PaginatedResponse<T> = {
   totalElements: number;
   totalPages: number;
 };
+
+export type Genre = {
+  id: string;
+  name: string;
+};
+
+export type ProjectionTime = {
+  id: string;
+  time: string;
+}

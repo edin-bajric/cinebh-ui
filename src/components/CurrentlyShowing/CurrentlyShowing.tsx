@@ -7,7 +7,7 @@ import Filter from "../Filter";
 import CurrentlyShowingDateTile from "../CurrentlyShowingDateTile";
 import CurrentlyShowingTile from "../CurrentlyShowingTile";
 import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
-import useCurrentlyShowingSearch from "../../hooks/useCurrentlyShowingSearch";
+import useAllVenues from "../../hooks/useAllVenues";
 
 const INITIAL_PAGE_SIZE = 2;
 const PAGE_INCREMENT = 2;
@@ -15,23 +15,23 @@ const PAGE_DEFAULT = 0;
 
 const CurrentlyShowing = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("query") || "";
+  const selectedTitle = searchParams.get("title") || "";
+  const selectedCity = searchParams.get("city") || "";
   const sizeFromUrl = parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10);
   const [size, setSize] = useState(sizeFromUrl);
 
-  const { data, isLoading, error } = useCurrentlyShowing(PAGE_DEFAULT, size);
-  const searchResults = useCurrentlyShowingSearch(query, PAGE_DEFAULT, size);
+  const { data: venuesData } = useAllVenues();
+  const { data, isLoading, error } = useCurrentlyShowing(PAGE_DEFAULT, size, selectedTitle, selectedCity);
 
   useEffect(() => {
     setSearchParams((prevParams) => {
       const newParams = new URLSearchParams(prevParams);
       newParams.set("size", size.toString());
-      if (query) {
-        newParams.set("query", query);
-      }
+      if (selectedTitle) newParams.set("title", selectedTitle);
+      if (selectedCity) newParams.set("city", selectedCity);
       return newParams;
     });
-  }, [size, query, setSearchParams]);
+  }, [size, selectedTitle, selectedCity, setSearchParams]);
 
   const handleLoadMore = () => {
     setSize((prevSize) => prevSize + PAGE_INCREMENT);
@@ -40,40 +40,44 @@ const CurrentlyShowing = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const searchInput = (e.target as HTMLFormElement).querySelector("input") as HTMLInputElement;
-    const newQuery = searchInput.value;
-    setSearchParams({ size: `${INITIAL_PAGE_SIZE}` }); 
+    const newTitle = searchInput.value;
     setSize(INITIAL_PAGE_SIZE);
-    if (newQuery) {
-      setSearchParams((prevParams) => {
-        const newParams = new URLSearchParams(prevParams);
-        newParams.set("query", newQuery); 
-        return newParams;
-      });
-    }
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
+      newParams.set("title", newTitle);
+      return newParams;
+    });
   };
 
-  const moviesData = query ? searchResults.data : data;
-  const isFetching = query ? searchResults.isLoading : isLoading;
+  const handleCityFilter = (city: string) => {
+    setSize(INITIAL_PAGE_SIZE);
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
+      newParams.set("city", city);
+      return newParams;
+    });
+  };
 
-  if (isFetching) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading movies.</p>;
+
+  const uniqueCities = Array.from(new Set(venuesData?.map((venue) => venue.city)));
 
   return (
     <div className={style.container}>
       <div className={style.title}>
         <CurrentlyShowingAndUpcomingTitle
           type="currentlyShowing"
-          totalItems={moviesData?.totalElements || 0}
+          totalItems={data?.totalElements || 0}
         />
       </div>
       <div className={style.search}>
-        <Search onSearch={handleSearch} query={query} />
+        <Search onSearch={handleSearch} title={selectedTitle} />
       </div>
       <div className={style.filters}>
-        <Filter />
-        <Filter />
-        <Filter />
-        <Filter />
+        <Filter title={"Cities"} data={uniqueCities} onSelect={handleCityFilter} />
       </div>
       <div className={style.dates}>
         <CurrentlyShowingDateTile />
@@ -83,9 +87,9 @@ const CurrentlyShowing = () => {
       </div>
       <div className={style.showing}>
         <CurrentlyShowingTile
-          movies={moviesData?.content || []}
+          movies={data?.content || []}
           onLoadMore={handleLoadMore}
-          totalItems={moviesData?.totalElements || 0}
+          totalItems={data?.totalElements || 0}
         />
       </div>
     </div>
