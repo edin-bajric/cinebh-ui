@@ -1,14 +1,29 @@
 import style from "./currently-showing-date.module.scss";
 
-const CurrentlyShowingDate = () => {
-  return (
-    <div className={style.container}>
-      <div className={style.date_block}>
-        <p className={style.date}>Dec 10</p>
-        <p className={style.day}>Today</p>
-      </div>
-    </div>
-  )
+interface CurrentlyShowingDateProps {
+  date: string;
+  day: string;
+  isSelected: boolean;
+  onSelect: () => void;
 }
 
-export default CurrentlyShowingDate
+const CurrentlyShowingDate: React.FC<CurrentlyShowingDateProps> = ({
+  date,
+  day,
+  isSelected,
+  onSelect,
+}) => {
+  return (
+    <div className={style.container}>
+      <div
+        className={`${style.date_block} ${isSelected ? style.selected : ""}`}
+        onClick={onSelect}
+      >
+        <p className={style.date}>{date}</p>
+        <p className={style.day}>{day}</p>
+      </div>
+    </div>
+  );
+};
+
+export default CurrentlyShowingDate;

@@ -22,7 +22,11 @@ const CurrentlyShowing = () => {
   const selectedVenue = searchParams.get("cinema") || "";
   const selectedGenre = searchParams.get("genres") || "";
   const selectedProjectionTime = searchParams.get("projectionTime") || "";
-  const sizeFromUrl = parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10);
+  const selectedDate = searchParams.get("date") || "";
+  const sizeFromUrl = parseInt(
+    searchParams.get("size") || `${INITIAL_PAGE_SIZE}`,
+    10
+  );
   const [size, setSize] = useState(sizeFromUrl);
 
   const { data: venuesData } = useAllVenues();
@@ -35,7 +39,8 @@ const CurrentlyShowing = () => {
     selectedCity,
     selectedVenue,
     selectedGenre,
-    selectedProjectionTime
+    selectedProjectionTime,
+    selectedDate
   );
 
   useEffect(() => {
@@ -46,7 +51,8 @@ const CurrentlyShowing = () => {
       if (selectedCity) newParams.set("city", selectedCity);
       if (selectedVenue) newParams.set("cinema", selectedVenue);
       if (selectedGenre) newParams.set("genres", selectedGenre);
-      if (selectedProjectionTime) newParams.set("projectionTime", selectedProjectionTime);
+      if (selectedProjectionTime)
+        newParams.set("projectionTime", selectedProjectionTime);
       return newParams;
     });
   }, [
@@ -65,7 +71,9 @@ const CurrentlyShowing = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const searchInput = (e.target as HTMLFormElement).querySelector("input") as HTMLInputElement;
+    const searchInput = (e.target as HTMLFormElement).querySelector(
+      "input"
+    ) as HTMLInputElement;
     const newTitle = searchInput.value;
     setSize(INITIAL_PAGE_SIZE);
     setSearchParams((prevParams) => {
@@ -116,10 +124,22 @@ const CurrentlyShowing = () => {
     });
   };
 
+  const handleDateSelect = (date: string) => {
+    setSize(INITIAL_PAGE_SIZE);
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
+      newParams.set("date", date);
+      return newParams;
+    });
+  };
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading movies.</p>;
 
-  const uniqueCities = Array.from(new Set(venuesData?.map((venue) => venue.city)));
+  const uniqueCities = Array.from(
+    new Set(venuesData?.map((venue) => venue.city))
+  );
   const uniqueProjectionTimes = Array.from(
     new Set(projectionTimesData?.map((projection) => projection.time))
   );
@@ -162,7 +182,10 @@ const CurrentlyShowing = () => {
         />
       </div>
       <div className={style.dates}>
-        <CurrentlyShowingDateTile />
+        <CurrentlyShowingDateTile
+          onDateSelect={handleDateSelect}
+          selectedDate={selectedDate}
+        />
       </div>
       <div className={style.reminder}>
         <p>

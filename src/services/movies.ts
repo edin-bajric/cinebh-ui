@@ -12,7 +12,8 @@ const getCurrentlyShowing = async (
   city?: string,
   venue?: string,
   genre?: string,
-  projectionTime?: string
+  projectionTime?: string,
+  date?: string,
 ): Promise<PaginatedResponse<Movie>> => {
   const params = new URLSearchParams();
   params.append("page", page.toString());
@@ -22,6 +23,7 @@ const getCurrentlyShowing = async (
   if (venue) params.append("cinema", venue);
   if (genre) params.append("genres", genre);
   if (projectionTime) params.append("projectionTime", projectionTime);
+  if (date) params.append("date", date);
 
   return appAxios.get(`/movies/currently-showing?${params.toString()}`)
     .then((response) => response.data);
