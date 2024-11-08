@@ -17,16 +17,16 @@ const PAGE_DEFAULT = 0;
 
 const CurrentlyShowing = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  
+  const today = new Date().toISOString().split("T")[0];
   const selectedTitle = searchParams.get("title") || "";
   const selectedCity = searchParams.get("city") || "";
   const selectedVenue = searchParams.get("cinema") || "";
   const selectedGenre = searchParams.get("genres") || "";
   const selectedProjectionTime = searchParams.get("projectionTime") || "";
-  const selectedDate = searchParams.get("date") || "";
-  const sizeFromUrl = parseInt(
-    searchParams.get("size") || `${INITIAL_PAGE_SIZE}`,
-    10
-  );
+  const selectedDate = searchParams.get("date") || today;  
+  const sizeFromUrl = parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10);
+  
   const [size, setSize] = useState(sizeFromUrl);
 
   const { data: venuesData } = useAllVenues();
@@ -47,12 +47,12 @@ const CurrentlyShowing = () => {
     setSearchParams((prevParams) => {
       const newParams = new URLSearchParams(prevParams);
       newParams.set("size", size.toString());
+      newParams.set("date", selectedDate);  
       if (selectedTitle) newParams.set("title", selectedTitle);
       if (selectedCity) newParams.set("city", selectedCity);
       if (selectedVenue) newParams.set("cinema", selectedVenue);
       if (selectedGenre) newParams.set("genres", selectedGenre);
-      if (selectedProjectionTime)
-        newParams.set("projectionTime", selectedProjectionTime);
+      if (selectedProjectionTime) newParams.set("projectionTime", selectedProjectionTime);
       return newParams;
     });
   }, [
@@ -62,6 +62,7 @@ const CurrentlyShowing = () => {
     selectedVenue,
     selectedGenre,
     selectedProjectionTime,
+    selectedDate,
     setSearchParams,
   ]);
 
@@ -71,9 +72,7 @@ const CurrentlyShowing = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const searchInput = (e.target as HTMLFormElement).querySelector(
-      "input"
-    ) as HTMLInputElement;
+    const searchInput = (e.target as HTMLFormElement).querySelector("input") as HTMLInputElement;
     const newTitle = searchInput.value;
     setSize(INITIAL_PAGE_SIZE);
     setSearchParams((prevParams) => {
@@ -137,12 +136,8 @@ const CurrentlyShowing = () => {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading movies.</p>;
 
-  const uniqueCities = Array.from(
-    new Set(venuesData?.map((venue) => venue.city))
-  );
-  const uniqueProjectionTimes = Array.from(
-    new Set(projectionTimesData?.map((projection) => projection.time))
-  );
+  const uniqueCities = Array.from(new Set(venuesData?.map((venue) => venue.city)));
+  const uniqueProjectionTimes = Array.from(new Set(projectionTimesData?.map((projection) => projection.time)));
 
   return (
     <div className={style.container}>
@@ -157,7 +152,7 @@ const CurrentlyShowing = () => {
       </div>
       <div className={style.filters}>
         <Filter
-          title={"Cities"}
+          title="Cities"
           data={uniqueCities}
           onSelect={handleCityFilter}
           selectedValue={selectedCity}
