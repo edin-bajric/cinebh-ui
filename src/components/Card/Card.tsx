@@ -1,5 +1,6 @@
 import style from "./card.module.scss";
 import { Movie, Venue } from "../../utils/types";
+import { format, isThisWeek } from "date-fns";
 
 type Props = {
   type: "movie" | "venue";
@@ -17,10 +18,22 @@ const Card: React.FC<Props> = ({ type, data, page }) => {
     ? (data as Movie).images.find((img) => img.isCoverImage)?.url
     : (data as Venue).imageURL;
 
+  const getFormattedStartDate = (startDate: string) => {
+    const date = new Date(startDate);
+    if (isThisWeek(date)) {
+      return `Opens ${format(date, "EEEE")}`;
+    }
+    return format(date, "EEE, MMM d, yyyy");
+  };
+
   return (
     <div className={style.container}>
       <div className={style.image_container}>
-        {isUpcoming && !isVenue && <div className={style.upcoming}>Upcoming</div>}
+        {isUpcoming && isMovie && (
+          <div className={style.upcoming}>
+            {getFormattedStartDate((data as Movie).startDate)}
+          </div>
+        )}
         <img className={style.image} src={imageUrl} alt={title} />
       </div>
       <p className={style.title}>{title}</p>
