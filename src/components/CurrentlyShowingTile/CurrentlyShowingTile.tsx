@@ -14,6 +14,7 @@ const CurrentlyShowingTile: React.FC<CurrentlyShowingTileProps> = ({
   totalItems,
 }) => {
   const isLoadMoreDisabled = movies.length >= totalItems;
+  const isNoMovies = movies.length === 0;
 
   return (
     <div className={style.container}>
@@ -25,9 +26,7 @@ const CurrentlyShowingTile: React.FC<CurrentlyShowingTileProps> = ({
           />
         ))}
         <div
-          className={`${style.load_more} ${
-            isLoadMoreDisabled ? style.disabled : ""
-          }`}
+          className={`${style.load_more} ${isLoadMoreDisabled ? style.disabled : ''} ${isNoMovies ? style.hidden : ''}`}
           onClick={!isLoadMoreDisabled ? onLoadMore : undefined}
         >
           <p className={style.load_more_text}>Load more</p>

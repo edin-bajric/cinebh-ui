@@ -10,6 +10,7 @@ import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
 import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
 import useProjectionTimes from "../../hooks/useProjectionTimes";
+import CurrentlyShowingAndUpcomingNotFound from "../CurrentlyShowingAndUpcomingNotFound";
 
 const INITIAL_PAGE_SIZE = 2;
 const PAGE_INCREMENT = 2;
@@ -188,6 +189,9 @@ const CurrentlyShowing = () => {
         </p>
       </div>
       <div className={style.showing}>
+        {data?.content.length === 0 && (
+          <CurrentlyShowingAndUpcomingNotFound type="currently-showing" />
+        )}
         <CurrentlyShowingTile
           movies={data?.content || []}
           onLoadMore={handleLoadMore}
