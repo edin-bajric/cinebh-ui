@@ -2,15 +2,40 @@ import { useQuery } from "react-query";
 import { MovieService } from "../services";
 import { Movie, PaginatedResponse } from "../utils/types";
 
-const useUpcoming = (page: number, size: number) => {
+const useUpcoming = (
+  page: number,
+  size: number,
+  title: string,
+  city: string,
+  venue: string,
+  genre: string,
+  startDate: string,
+  endDate: string
+
+) => {
   return useQuery<PaginatedResponse<Movie>>(
-    ["moviesUpcoming", page, size],
+    [
+      "moviesUpcoming",
+      page,
+      size,
+      title,
+      city,
+      venue,
+      genre,
+      startDate,
+      endDate
+    ],
     async () => {
-      const response: PaginatedResponse<Movie> = await MovieService.getUpcoming(
+      return await MovieService.getUpcoming(
         page,
-        size
+        size,
+        title,
+        city,
+        venue,
+        genre,
+        startDate,
+        endDate
       );
-      return response;
     }
   );
 };
