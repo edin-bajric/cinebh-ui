@@ -18,16 +18,19 @@ const PAGE_DEFAULT = 0;
 
 const CurrentlyShowing = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   const today = new Date().toISOString().split("T")[0];
   const selectedTitle = searchParams.get("title") || "";
   const selectedCity = searchParams.get("city") || "";
   const selectedVenue = searchParams.get("cinema") || "";
   const selectedGenre = searchParams.get("genres") || "";
   const selectedProjectionTime = searchParams.get("projectionTime") || "";
-  const selectedDate = searchParams.get("date") || today;  
-  const sizeFromUrl = parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10);
-  
+  const selectedDate = searchParams.get("date") || today;
+  const sizeFromUrl = parseInt(
+    searchParams.get("size") || `${INITIAL_PAGE_SIZE}`,
+    10
+  );
+
   const [size, setSize] = useState(sizeFromUrl);
 
   const { data: venuesData } = useAllVenues();
@@ -48,12 +51,13 @@ const CurrentlyShowing = () => {
     setSearchParams((prevParams) => {
       const newParams = new URLSearchParams(prevParams);
       newParams.set("size", size.toString());
-      newParams.set("date", selectedDate);  
+      newParams.set("date", selectedDate);
       if (selectedTitle) newParams.set("title", selectedTitle);
       if (selectedCity) newParams.set("city", selectedCity);
       if (selectedVenue) newParams.set("cinema", selectedVenue);
       if (selectedGenre) newParams.set("genres", selectedGenre);
-      if (selectedProjectionTime) newParams.set("projectionTime", selectedProjectionTime);
+      if (selectedProjectionTime)
+        newParams.set("projectionTime", selectedProjectionTime);
       return newParams;
     });
   }, [
@@ -73,7 +77,9 @@ const CurrentlyShowing = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const searchInput = (e.target as HTMLFormElement).querySelector("input") as HTMLInputElement;
+    const searchInput = (e.target as HTMLFormElement).querySelector(
+      "input"
+    ) as HTMLInputElement;
     const newTitle = searchInput.value;
     setSize(INITIAL_PAGE_SIZE);
     setSearchParams((prevParams) => {
@@ -84,52 +90,17 @@ const CurrentlyShowing = () => {
     });
   };
 
-  const handleCityFilter = (selectedCity: string) => {
+  const handleFilterChange = (filterType: string, value: string) => {
     setSize(INITIAL_PAGE_SIZE);
     setSearchParams((prevParams) => {
       const newParams = new URLSearchParams(prevParams);
       newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      newParams.set("city", selectedCity);
-      return newParams;
-    });
-  };
-
-  const handleVenueFilter = (selectedVenue: string) => {
-    setSize(INITIAL_PAGE_SIZE);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      newParams.set("cinema", selectedVenue);
-      return newParams;
-    });
-  };
-
-  const handleGenreFilter = (selectedGenre: string) => {
-    setSize(INITIAL_PAGE_SIZE);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      newParams.set("genres", selectedGenre);
-      return newParams;
-    });
-  };
-
-  const handleProjectionTimeFilter = (selectedProjectionTime: string) => {
-    setSize(INITIAL_PAGE_SIZE);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      newParams.set("projectionTime", selectedProjectionTime);
-      return newParams;
-    });
-  };
-
-  const handleDateSelect = (date: string) => {
-    setSize(INITIAL_PAGE_SIZE);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      newParams.set("date", date);
+      if (filterType === "city") newParams.set("city", value);
+      if (filterType === "cinema") newParams.set("cinema", value);
+      if (filterType === "genres") newParams.set("genres", value);
+      if (filterType === "projectionTime")
+        newParams.set("projectionTime", value);
+      if (filterType === "date") newParams.set("date", value);
       return newParams;
     });
   };
@@ -137,8 +108,12 @@ const CurrentlyShowing = () => {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading movies.</p>;
 
-  const uniqueCities = Array.from(new Set(venuesData?.map((venue) => venue.city)));
-  const uniqueProjectionTimes = Array.from(new Set(projectionTimesData?.map((projection) => projection.time)));
+  const uniqueCities = Array.from(
+    new Set(venuesData?.map((venue) => venue.city))
+  );
+  const uniqueProjectionTimes = Array.from(
+    new Set(projectionTimesData?.map((projection) => projection.time))
+  );
 
   return (
     <div className={style.container}>
@@ -155,31 +130,31 @@ const CurrentlyShowing = () => {
         <Filter
           title="Cities"
           data={uniqueCities}
-          onSelect={handleCityFilter}
+          onSelect={(value) => handleFilterChange("city", value)}
           selectedValue={selectedCity}
         />
         <Filter
           title="Venues"
           data={venuesData?.map((venue) => venue.name) || []}
-          onSelect={handleVenueFilter}
+          onSelect={(value) => handleFilterChange("cinema", value)}
           selectedValue={selectedVenue}
         />
         <Filter
           title="Genres"
           data={genresData?.map((genre) => genre.name) || []}
-          onSelect={handleGenreFilter}
+          onSelect={(value) => handleFilterChange("genres", value)}
           selectedValue={selectedGenre}
         />
         <Filter
           title="Projection Times"
           data={uniqueProjectionTimes}
-          onSelect={handleProjectionTimeFilter}
+          onSelect={(value) => handleFilterChange("projectionTime", value)}
           selectedValue={selectedProjectionTime}
         />
       </div>
       <div className={style.dates}>
         <CurrentlyShowingDateTile
-          onDateSelect={handleDateSelect}
+          onDateSelect={(value) => handleFilterChange("date", value)}
           selectedDate={selectedDate}
         />
       </div>
