@@ -4,11 +4,13 @@ import { Movie, Venue } from "../../utils/types";
 type Props = {
   type: "movie" | "venue";
   data: Movie | Venue;
+  page: "home" | "upcoming";
 };
 
-const Card: React.FC<Props> = ({ type, data }) => {
+const Card: React.FC<Props> = ({ type, data, page }) => {
   const isMovie = type === "movie";
   const isVenue = type === "venue";
+  const isUpcoming = page === "upcoming";
 
   const title = isMovie ? (data as Movie).title : (data as Venue).name;
   const imageUrl = isMovie
@@ -18,6 +20,7 @@ const Card: React.FC<Props> = ({ type, data }) => {
   return (
     <div className={style.container}>
       <div className={style.image_container}>
+        {isUpcoming && !isVenue && <div className={style.upcoming}>Upcoming</div>}
         <img className={style.image} src={imageUrl} alt={title} />
       </div>
       <p className={style.title}>{title}</p>
