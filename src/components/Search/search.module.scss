@@ -2,7 +2,7 @@
 
 .container {
   width: 100%;
-  padding-top: 24px;;
+  padding-top: 24px;
 }
 
 .search {
@@ -12,8 +12,12 @@
   border: 1px solid variables.$gray;
   border-radius: 8px;
   box-shadow: 0px 1px 2px -2px rgba(52, 64, 84, 0.08);
-  box-shadow: 0px 1px 3px -1px rgba(52, 64, 84, 0.08);
   background-color: white;
+  transition: border-color 0.2s;
+
+  &.active {
+    border: 2px solid variables.$primary_color; 
+  }
 }
 
 .search form {
@@ -59,4 +63,9 @@
   padding: 1px;
   margin-right: 4px;
   vertical-align: middle;
+  transition: color 0.2s;
+
+  &.iconActive {
+    color: variables.$primary_color; 
+  }
 }

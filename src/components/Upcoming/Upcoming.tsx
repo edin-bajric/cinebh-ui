@@ -4,6 +4,7 @@ import style from "./upcoming.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
 import Filter from "../Filter";
+import DateRangeFilter from "../FilterDateRange";
 import UpcomingTile from "../UpcomingTile";
 import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
@@ -17,13 +18,12 @@ const PAGE_DEFAULT = 0;
 const Upcoming = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const today = new Date().toISOString().split("T")[0];
   const selectedTitle = searchParams.get("title") || "";
   const selectedCity = searchParams.get("city") || "";
   const selectedVenue = searchParams.get("cinema") || "";
   const selectedGenre = searchParams.get("genres") || "";
-  const selectedStartDate = searchParams.get("startDate") || today;
-  const selectedEndDate = searchParams.get("endDate") || today;
+  const selectedStartDate = searchParams.get("startDate") || "";
+  const selectedEndDate = searchParams.get("endDate") || "";
   const sizeFromUrl = parseInt(
     searchParams.get("size") || `${INITIAL_PAGE_SIZE}`,
     10
@@ -100,19 +100,33 @@ const Upcoming = () => {
     });
   };
 
+  const handleDateRangeSelect = (startDate: Date, endDate: Date) => {
+    const formatDate = (date: Date) => {
+      const adjustedDate = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+      return adjustedDate.toISOString().split("T")[0];
+    };
+
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("startDate", formatDate(startDate));
+      newParams.set("endDate", formatDate(endDate));
+      return newParams;
+    });
+  };
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading movies.</p>;
 
   const uniqueCities = Array.from(
     new Set(venuesData?.map((venue) => venue.city))
   );
-  <div className={style.search}>
-        <Search onSearch={handleSearch} title={selectedTitle} />
-      </div>
+
   return (
     <div className={style.container}>
       <div className={style.title}>
-      <CurrentlyShowingAndUpcomingTitle
+        <CurrentlyShowingAndUpcomingTitle
           type="upcoming"
           totalItems={data?.totalElements || 0}
         />
@@ -121,7 +135,7 @@ const Upcoming = () => {
         <Search onSearch={handleSearch} title={selectedTitle} />
       </div>
       <div className={style.filters}>
-      <Filter
+        <Filter
           title="Cities"
           data={uniqueCities}
           onSelect={(value) => handleFilterChange("city", value)}
@@ -139,15 +153,24 @@ const Upcoming = () => {
           onSelect={(value) => handleFilterChange("genres", value)}
           selectedValue={selectedGenre}
         />
+        <DateRangeFilter
+          onSelect={handleDateRangeSelect}
+          selectedStartDate={selectedStartDate || undefined}
+          selectedEndDate={selectedEndDate || undefined}
+        />
       </div>
       <div className={style.upcoming}>
-      {data?.content.length === 0 && (
+        {data?.content.length === 0 && (
           <CurrentlyShowingAndUpcomingNotFound type="upcoming" />
         )}
-        <UpcomingTile movies={data?.content || []} onLoadMore={handleLoadMore} totalItems={data?.totalElements || 0}/>
+        <UpcomingTile
+          movies={data?.content || []}
+          onLoadMore={handleLoadMore}
+          totalItems={data?.totalElements || 0}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Upcoming
+export default Upcoming;
