@@ -4,7 +4,7 @@ import style from "./upcoming.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
 import Filter from "../Filter";
-import DateRangeFilter from "../FilterDateRange";
+import FilterDateRange from "../FilterDateRange";
 import UpcomingTile from "../UpcomingTile";
 import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
@@ -153,7 +153,7 @@ const Upcoming = () => {
           onSelect={(value) => handleFilterChange("genres", value)}
           selectedValue={selectedGenre}
         />
-        <DateRangeFilter
+        <FilterDateRange
           onSelect={handleDateRangeSelect}
           selectedStartDate={selectedStartDate || undefined}
           selectedEndDate={selectedEndDate || undefined}
