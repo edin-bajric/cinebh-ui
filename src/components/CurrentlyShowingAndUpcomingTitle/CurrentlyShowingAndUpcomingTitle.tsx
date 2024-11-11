@@ -11,10 +11,9 @@ const CurrentlyShowingAndUpcomingTitle: React.FC<Props> = ({
 }) => {
   return (
     <div className={style.container}>
-      <p className={style.title}>
-        {type === "currentlyShowing" ? "Currently Showing" : "Upcoming Movies"}{" "}
-        ({totalItems})
-      </p>
+        <p className={style.title}>
+            {type === "currentlyShowing" ? "Currently Showing" : "Upcoming Movies"} ({totalItems})
+        </p>
     </div>
   );
 };
