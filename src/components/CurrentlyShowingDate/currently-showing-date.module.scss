@@ -18,6 +18,7 @@
   justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
+  transition: background-color 0.2s, border-radius 0.2s;
 }
 
 .date {
@@ -26,6 +27,7 @@
   line-height: 24px;
   letter-spacing: 0.005em;
   color: variables.$secondary_color;
+  transition: color 0.2s;
 }
 
 .day {
