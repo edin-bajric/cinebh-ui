@@ -22,6 +22,12 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
   const [endDate, setEndDate] = useState<Date | undefined>(
     selectedEndDate ? new Date(selectedEndDate) : undefined
   );
+  const [startDateInput, setStartDateInput] = useState(
+    startDate ? startDate.toLocaleDateString() : ""
+  );
+  const [endDateInput, setEndDateInput] = useState(
+    endDate ? endDate.toLocaleDateString() : ""
+  );
   const [showCalendar, setShowCalendar] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const calendarRef = useRef(null);
@@ -30,11 +36,15 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
     const [start, end] = dates;
     setStartDate(start || undefined);
     setEndDate(end || undefined);
+    setStartDateInput(start ? start.toLocaleDateString() : "");
+    setEndDateInput(end ? end.toLocaleDateString() : "");
   };
 
   const handleCancel = () => {
     setStartDate(selectedStartDate ? new Date(selectedStartDate) : undefined);
     setEndDate(selectedEndDate ? new Date(selectedEndDate) : undefined);
+    setStartDateInput(startDate ? startDate.toLocaleDateString() : "");
+    setEndDateInput(endDate ? endDate.toLocaleDateString() : "");
     setShowCalendar(false);
     setIsActive(false);
   };
@@ -52,10 +62,30 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
     setIsActive(!isActive);
   };
 
-  const formattedDateRange =
-    startDate && endDate
-      ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
-      : "Date Range";
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    type: "start" | "end"
+  ) => {
+    const value = event.target.value;
+    if (type === "start") setStartDateInput(value);
+    if (type === "end") setEndDateInput(value);
+  };
+
+  const handleInputBlur = (type: "start" | "end") => {
+    const value = type === "start" ? startDateInput : endDateInput;
+    const [day, month, year] = value.split("/").map(Number);
+    const date = new Date(year, month - 1, day);
+    
+    if (
+      !isNaN(date.getTime()) &&
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day
+    ) {
+      if (type === "start") setStartDate(date);
+      if (type === "end") setEndDate(date);
+    }
+  };
 
   return (
     <div className={style.container}>
@@ -69,10 +99,12 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
           />
           <p
             className={`${style.title} ${
-              formattedDateRange !== "Date Range" ? style.selected : ""
+              startDate && endDate ? style.selected : ""
             }`}
           >
-            {formattedDateRange}
+            {startDate && endDate
+              ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
+              : "Date Range"}
           </p>
         </div>
         <FaChevronDown
@@ -87,15 +119,25 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
           <div className={style.date_container}>
             <div className={style.date}>
               <p className={style.date_name}>Start Date</p>
-              <p className={style.date_value}>
-                {startDate?.toLocaleDateString()}
-              </p>
+              <input
+                type="text"
+                className={style.date_value}
+                placeholder="DD/MM/YYYY"
+                value={startDateInput}
+                onChange={(e) => handleInputChange(e, "start")}
+                onBlur={() => handleInputBlur("start")}
+              />
             </div>
             <div className={style.date}>
               <p className={style.date_name}>End Date</p>
-              <p className={style.date_value}>
-                {endDate?.toLocaleDateString()}
-              </p>
+              <input
+                type="text"
+                className={style.date_value}
+                placeholder="DD/MM/YYYY"
+                value={endDateInput}
+                onChange={(e) => handleInputChange(e, "end")}
+                onBlur={() => handleInputBlur("end")}
+              />
             </div>
           </div>
           <DatePicker
@@ -108,7 +150,6 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
             className={style.datepicker}
             formatWeekDay={(nameOfDay) => nameOfDay.slice(0, 3)}
             minDate={new Date()}
-            renderDayContents={(day) => <span>{day}</span>}
           />
           <div className={style.button_container}>
             <Button
