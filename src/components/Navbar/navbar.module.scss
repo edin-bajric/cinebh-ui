@@ -1,6 +1,8 @@
 @use "../../assets/css/variables.scss";
 
 .container {
+    position: fixed;
+    z-index: 1000;
     width: 100%;
     max-width: 100%;
     height: 80px;
