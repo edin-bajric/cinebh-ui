@@ -1,5 +1,39 @@
 @charset "UTF-8";
 
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+  border-radius: 50% !important;
+  background-color: rgba(253, 227, 227, 1) !important;
+  color: rgba(29, 41, 57, 1) !important;
+  align-items: center;
+}
+
+.react-datepicker__day--in-range {
+  border-radius: 0 !important;
+  background-color: rgba(29, 41, 57, 1)2;
+  margin: 0 !important;
+  width: 32.5px !important;
+  padding: 2px !important;
+}
+
+.react-datepicker__day--in-selecting-range {
+  background-color: rgba(178, 34, 34, 0.9) !important;
+  margin: 0 !important;
+  width: 32.5px !important;
+  padding: 2px !important;
+  color: white !important;
+  border-radius: 50% !important;
+  align-items: center;
+}
+
 .react-datepicker__day--range-end,
 .react-datepicker__day--range-start {
   background-color: rgba(178, 34, 34, 1) !important;
