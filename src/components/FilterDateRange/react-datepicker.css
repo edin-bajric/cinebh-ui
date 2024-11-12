@@ -285,6 +285,7 @@ h2.react-datepicker__current-month {
   .react-datepicker-time__input-container
   .react-datepicker-time__input
   input[type="time"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 .react-datepicker__input-time-container
