@@ -8,7 +8,7 @@ interface PriceBoxProps {
   price: string;
   features: string[];
   buttonText: string;
-  variant: "solid" | "outlined",
+  variant: "solid" | "outlined";
   containerStyle?: string;
 }
 
@@ -34,10 +34,7 @@ const PriceBox: React.FC<PriceBoxProps> = ({
           </p>
         ))}
         <div className={style.button_container}>
-          <Button
-            text={buttonText}
-            variant={variant}
-          />
+          <Button text={buttonText} variant={variant} />
         </div>
       </div>
     </div>

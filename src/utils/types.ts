@@ -59,4 +59,4 @@ export type Genre = {
 export type ProjectionTime = {
   id: string;
   time: string;
-}
+};

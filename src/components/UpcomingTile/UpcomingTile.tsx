@@ -22,14 +22,15 @@ const UpcomingTile: React.FC<UpcomingTileProps> = ({
         {movies.map((item, index) => (
           <Card key={index} type="movie" data={item} page="upcoming" />
         ))}
-        
       </div>
       <div
-          className={`${style.load_more} ${isLoadMoreDisabled ? style.disabled : ''} ${isNoMovies ? style.hidden : ''}`}
-          onClick={!isLoadMoreDisabled ? onLoadMore : undefined}
-        >
-          <p className={style.load_more_text}>Load more</p>
-        </div>
+        className={`${style.load_more} ${
+          isLoadMoreDisabled ? style.disabled : ""
+        } ${isNoMovies ? style.hidden : ""}`}
+        onClick={!isLoadMoreDisabled ? onLoadMore : undefined}
+      >
+        <p className={style.load_more_text}>Load more</p>
+      </div>
     </div>
   );
 };

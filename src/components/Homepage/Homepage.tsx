@@ -11,7 +11,8 @@ const DEFAULT_PAGE = 0;
 const DEFAULT_SIZE = 4;
 
 const Homepage = () => {
-  const [currentlyShowingPage, setCurrentlyShowingPage] = useState(DEFAULT_PAGE);
+  const [currentlyShowingPage, setCurrentlyShowingPage] =
+    useState(DEFAULT_PAGE);
   const [upcomingPage, setUpcomingPage] = useState(DEFAULT_PAGE);
   const [venuesPage, setVenuesPage] = useState(DEFAULT_PAGE);
 
@@ -56,7 +57,7 @@ const Homepage = () => {
         isError={isErrorUpcoming}
         totalItems={upcoming?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
-        onPageChange={setUpcomingPage} 
+        onPageChange={setUpcomingPage}
         linkTo="/upcoming"
       />
       <HomepageTile

@@ -11,9 +11,7 @@ const About = () => {
           <p className={style.text}>Cinema.</p>
         </div>
         <div className={style.right_content}>
-          <p className={style.about_us}>
-            About Us
-          </p>
+          <p className={style.about_us}>About Us</p>
           <p className={style.paragraph}>
             Welcome to Cinebh, where movie magic comes to life.{" "}
           </p>

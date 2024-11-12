@@ -41,17 +41,18 @@ const CarouselComp: React.FC = () => {
 
             return (
               <div key={index} className={style.item}>
-                <img src={coverImage} alt={movie.title} className={style.movie_image} />
+                <img
+                  src={coverImage}
+                  alt={movie.title}
+                  className={style.movie_image}
+                />
                 <div className={style.overlay}>
                   <div className={style.genre}>
                     <p>{genre}</p>
                   </div>
                   <h2 className={style.title}>{movie.title}</h2>
                   <p className={style.description}>{shortDescription}</p>
-                  <Button
-                    variant="solid"
-                    text="Buy Ticket"
-                  />
+                  <Button variant="solid" text="Buy Ticket" />
                 </div>
               </div>
             );

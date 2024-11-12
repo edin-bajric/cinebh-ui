@@ -52,9 +52,10 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
     setIsActive(!isActive);
   };
 
-  const formattedDateRange = startDate && endDate
-    ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
-    : "Date Range";
+  const formattedDateRange =
+    startDate && endDate
+      ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
+      : "Date Range";
 
   return (
     <div className={style.container}>
@@ -63,12 +64,22 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
         onClick={toggleCalendar}
       >
         <div className={style.filter}>
-          <FaCalendarAlt className={`${style.icon} ${isActive ? style.icon_active : ""}`} />
-          <p className={`${style.title} ${formattedDateRange !== "Date Range" ? style.selected : ""}`}>
+          <FaCalendarAlt
+            className={`${style.icon} ${isActive ? style.icon_active : ""}`}
+          />
+          <p
+            className={`${style.title} ${
+              formattedDateRange !== "Date Range" ? style.selected : ""
+            }`}
+          >
             {formattedDateRange}
           </p>
         </div>
-        <FaChevronDown className={`${style.dropdown_icon} ${isActive ? style.icon_active : ""}`} />
+        <FaChevronDown
+          className={`${style.dropdown_icon} ${
+            isActive ? style.icon_active : ""
+          }`}
+        />
       </div>
 
       {showCalendar && (
@@ -76,11 +87,15 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
           <div className={style.date_container}>
             <div className={style.date}>
               <p className={style.date_name}>Start Date</p>
-              <p className={style.date_value}>{startDate?.toLocaleDateString()}</p>
+              <p className={style.date_value}>
+                {startDate?.toLocaleDateString()}
+              </p>
             </div>
             <div className={style.date}>
               <p className={style.date_name}>End Date</p>
-              <p className={style.date_value}>{endDate?.toLocaleDateString()}</p>
+              <p className={style.date_value}>
+                {endDate?.toLocaleDateString()}
+              </p>
             </div>
           </div>
           <DatePicker
@@ -96,8 +111,18 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
             renderDayContents={(day) => <span>{day}</span>}
           />
           <div className={style.button_container}>
-            <Button text="Cancel" variant="outlined" onClick={handleCancel} className={style.button} />
-            <Button text="Apply" variant="solid" onClick={handleApply} className={style.button} />
+            <Button
+              text="Cancel"
+              variant="outlined"
+              onClick={handleCancel}
+              className={style.button}
+            />
+            <Button
+              text="Apply"
+              variant="solid"
+              onClick={handleApply}
+              className={style.button}
+            />
           </div>
         </div>
       )}

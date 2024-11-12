@@ -1,9 +1,7 @@
-import Upcoming from "../components/Upcoming"
+import Upcoming from "../components/Upcoming";
 
 const UpcomingPage = () => {
-  return (
-    <Upcoming />
-  )
-}
+  return <Upcoming />;
+};
 
-export default UpcomingPage
+export default UpcomingPage;

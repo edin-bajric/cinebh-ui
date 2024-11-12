@@ -1,9 +1,7 @@
-import CurrentlyShowing from "../components/CurrentlyShowing"
+import CurrentlyShowing from "../components/CurrentlyShowing";
 
 const CurrentlyShowingPage = () => {
-  return (
-    <CurrentlyShowing />
-  )
-}
+  return <CurrentlyShowing />;
+};
 
-export default CurrentlyShowingPage
+export default CurrentlyShowingPage;
