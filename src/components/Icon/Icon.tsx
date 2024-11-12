@@ -4,7 +4,7 @@ import style from "./icon.module.css";
 
 type IconProps = {
   to?: string;
-  src?: string; 
+  src?: string;
   alt?: string;
   className?: string;
 };
@@ -12,7 +12,7 @@ type IconProps = {
 const Icon: React.FC<IconProps> = ({
   to = "/",
   src = logo,
-  alt = "Logo", 
+  alt = "Logo",
   className = "",
 }) => {
   return (

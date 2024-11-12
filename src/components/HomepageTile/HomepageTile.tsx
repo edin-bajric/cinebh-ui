@@ -62,11 +62,13 @@ const HomepageTile: React.FC<Props> = ({
     <div className={style.container}>
       <div className={style.header}>
         <p className={style.title}>{title}</p>
-        <Link to={linkTo} className={style.see_all}>See All</Link>
+        <Link to={linkTo} className={style.see_all}>
+          See All
+        </Link>
       </div>
       <div className={style.content}>
         {data.map((item, index) => (
-          <Card key={index} type={type} data={item} page="home"/>
+          <Card key={index} type={type} data={item} page="home" />
         ))}
       </div>
       <div className={style.pagination}>

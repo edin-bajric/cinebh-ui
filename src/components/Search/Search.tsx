@@ -19,7 +19,9 @@ const Search: React.FC<SearchProps> = ({ onSearch, title }) => {
         <form onSubmit={onSearch}>
           <button type="submit">
             <FaSearch
-              className={`${style.magnifying_glass} ${isActive ? style.iconActive : ""}`}
+              className={`${style.magnifying_glass} ${
+                isActive ? style.iconActive : ""
+              }`}
             />
           </button>
           <input

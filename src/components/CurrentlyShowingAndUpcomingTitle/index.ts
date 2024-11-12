@@ -1,1 +1,1 @@
-export { default } from './CurrentlyShowingAndUpcomingTitle';
+export { default } from "./CurrentlyShowingAndUpcomingTitle";

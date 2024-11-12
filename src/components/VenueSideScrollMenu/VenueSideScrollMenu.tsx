@@ -6,11 +6,7 @@ import Error from "../Error";
 const REPEAT_COUNT = 6;
 
 const VenueSideScrollMenu = () => {
-  const {
-    data: venues = [],
-    isLoading,
-    isError,
-  } = useAllVenues();
+  const { data: venues = [], isLoading, isError } = useAllVenues();
 
   if (isLoading) {
     return <Spinner />;

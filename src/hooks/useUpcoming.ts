@@ -11,7 +11,6 @@ const useUpcoming = (
   genre: string,
   startDate: string,
   endDate: string
-
 ) => {
   return useQuery<PaginatedResponse<Movie>>(
     [
@@ -23,7 +22,7 @@ const useUpcoming = (
       venue,
       genre,
       startDate,
-      endDate
+      endDate,
     ],
     async () => {
       return await MovieService.getUpcoming(
