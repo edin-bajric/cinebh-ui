@@ -104,6 +104,10 @@
   color: variables.$dark_gray;
 
   &.title_active {
+    color: variables.$primary_color;
+  }
+
+  &.selected {
     color: variables.$secondary_color;
   }
 }
