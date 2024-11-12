@@ -17,7 +17,7 @@
   transition: border-color 0.2s;
 
   &.active {
-    border: 2px solid variables.$primary_color; 
+    border: 2px solid variables.$primary_color;
   }
 }
 
@@ -67,6 +67,6 @@
   transition: color 0.2s;
 
   &.iconActive {
-    color: variables.$primary_color; 
+    color: variables.$primary_color;
   }
 }
