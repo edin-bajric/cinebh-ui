@@ -23,12 +23,11 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
     selectedEndDate ? new Date(selectedEndDate) : undefined
   );
   const [showCalendar, setShowCalendar] = useState(false);
-  const [isActive, setIsActive] = useState(false); 
+  const [isActive, setIsActive] = useState(false);
   const calendarRef = useRef(null);
 
   const handleDateChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
-
     setStartDate(start || undefined);
     setEndDate(end || undefined);
   };
@@ -37,7 +36,7 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
     setStartDate(selectedStartDate ? new Date(selectedStartDate) : undefined);
     setEndDate(selectedEndDate ? new Date(selectedEndDate) : undefined);
     setShowCalendar(false);
-    setIsActive(false); 
+    setIsActive(false);
   };
 
   const handleApply = () => {
@@ -45,23 +44,29 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
       onSelect(startDate, endDate);
     }
     setShowCalendar(false);
-    setIsActive(false); 
+    setIsActive(false);
   };
 
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
-    setIsActive(!isActive); 
+    setIsActive(!isActive);
   };
+
+  const formattedDateRange = startDate && endDate
+    ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
+    : "Date Range";
 
   return (
     <div className={style.container}>
       <div
-        className={`${style.filter_container} ${isActive ? style.active : ""}`} 
+        className={`${style.filter_container} ${isActive ? style.active : ""}`}
         onClick={toggleCalendar}
       >
         <div className={style.filter}>
           <FaCalendarAlt className={`${style.icon} ${isActive ? style.icon_active : ""}`} />
-          <p className={`${style.title} ${isActive ? style.title_active : ""}`}>Date Range</p>
+          <p className={`${style.title} ${formattedDateRange !== "Date Range" ? style.selected : ""}`}>
+            {formattedDateRange}
+          </p>
         </div>
         <FaChevronDown className={`${style.dropdown_icon} ${isActive ? style.icon_active : ""}`} />
       </div>
