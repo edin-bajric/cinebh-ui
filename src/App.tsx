@@ -1,5 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, AboutUs, Tickets, NotFound, CurrentlyShowingPage, UpcomingPage } from "./pages";
+import {
+  Home,
+  AboutUs,
+  Tickets,
+  NotFound,
+  CurrentlyShowingPage,
+  UpcomingPage,
+} from "./pages";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import "./index.css";
@@ -8,6 +15,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <div className="navbar_offset">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -17,6 +25,7 @@ function App() {
           <Route path="/upcoming" element={<UpcomingPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </div>
       <Footer />
     </>
   );
