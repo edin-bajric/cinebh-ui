@@ -5,7 +5,7 @@ import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitl
 import Search from "../Search";
 import Filter from "../Filter";
 import CurrentlyShowingDateTile from "../CurrentlyShowingDateTile";
-import CurrentlyShowingTile from "../CurrentlyShowingTile";
+import CurrentlyShowingMovieList from "../CurrentlyShowingMovieList";
 import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
 import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
@@ -160,7 +160,7 @@ const CurrentlyShowing = () => {
         {data?.content.length === 0 && (
           <CurrentlyShowingAndUpcomingNotFound type="currently-showing" />
         )}
-        <CurrentlyShowingTile
+        <CurrentlyShowingMovieList
           movies={data?.content || []}
           onLoadMore={handleLoadMore}
           totalItems={data?.totalElements || 0}

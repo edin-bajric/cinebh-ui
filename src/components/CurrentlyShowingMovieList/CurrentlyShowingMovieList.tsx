@@ -1,14 +1,14 @@
-import style from "./currently-showing-tile.module.scss";
+import style from "./currently-showing-movie-list.module.scss";
 import CurrentlyShowingCard from "../CurrentlyShowingCard";
 import { Movie } from "../../utils/types";
 
-type CurrentlyShowingTileProps = {
+type CurrentlyShowingMovieListProps = {
   movies: Movie[];
   onLoadMore: () => void;
   totalItems: number;
 };
 
-const CurrentlyShowingTile: React.FC<CurrentlyShowingTileProps> = ({
+const CurrentlyShowingMovieList: React.FC<CurrentlyShowingMovieListProps> = ({
   movies,
   onLoadMore,
   totalItems,
@@ -36,4 +36,4 @@ const CurrentlyShowingTile: React.FC<CurrentlyShowingTileProps> = ({
   );
 };
 
-export default CurrentlyShowingTile;
+export default CurrentlyShowingMovieList;
