@@ -11,8 +11,8 @@
   align-items: center;
   border: 1px solid variables.$gray;
   border-radius: 8px;
-  box-shadow: 0px 1px 2px -2px rgba(52, 64, 84, 0.08);
-  box-shadow: 0px 1px 3px -1px rgba(52, 64, 84, 0.08);
+  box-shadow: 0px 1px 2px -2px variables.$shadow;
+  box-shadow: 0px 1px 3px -1px variables.$shadow;
   background-color: white;
 }
 
