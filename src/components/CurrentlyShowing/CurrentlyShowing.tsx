@@ -26,12 +26,8 @@ const CurrentlyShowing = () => {
   const selectedGenre = searchParams.get("genres") || "";
   const selectedProjectionTime = searchParams.get("projectionTime") || "";
   const selectedDate = searchParams.get("date") || today;
-  const sizeFromUrl = parseInt(
-    searchParams.get("size") || `${INITIAL_PAGE_SIZE}`,
-    10
-  );
 
-  const [size, setSize] = useState(sizeFromUrl);
+  const [size, setSize] = useState(parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10));
 
   const { data: venuesData } = useAllVenues();
   const { data: genresData } = useGenres();
