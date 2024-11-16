@@ -1,7 +1,7 @@
-import CurrentlyShowingDate from "../CurrentlyShowingDate";
-import style from "./currently-showing-date-tile.module.scss";
+import DateBox from "../DateBox";
+import style from "./date-list.module.scss";
 
-interface CurrentlyShowingDateTileProps {
+interface DateLIstProps {
   onDateSelect: (selectedDate: string) => void;
   selectedDate: string;
 }
@@ -28,7 +28,7 @@ const generateDateArray = () => {
   return dates;
 };
 
-const CurrentlyShowingDateTile: React.FC<CurrentlyShowingDateTileProps> = ({
+const DateList: React.FC<DateLIstProps> = ({
   onDateSelect,
   selectedDate,
 }) => {
@@ -37,7 +37,7 @@ const CurrentlyShowingDateTile: React.FC<CurrentlyShowingDateTileProps> = ({
   return (
     <div className={style.container}>
       {dates.map((dateObj, index) => (
-        <CurrentlyShowingDate
+        <DateBox
           key={index}
           date={dateObj.date}
           day={dateObj.day}
@@ -49,4 +49,4 @@ const CurrentlyShowingDateTile: React.FC<CurrentlyShowingDateTileProps> = ({
   );
 };
 
-export default CurrentlyShowingDateTile;
+export default DateList;

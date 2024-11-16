@@ -4,8 +4,8 @@ import style from "./currently-showing.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
 import SelectDropdown from "../SelectDropdown";
-import CurrentlyShowingDateTile from "../CurrentlyShowingDateTile";
-import CurrentlyShowingMovieList from "../CurrentlyShowingMovieList";
+import DateList from "../DateList";
+import CurrentlyShowingMovieList from "./CurrentlyShowingMovieList";
 import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
 import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
@@ -146,7 +146,7 @@ const CurrentlyShowing = () => {
         />
       </div>
       <div className={style.dates}>
-        <CurrentlyShowingDateTile
+        <DateList
           onDateSelect={(value) => handleFilterChange("date", value)}
           selectedDate={selectedDate}
         />

@@ -1,13 +1,13 @@
-import style from "./currently-showing-date.module.scss";
+import style from "./date-box.module.scss";
 
-interface CurrentlyShowingDateProps {
+interface DateBoxProps {
   date: string;
   day: string;
   isSelected: boolean;
   onSelect: () => void;
 }
 
-const CurrentlyShowingDate: React.FC<CurrentlyShowingDateProps> = ({
+const DateBox: React.FC<DateBoxProps> = ({
   date,
   day,
   isSelected,
@@ -26,4 +26,4 @@ const CurrentlyShowingDate: React.FC<CurrentlyShowingDateProps> = ({
   );
 };
 
-export default CurrentlyShowingDate;
+export default DateBox;

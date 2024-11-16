@@ -1,5 +1,5 @@
 import style from "./currently-showing-card.module.scss";
-import { Movie } from "../../utils/types";
+import { Movie } from "../../../utils/types";
 
 type CurrentlyShowingCardProps = {
   movie: Movie;

@@ -1,6 +1,6 @@
 import style from "./currently-showing-movie-list.module.scss";
 import CurrentlyShowingCard from "../CurrentlyShowingCard";
-import { Movie } from "../../utils/types";
+import { Movie } from "../../../utils/types";
 
 type CurrentlyShowingMovieListProps = {
   movies: Movie[];
