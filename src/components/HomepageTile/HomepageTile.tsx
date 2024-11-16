@@ -50,6 +50,10 @@ const HomepageTile: React.FC<Props> = ({
 
   const itemsToShow = end - start + 1;
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -62,7 +66,7 @@ const HomepageTile: React.FC<Props> = ({
     <div className={style.container}>
       <div className={style.header}>
         <p className={style.title}>{title}</p>
-        <Link to={linkTo} className={style.see_all}>
+        <Link to={linkTo} className={style.see_all} onClick={scrollToTop}>
           See All
         </Link>
       </div>
