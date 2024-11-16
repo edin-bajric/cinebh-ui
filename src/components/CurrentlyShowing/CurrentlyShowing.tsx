@@ -73,10 +73,7 @@ const CurrentlyShowing = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const searchInput = (e.target as HTMLFormElement).querySelector(
-      "input"
-    ) as HTMLInputElement;
-    const newTitle = searchInput.value;
+    const newTitle = (e.target as HTMLFormElement).querySelector("input")?.value || "";
     setSize(INITIAL_PAGE_SIZE);
     setSearchParams((prevParams) => {
       const newParams = new URLSearchParams(prevParams);
