@@ -10,6 +10,7 @@ import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
 import useUpcoming from "../../hooks/useUpcoming";
 import CurrentlyShowingAndUpcomingNotFound from "../CurrentlyShowingAndUpcomingNotFound";
+import Loading from "../Loading";
 
 const INITIAL_PAGE_SIZE = 2;
 const PAGE_INCREMENT = 2;
@@ -116,7 +117,7 @@ const Upcoming = () => {
     });
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   if (error) return <p>Error loading movies.</p>;
 
   const uniqueCities = Array.from(
