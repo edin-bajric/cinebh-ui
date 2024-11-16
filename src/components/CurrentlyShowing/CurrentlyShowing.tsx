@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import style from "./currently-showing.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
-import Filter from "../Filter";
+import SelectDropdown from "../SelectDropdown";
 import CurrentlyShowingDateTile from "../CurrentlyShowingDateTile";
 import CurrentlyShowingMovieList from "../CurrentlyShowingMovieList";
 import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
@@ -120,25 +120,25 @@ const CurrentlyShowing = () => {
         <Search onSearch={handleSearch} title={selectedTitle} />
       </div>
       <div className={style.filters}>
-        <Filter
+        <SelectDropdown
           title="Cities"
           data={uniqueCities}
           onSelect={(value) => handleFilterChange("city", value)}
           selectedValue={selectedCity}
         />
-        <Filter
+        <SelectDropdown
           title="Venues"
           data={venuesData?.map((venue) => venue.name) || []}
           onSelect={(value) => handleFilterChange("cinema", value)}
           selectedValue={selectedVenue}
         />
-        <Filter
+        <SelectDropdown
           title="Genres"
           data={genresData?.map((genre) => genre.name) || []}
           onSelect={(value) => handleFilterChange("genres", value)}
           selectedValue={selectedGenre}
         />
-        <Filter
+        <SelectDropdown
           title="Projection Times"
           data={uniqueProjectionTimes}
           onSelect={(value) => handleFilterChange("projectionTime", value)}

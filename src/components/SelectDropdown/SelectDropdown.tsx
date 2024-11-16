@@ -1,14 +1,14 @@
-import style from "./filter.module.scss";
+import style from "./select-dropdown.module.scss";
 import { FaFilter, FaChevronDown } from "react-icons/fa";
 
-type FilterProps = {
+type SelectDropdownProps = {
   title: string;
   data: string[];
   onSelect: (value: string) => void;
   selectedValue: string;
 };
 
-const Filter: React.FC<FilterProps> = ({ title, data, onSelect, selectedValue }) => {
+const SelectDropdown: React.FC<SelectDropdownProps> = ({ title, data, onSelect, selectedValue }) => {
   return (
     <div className={style.container}>
       <div className={style.filter_container}>
@@ -35,4 +35,4 @@ const Filter: React.FC<FilterProps> = ({ title, data, onSelect, selectedValue })
   );
 };
 
-export default Filter;
+export default SelectDropdown;
