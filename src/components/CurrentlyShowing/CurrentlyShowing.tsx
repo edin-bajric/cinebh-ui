@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import style from "./currently-showing.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
@@ -43,59 +43,38 @@ const CurrentlyShowing = () => {
     selectedDate
   );
 
-  useEffect(() => {
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", size.toString());
-      newParams.set("date", selectedDate);
-      if (selectedTitle) newParams.set("title", selectedTitle);
-      if (selectedCity) newParams.set("city", selectedCity);
-      if (selectedVenue) newParams.set("cinema", selectedVenue);
-      if (selectedGenre) newParams.set("genres", selectedGenre);
-      if (selectedProjectionTime)
-        newParams.set("projectionTime", selectedProjectionTime);
-      return newParams;
+  const updateSearchParams = (updates: Record<string, string>) => {
+    const newParams = new URLSearchParams(searchParams);
+    Object.entries(updates).forEach(([key, value]) => {
+      newParams.set(key, value);
     });
-  }, [
-    size,
-    selectedTitle,
-    selectedCity,
-    selectedVenue,
-    selectedGenre,
-    selectedProjectionTime,
-    selectedDate,
-    setSearchParams,
-  ]);
+    setSearchParams(newParams);
+  };
 
   const handleLoadMore = () => {
-    setSize((prevSize) => prevSize + PAGE_INCREMENT);
+    const newSize = size + PAGE_INCREMENT;
+    setSize(newSize);
+    updateSearchParams({ size: newSize.toString() });
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const newTitle = (e.target as HTMLFormElement).querySelector("input")?.value || "";
     setSize(INITIAL_PAGE_SIZE);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      newParams.set("title", newTitle);
-      return newParams;
-    });
+    updateSearchParams({ title: newTitle, size: `${INITIAL_PAGE_SIZE}` });
   };
 
   const handleFilterChange = (filterType: string, value: string) => {
     setSize(INITIAL_PAGE_SIZE);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      if (filterType === "city") newParams.set("city", value);
-      if (filterType === "cinema") newParams.set("cinema", value);
-      if (filterType === "genres") newParams.set("genres", value);
-      if (filterType === "projectionTime")
-        newParams.set("projectionTime", value);
-      if (filterType === "date") newParams.set("date", value);
-      return newParams;
-    });
+    const filterMapping: Record<string, string> = {
+      city: selectedCity,
+      cinema: selectedVenue,
+      genres: selectedGenre,
+      projectionTime: selectedProjectionTime,
+      date: selectedDate,
+    };
+    filterMapping[filterType] = value;
+    updateSearchParams({ ...filterMapping, size: `${INITIAL_PAGE_SIZE}` });
   };
 
   if (isLoading) return <p>Loading...</p>;
