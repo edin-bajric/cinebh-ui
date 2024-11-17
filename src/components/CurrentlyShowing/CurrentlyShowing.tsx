@@ -14,7 +14,6 @@ import CurrentlyShowingAndUpcomingNotFound from "../CurrentlyShowingAndUpcomingN
 
 const INITIAL_PAGE_SIZE = 2;
 const PAGE_INCREMENT = 2;
-const PAGE_DEFAULT = 0;
 
 const CurrentlyShowing = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +32,7 @@ const CurrentlyShowing = () => {
   const { data: genresData } = useGenres();
   const { data: projectionTimesData } = useProjectionTimes();
   const { data, isLoading, error } = useCurrentlyShowing(
-    PAGE_DEFAULT,
+    0,
     size,
     selectedTitle,
     selectedCity,
@@ -43,10 +42,11 @@ const CurrentlyShowing = () => {
     selectedDate
   );
 
-  const updateSearchParams = (updates: Record<string, string>) => {
+  const updateSearchParams = (params: Record<string, string>) => {
     const newParams = new URLSearchParams(searchParams);
-    Object.entries(updates).forEach(([key, value]) => {
-      newParams.set(key, value);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) newParams.set(key, value);
+      else newParams.delete(key); 
     });
     setSearchParams(newParams);
   };
@@ -66,26 +66,14 @@ const CurrentlyShowing = () => {
 
   const handleFilterChange = (filterType: string, value: string) => {
     setSize(INITIAL_PAGE_SIZE);
-    const filterMapping: Record<string, string> = {
-      city: selectedCity,
-      cinema: selectedVenue,
-      genres: selectedGenre,
-      projectionTime: selectedProjectionTime,
-      date: selectedDate,
-    };
-    filterMapping[filterType] = value;
-    updateSearchParams({ ...filterMapping, size: `${INITIAL_PAGE_SIZE}` });
+    updateSearchParams({ [filterType]: value, size: `${INITIAL_PAGE_SIZE}` });
   };
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading movies.</p>;
 
-  const uniqueCities = Array.from(
-    new Set(venuesData?.map((venue) => venue.city))
-  );
-  const uniqueProjectionTimes = Array.from(
-    new Set(projectionTimesData?.map((projection) => projection.time))
-  );
+  const uniqueCities = Array.from(new Set(venuesData?.map((venue) => venue.city)));
+  const uniqueProjectionTimes = Array.from(new Set(projectionTimesData?.map((projection) => projection.time)));
 
   return (
     <div className={style.container}>
@@ -131,9 +119,7 @@ const CurrentlyShowing = () => {
         />
       </div>
       <div className={style.reminder}>
-        <p>
-          Quick reminder that our cinema schedule is on a ten-day update cycle.
-        </p>
+        <p>Quick reminder that our cinema schedule is on a ten-day update cycle.</p>
       </div>
       <div className={style.showing}>
         {data?.content.length === 0 && (
