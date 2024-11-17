@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import style from "./currently-showing.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
@@ -26,7 +26,9 @@ const CurrentlyShowing = () => {
   const selectedProjectionTime = searchParams.get("projectionTime") || "";
   const selectedDate = searchParams.get("date") || today;
 
-  const [size, setSize] = useState(parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10));
+  const [size, setSize] = useState(
+    parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10)
+  );
 
   const { data: venuesData } = useAllVenues();
   const { data: genresData } = useGenres();
@@ -42,38 +44,65 @@ const CurrentlyShowing = () => {
     selectedDate
   );
 
-  const updateSearchParams = (params: Record<string, string>) => {
-    const newParams = new URLSearchParams(searchParams);
-    Object.entries(params).forEach(([key, value]) => {
-      if (value) newParams.set(key, value);
-      else newParams.delete(key); 
-    });
-    setSearchParams(newParams);
-  };
+  const uniqueCities = useMemo(
+    () => Array.from(new Set(venuesData?.map((venue) => venue.city))),
+    [venuesData]
+  );
 
-  const handleLoadMore = () => {
+  const uniqueProjectionTimes = useMemo(
+    () =>
+      Array.from(
+        new Set(projectionTimesData?.map((projection) => projection.time))
+      ),
+    [projectionTimesData]
+  );
+
+  const updateSearchParams = useCallback(
+    (params: Record<string, string>) => {
+      const newParams = new URLSearchParams(searchParams);
+      Object.entries(params).forEach(([key, value]) => {
+        if (value && searchParams.get(key) !== value) newParams.set(key, value);
+        else if (!value && searchParams.has(key)) newParams.delete(key);
+      });
+      setSearchParams(newParams);
+    },
+    [searchParams, setSearchParams]
+  );
+
+  const handleLoadMore = useCallback(() => {
     const newSize = size + PAGE_INCREMENT;
     setSize(newSize);
     updateSearchParams({ size: newSize.toString() });
-  };
+  }, [size, updateSearchParams]);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newTitle = (e.target as HTMLFormElement).querySelector("input")?.value || "";
-    setSize(INITIAL_PAGE_SIZE);
-    updateSearchParams({ title: newTitle, size: `${INITIAL_PAGE_SIZE}` });
-  };
+  const handleSearch = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      const newTitle =
+        (e.target as HTMLFormElement).querySelector("input")?.value || "";
+      if (newTitle !== selectedTitle) {
+        setSize(INITIAL_PAGE_SIZE);
+        updateSearchParams({ title: newTitle, size: `${INITIAL_PAGE_SIZE}` });
+      }
+    },
+    [selectedTitle, updateSearchParams]
+  );
 
-  const handleFilterChange = (filterType: string, value: string) => {
-    setSize(INITIAL_PAGE_SIZE);
-    updateSearchParams({ [filterType]: value, size: `${INITIAL_PAGE_SIZE}` });
-  };
+  const handleFilterChange = useCallback(
+    (filterType: string, value: string) => {
+      if (searchParams.get(filterType) !== value) {
+        setSize(INITIAL_PAGE_SIZE);
+        updateSearchParams({
+          [filterType]: value,
+          size: `${INITIAL_PAGE_SIZE}`,
+        });
+      }
+    },
+    [searchParams, updateSearchParams]
+  );
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading movies.</p>;
-
-  const uniqueCities = Array.from(new Set(venuesData?.map((venue) => venue.city)));
-  const uniqueProjectionTimes = Array.from(new Set(projectionTimesData?.map((projection) => projection.time)));
 
   return (
     <div className={style.container}>
@@ -119,7 +148,9 @@ const CurrentlyShowing = () => {
         />
       </div>
       <div className={style.reminder}>
-        <p>Quick reminder that our cinema schedule is on a ten-day update cycle.</p>
+        <p>
+          Quick reminder that our cinema schedule is on a ten-day update cycle.
+        </p>
       </div>
       <div className={style.showing}>
         {data?.content.length === 0 && (
