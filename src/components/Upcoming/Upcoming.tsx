@@ -11,6 +11,7 @@ import useGenres from "../../hooks/useGenres";
 import useUpcoming from "../../hooks/useUpcoming";
 import CurrentlyShowingAndUpcomingNotFound from "../CurrentlyShowingAndUpcomingNotFound";
 import Loading from "../Loading";
+import Error from "../Error";
 
 const INITIAL_PAGE_SIZE = 2;
 const PAGE_INCREMENT = 2;
@@ -118,7 +119,7 @@ const Upcoming = () => {
   };
 
   if (isLoading) return <Loading />;
-  if (error) return <p>Error loading movies.</p>;
+  if (error) return <Error />;
 
   const uniqueCities = Array.from(
     new Set(venuesData?.map((venue) => venue.city))

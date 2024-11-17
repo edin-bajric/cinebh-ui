@@ -1,7 +1,7 @@
 import { Carousel, ConfigProvider } from "antd";
 import style from "./carousel.module.scss";
 import useFeaturedMovies from "../../hooks/useFeaturedMovies";
-import Spinner from "../Spinner";
+import Loading from "../Loading";
 import Error from "../Error";
 import Button from "../Button";
 
@@ -9,7 +9,7 @@ const CarouselComp: React.FC = () => {
   const { data: movies = [], isLoading, isError } = useFeaturedMovies();
 
   if (isLoading) {
-    return <Spinner />;
+    return <Loading />;
   }
 
   if (isError) {

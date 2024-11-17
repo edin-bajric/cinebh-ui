@@ -1,7 +1,5 @@
 import { useState } from "react";
 import style from "./homepage-tile.module.scss";
-import Spinner from "../Spinner";
-import Error from "../Error";
 import Card from "../Card";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -10,8 +8,6 @@ type Props = {
   title: string;
   type: "movie" | "venue";
   data: any[];
-  isLoading: boolean;
-  isError: boolean;
   totalItems: number;
   pageSize: number;
   onPageChange: (page: number) => void;
@@ -22,8 +18,6 @@ const HomepageTile: React.FC<Props> = ({
   title,
   type,
   data,
-  isLoading,
-  isError,
   totalItems,
   pageSize,
   onPageChange,
@@ -53,14 +47,6 @@ const HomepageTile: React.FC<Props> = ({
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (isError) {
-    return <Error />;
-  }
 
   return (
     <div className={style.container}>
