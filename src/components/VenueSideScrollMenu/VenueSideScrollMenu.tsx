@@ -1,6 +1,6 @@
 import style from "./venue-side-scroll-menu.module.scss";
 import useAllVenues from "../../hooks/useAllVenues";
-import Spinner from "../Spinner";
+import Loading from "../Loading";
 import Error from "../Error";
 
 const REPEAT_COUNT = 6;
@@ -9,7 +9,7 @@ const VenueSideScrollMenu = () => {
   const { data: venues = [], isLoading, isError } = useAllVenues();
 
   if (isLoading) {
-    return <Spinner />;
+    return <Loading />;
   }
 
   if (isError) {

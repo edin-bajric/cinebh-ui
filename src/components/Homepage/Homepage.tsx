@@ -6,13 +6,14 @@ import HomepageTile from "../HomepageTile";
 import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
 import useUpcoming from "../../hooks/useUpcoming";
 import useVenues from "../../hooks/useVenues";
+import Loading from "../Loading";
+import Error from "../Error";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_SIZE = 4;
 
 const Homepage = () => {
-  const [currentlyShowingPage, setCurrentlyShowingPage] =
-    useState(DEFAULT_PAGE);
+  const [currentlyShowingPage, setCurrentlyShowingPage] = useState(DEFAULT_PAGE);
   const [upcomingPage, setUpcomingPage] = useState(DEFAULT_PAGE);
   const [venuesPage, setVenuesPage] = useState(DEFAULT_PAGE);
 
@@ -34,6 +35,13 @@ const Homepage = () => {
     isError: isErrorVenues,
   } = useVenues(venuesPage, DEFAULT_SIZE);
 
+  
+  const isLoading = isLoadingCurrentlyShowing || isLoadingUpcoming || isLoadingVenues;
+  const isError = isErrorCurrentlyShowing || isErrorUpcoming || isErrorVenues;
+
+  if (isLoading) return <Loading />;
+  if (isError) return <Error />;
+
   return (
     <div id={style.container}>
       <CarouselComp />
@@ -41,9 +49,7 @@ const Homepage = () => {
       <HomepageTile
         title="Currently Showing"
         type="movie"
-        data={currentlyShowing?.content || []}
-        isLoading={isLoadingCurrentlyShowing}
-        isError={isErrorCurrentlyShowing}
+        data={currentlyShowing?.content || []}   
         totalItems={currentlyShowing?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
         onPageChange={setCurrentlyShowingPage}
@@ -53,8 +59,6 @@ const Homepage = () => {
         title="Upcoming Movies"
         type="movie"
         data={upcoming?.content || []}
-        isLoading={isLoadingUpcoming}
-        isError={isErrorUpcoming}
         totalItems={upcoming?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
         onPageChange={setUpcomingPage}
@@ -64,8 +68,6 @@ const Homepage = () => {
         title="Venues"
         type="venue"
         data={venues?.content || []}
-        isLoading={isLoadingVenues}
-        isError={isErrorVenues}
         totalItems={venues?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
         onPageChange={setVenuesPage}
