@@ -58,19 +58,21 @@ const CurrentlyShowingCard: React.FC<CurrentlyShowingCardProps> = ({
             <p>Playing in cinema until {formattedDate}.</p>
           </div>
         </div>
-        <div className={style.showtimes}>
-          <p className={style.showtimes_title}>Showtimes</p>
-          <div className={style.showtimes_container}>
-            {showtimes.map((time) => {
-              const formattedTime = time.slice(0, 5);
-              return (
-                <div key={formattedTime} className={style.showtime}>
-                  <p>{formattedTime}</p>
-                </div>
-              );
-            })}
+        {showtimes.length > 0 && (
+          <div className={style.showtimes}>
+            <p className={style.showtimes_title}>Showtimes</p>
+            <div className={style.showtimes_container}>
+              {showtimes.map((time) => {
+                const formattedTime = time.slice(0, 5);
+                return (
+                  <div key={formattedTime} className={style.showtime}>
+                    <p>{formattedTime}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
