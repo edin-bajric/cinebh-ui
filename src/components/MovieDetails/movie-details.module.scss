@@ -1,0 +1,99 @@
+@use "../../assets/css/variables.scss";
+
+.page_title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.0015em;
+  color: variables.$secondary_color;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: -0.0025em;
+  color: variables.$secondary_color;
+}
+
+.basic_info p,
+.synopsis p,
+.director_name,
+.writers_name {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$secondary_color;
+}
+
+.genre_container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.genre {
+  border-radius: 8px;
+  background-color: variables.$gray;
+  padding: 6px 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.genre p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(52, 64, 84, 1);
+}
+
+.creator {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$dark_gray;
+}
+
+.section_title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  color: variables.$dark_gray;
+}
+
+.cast_name {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(16, 24, 40, 1);
+}
+
+.cast_role {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  color: variables.$dark_gray;
+}
+
+.movie_rating_value {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(16, 24, 40, 1);
+}
+
+.movie_rating_provider {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  color: variables.$dark_gray;
+}
