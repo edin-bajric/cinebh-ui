@@ -1,24 +1,16 @@
 @use "../../assets/css/variables.scss";
 
 .container {
-    padding: 40px 92px 40px 92px;
-    background-color: variables.$white;
+  padding: 40px 92px 40px 92px;
+  background-color: variables.$white;
 }
 
-.filters {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-}
-
-.reminder p{
-    font-weight: 400;
-    font-size: 14px;
-    font-style: italic;
-    line-height: 20px;
-    letter-spacing: 0.0025em;
-    color: variables.$dark_gray;
-    padding-top: 24px;
+.reminder p {
+  font-weight: 400;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: variables.$dark_gray;
+  padding-top: 24px;
 }
