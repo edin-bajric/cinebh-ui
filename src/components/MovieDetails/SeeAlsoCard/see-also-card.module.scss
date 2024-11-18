@@ -1,0 +1,30 @@
+@use "../../../assets/css/variables.scss";
+
+.container {
+  width: 196px;
+  height: 200px;
+  border: 1p solid variables.$light_gray;
+  border-radius: 16px;
+  box-shadow: 0px 2px 4px -2px variables.$shadow;
+  box-shadow: 0px 4px 6px -1px variables.$shadow;
+  padding: 16px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  width: 172px;
+  height: 136px;
+  border-radius: 12px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$secondary_color;
+}
