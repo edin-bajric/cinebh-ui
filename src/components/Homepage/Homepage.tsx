@@ -1,8 +1,8 @@
 import { useState } from "react";
 import style from "./homepage.module.scss";
-import CarouselComp from "../CarouselComp";
+import CarouselComp from "./CarouselComp";
 import VenueSideScrollMenu from "../VenueSideScrollMenu";
-import HomepageTile from "../HomepageTile";
+import HomepageTile from "./HomepageTile";
 import useCurrentlyShowing from "../../hooks/useCurrentlyShowing";
 import useUpcoming from "../../hooks/useUpcoming";
 import useVenues from "../../hooks/useVenues";

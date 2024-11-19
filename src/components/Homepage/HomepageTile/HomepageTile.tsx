@@ -1,8 +1,8 @@
 import { useState } from "react";
 import style from "./homepage-tile.module.scss";
-import Loading from "../Loading";
-import Error from "../Error";
-import Card from "../Card";
+import Loading from "../../Loading";
+import Error from "../../Error";
+import Card from "../../Card";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
