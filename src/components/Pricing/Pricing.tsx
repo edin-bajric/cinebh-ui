@@ -1,5 +1,5 @@
 import style from "./pricing.module.scss";
-import PriceBox from "../PriceBox.tsx/PriceBox";
+import PriceBox from "./PriceBox.tsx";
 
 const Pricing = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
-import Button from "../Button";
+import Button from "../../Button";
 import style from "../Pricing/pricing.module.scss";
 
 interface PriceBoxProps {
