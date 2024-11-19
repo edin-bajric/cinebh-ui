@@ -1,176 +1,112 @@
-import { useEffect, useState } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import style from "./upcoming.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
-import SelectDropdown from "../SelectDropdown";
-import FilterDateRange from "../FilterDateRange";
 import UpcomingMovieList from "./UpcomingMovieList";
 import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
-import useUpcoming from "../../hooks/useUpcoming";
-import CurrentlyShowingAndUpcomingNotFound from "../CurrentlyShowingAndUpcomingNotFound";
-import Loading from "../Loading";
-import Error from "../Error";
+import UpcomingFilters from "./UpcomingFilters";
 
 const INITIAL_PAGE_SIZE = 2;
-const PAGE_INCREMENT = 2;
-const PAGE_DEFAULT = 0;
 
 const Upcoming = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [totalItems, setTotalItems] = useState(0);
 
-  const selectedTitle = searchParams.get("title") || "";
-  const selectedCity = searchParams.get("city") || "";
-  const selectedVenue = searchParams.get("cinema") || "";
-  const selectedGenre = searchParams.get("genres") || "";
-  const selectedStartDate = searchParams.get("startDate") || "";
-  const selectedEndDate = searchParams.get("endDate") || "";
-  const sizeFromUrl = parseInt(
-    searchParams.get("size") || `${INITIAL_PAGE_SIZE}`,
-    10
-  );
+  const filters = {
+    title: searchParams.get("title") || "",
+    city: searchParams.get("city") || "",
+    cinema: searchParams.get("cinema") || "",
+    genres: searchParams.get("genres") || "",
+    startDate: searchParams.get("startDate") || "",
+    endDate: searchParams.get("endDate") || "",
+  };
 
-  const [size, setSize] = useState(sizeFromUrl);
+  const size = parseInt(searchParams.get("size") || `${INITIAL_PAGE_SIZE}`, 10);
 
   const { data: venuesData } = useAllVenues();
   const { data: genresData } = useGenres();
-  const { data, isLoading, error } = useUpcoming(
-    PAGE_DEFAULT,
-    size,
-    selectedTitle,
-    selectedCity,
-    selectedVenue,
-    selectedGenre,
-    selectedStartDate,
-    selectedEndDate
+
+  const uniqueCities = useMemo(
+    () => Array.from(new Set(venuesData?.map((venue) => venue.city)) || []),
+    [venuesData]
+  );
+
+  const updateSearchParams = (newParams: Record<string, string | number>) => {
+    const currentParams = new URLSearchParams(searchParams.toString());
+
+    Object.entries(newParams).forEach(([key, value]) => {
+      if (value) {
+        currentParams.set(key, String(value));
+      } else {
+        currentParams.delete(key);
+      }
+    });
+
+    setSearchParams(currentParams);
+  };
+
+  const handleFilterChange = useCallback(
+    (
+      filterType: string,
+      value: string | { startDate: string; endDate: string }
+    ) => {
+      if (filterType === "dateRange" && typeof value === "object") {
+        const { startDate, endDate } = value;
+
+        updateSearchParams({
+          startDate,
+          endDate,
+        });
+      } else {
+        updateSearchParams({ [filterType]: value as string });
+      }
+    },
+    [updateSearchParams]
+  );
+
+  const handleSizeChange = useCallback(
+    (newSize: number) => {
+      updateSearchParams({ size: newSize });
+    },
+    [updateSearchParams]
   );
 
   useEffect(() => {
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", size.toString());
-      if (selectedTitle) newParams.set("title", selectedTitle);
-      if (selectedCity) newParams.set("city", selectedCity);
-      if (selectedVenue) newParams.set("cinema", selectedVenue);
-      if (selectedGenre) newParams.set("genres", selectedGenre);
-      if (selectedStartDate) newParams.set("startDate", selectedStartDate);
-      if (selectedEndDate) newParams.set("endDate", selectedEndDate);
-      return newParams;
-    });
-  }, [
-    size,
-    selectedTitle,
-    selectedCity,
-    selectedVenue,
-    selectedGenre,
-    selectedStartDate,
-    selectedEndDate,
-    setSearchParams,
-  ]);
-
-  const handleLoadMore = () => {
-    setSize((prevSize) => prevSize + PAGE_INCREMENT);
-  };
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const searchInput = (e.target as HTMLFormElement).querySelector(
-      "input"
-    ) as HTMLInputElement;
-    const newTitle = searchInput.value;
-    setSize(INITIAL_PAGE_SIZE);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      newParams.set("title", newTitle);
-      return newParams;
-    });
-  };
-
-  const handleFilterChange = (filterType: string, value: string) => {
-    setSize(INITIAL_PAGE_SIZE);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
-      if (filterType === "city") newParams.set("city", value);
-      if (filterType === "cinema") newParams.set("cinema", value);
-      if (filterType === "genres") newParams.set("genres", value);
-      if (filterType === "startDate") newParams.set("startDate", value);
-      if (filterType === "endDate") newParams.set("endDate", value);
-      return newParams;
-    });
-  };
-
-  const handleDateRangeSelect = (startDate: Date, endDate: Date) => {
-    const formatDate = (date: Date) => {
-      const adjustedDate = new Date(
-        date.getTime() - date.getTimezoneOffset() * 60000
-      );
-      return adjustedDate.toISOString().split("T")[0];
-    };
-
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("startDate", formatDate(startDate));
-      newParams.set("endDate", formatDate(endDate));
-      return newParams;
-    });
-  };
-
-  if (isLoading) return <Loading />;
-  if (error) return <Error />;
-
-  const uniqueCities = Array.from(
-    new Set(venuesData?.map((venue) => venue.city))
-  );
+    if (!searchParams.has("size")) {
+      updateSearchParams({ size: INITIAL_PAGE_SIZE });
+    }
+  }, [searchParams, updateSearchParams]);
 
   return (
     <div className={style.container}>
-      <div className={style.title}>
-        <CurrentlyShowingAndUpcomingTitle
-          type="upcoming"
-          totalItems={data?.totalElements || 0}
-        />
-      </div>
-      <div className={style.search}>
-        <Search onSearch={handleSearch} title={selectedTitle} />
-      </div>
-      <div className={style.filters}>
-        <SelectDropdown
-          title="Cities"
-          data={uniqueCities}
-          onSelect={(value) => handleFilterChange("city", value)}
-          selectedValue={selectedCity}
-        />
-        <SelectDropdown
-          title="Venues"
-          data={venuesData?.map((venue) => venue.name) || []}
-          onSelect={(value) => handleFilterChange("cinema", value)}
-          selectedValue={selectedVenue}
-        />
-        <SelectDropdown
-          title="Genres"
-          data={genresData?.map((genre) => genre.name) || []}
-          onSelect={(value) => handleFilterChange("genres", value)}
-          selectedValue={selectedGenre}
-        />
-        <FilterDateRange
-          onSelect={handleDateRangeSelect}
-          selectedStartDate={selectedStartDate || undefined}
-          selectedEndDate={selectedEndDate || undefined}
-        />
-      </div>
-      <div className={style.upcoming}>
-        {data?.content.length === 0 && (
-          <CurrentlyShowingAndUpcomingNotFound type="upcoming" />
-        )}
-        <UpcomingMovieList
-          movies={data?.content || []}
-          onLoadMore={handleLoadMore}
-          totalItems={data?.totalElements || 0}
-        />
-      </div>
+      <CurrentlyShowingAndUpcomingTitle
+        type="upcoming"
+        totalItems={totalItems}
+      />
+      <Search
+        onSearch={(e) => {
+          e.preventDefault();
+          const newTitle =
+            (e.target as HTMLFormElement).querySelector("input")?.value || "";
+          updateSearchParams({ title: newTitle });
+        }}
+        title={filters.title}
+      />
+      <UpcomingFilters
+        filters={filters}
+        onFilterChange={handleFilterChange}
+        venues={venuesData?.map((venue) => venue.name) || []}
+        cities={uniqueCities}
+        genres={genresData?.map((genre) => genre.name) || []}
+      />
+      <UpcomingMovieList
+        filters={filters}
+        size={size}
+        onSizeChange={handleSizeChange}
+        setTotalItems={setTotalItems}
+      />
     </div>
   );
 };

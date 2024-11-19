@@ -22,11 +22,19 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
   const [endDate, setEndDate] = useState<Date | undefined>(
     selectedEndDate ? new Date(selectedEndDate) : undefined
   );
+
+  const formatDateManually = (date: Date): string => {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+  
   const [startDateInput, setStartDateInput] = useState(
-    startDate ? startDate.toLocaleDateString() : ""
+    startDate ? formatDateManually(startDate) : ""
   );
   const [endDateInput, setEndDateInput] = useState(
-    endDate ? endDate.toLocaleDateString() : ""
+    endDate ? formatDateManually(endDate) : ""
   );
   const [showCalendar, setShowCalendar] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -36,15 +44,15 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
     const [start, end] = dates;
     setStartDate(start || undefined);
     setEndDate(end || undefined);
-    setStartDateInput(start ? start.toLocaleDateString() : "");
-    setEndDateInput(end ? end.toLocaleDateString() : "");
+    setStartDateInput(start ? formatDateManually(start) : "");
+    setEndDateInput(end ? formatDateManually(end) : "");
   };
 
   const handleCancel = () => {
     setStartDate(selectedStartDate ? new Date(selectedStartDate) : undefined);
     setEndDate(selectedEndDate ? new Date(selectedEndDate) : undefined);
-    setStartDateInput(startDate ? startDate.toLocaleDateString() : "");
-    setEndDateInput(endDate ? endDate.toLocaleDateString() : "");
+    setStartDateInput(startDate ? formatDateManually(startDate) : "");
+    setEndDateInput(endDate ? formatDateManually(endDate) : "");
     setShowCalendar(false);
     setIsActive(false);
   };
@@ -75,7 +83,7 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
     const value = type === "start" ? startDateInput : endDateInput;
     const [day, month, year] = value.split("/").map(Number);
     const date = new Date(year, month - 1, day);
-    
+
     if (
       !isNaN(date.getTime()) &&
       date.getFullYear() === year &&
@@ -103,7 +111,9 @@ const FilterDateRange: React.FC<FilterDateRangeProps> = ({
             }`}
           >
             {startDate && endDate
-              ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
+              ? `${formatDateManually(startDate)} - ${formatDateManually(
+                  endDate
+                )}`
               : "Date Range"}
           </p>
         </div>
