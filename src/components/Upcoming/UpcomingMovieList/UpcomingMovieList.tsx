@@ -1,14 +1,14 @@
-import style from "./upcoming-tile.module.scss";
-import Card from "../Card";
-import { Movie } from "../../utils/types";
+import style from "./upcoming-movie-list.module.scss";
+import Card from "../../Card";
+import { Movie } from "../../../utils/types";
 
-type UpcomingTileProps = {
+type UpcomingMovieListProps = {
   movies: Movie[];
   onLoadMore: () => void;
   totalItems: number;
 };
 
-const UpcomingTile: React.FC<UpcomingTileProps> = ({
+const UpcomingMovieList: React.FC<UpcomingMovieListProps> = ({
   movies,
   onLoadMore,
   totalItems,
@@ -35,4 +35,4 @@ const UpcomingTile: React.FC<UpcomingTileProps> = ({
   );
 };
 
-export default UpcomingTile;
+export default UpcomingMovieList;

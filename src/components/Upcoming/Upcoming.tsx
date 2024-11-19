@@ -5,7 +5,7 @@ import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitl
 import Search from "../Search";
 import SelectDropdown from "../SelectDropdown";
 import FilterDateRange from "../FilterDateRange";
-import UpcomingTile from "../UpcomingTile";
+import UpcomingMovieList from "./UpcomingMovieList";
 import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
 import useUpcoming from "../../hooks/useUpcoming";
@@ -165,7 +165,7 @@ const Upcoming = () => {
         {data?.content.length === 0 && (
           <CurrentlyShowingAndUpcomingNotFound type="upcoming" />
         )}
-        <UpcomingTile
+        <UpcomingMovieList
           movies={data?.content || []}
           onLoadMore={handleLoadMore}
           totalItems={data?.totalElements || 0}
