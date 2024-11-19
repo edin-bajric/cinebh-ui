@@ -4,6 +4,8 @@ import CurrentlyShowingCard from "../CurrentlyShowingCard";
 import { Movie } from "../../../utils/types";
 import classNames from "classnames";
 import useCurrentlyShowing from "../../../hooks/useCurrentlyShowing";
+import Error from "../../Error";
+import Loading from "../../Loading";
 
 type CurrentlyShowingMovieListProps = {
   filters: {
@@ -51,8 +53,8 @@ const CurrentlyShowingMovieList: React.FC<CurrentlyShowingMovieListProps> = ({
     setTotalItems(totalItems);
   }, [totalItems, setTotalItems]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading movies.</p>;
+  if (isLoading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <div className={style.container}>

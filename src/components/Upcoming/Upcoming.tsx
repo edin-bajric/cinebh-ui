@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import style from "./upcoming.module.scss";
 import CurrentlyShowingAndUpcomingTitle from "../CurrentlyShowingAndUpcomingTitle";
 import Search from "../Search";
-import Filter from "../Filter";
+import SelectDropdown from "../SelectDropdown";
 import FilterDateRange from "../FilterDateRange";
 import UpcomingTile from "../UpcomingTile";
 import useAllVenues from "../../hooks/useAllVenues";
@@ -137,19 +137,19 @@ const Upcoming = () => {
         <Search onSearch={handleSearch} title={selectedTitle} />
       </div>
       <div className={style.filters}>
-        <Filter
+        <SelectDropdown
           title="Cities"
           data={uniqueCities}
           onSelect={(value) => handleFilterChange("city", value)}
           selectedValue={selectedCity}
         />
-        <Filter
+        <SelectDropdown
           title="Venues"
           data={venuesData?.map((venue) => venue.name) || []}
           onSelect={(value) => handleFilterChange("cinema", value)}
           selectedValue={selectedVenue}
         />
-        <Filter
+        <SelectDropdown
           title="Genres"
           data={genresData?.map((genre) => genre.name) || []}
           onSelect={(value) => handleFilterChange("genres", value)}
