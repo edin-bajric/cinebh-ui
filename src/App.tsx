@@ -10,6 +10,7 @@ import {
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import "./index.css";
+import MovieDetails from "./components/MovieDetails";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/currently-showing" element={<CurrentlyShowingPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
+          <Route path="/movie" element={<MovieDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
