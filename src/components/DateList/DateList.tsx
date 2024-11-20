@@ -7,13 +7,12 @@ interface DateLIstProps {
 }
 
 const generateDateArray = () => {
-  const dates = [];
   const today = new Date();
 
-  for (let i = 0; i < 10; i++) {
+  return Array.from({ length: 10 }, (_, i) => {
     const date = new Date(today);
     date.setDate(today.getDate() + i);
-    dates.push({
+    return {
       date: date.toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
@@ -23,15 +22,11 @@ const generateDateArray = () => {
           ? "Today"
           : date.toLocaleDateString("en-US", { weekday: "short" }),
       fullDate: date.toISOString().split("T")[0],
-    });
-  }
-  return dates;
+    };
+  });
 };
 
-const DateList: React.FC<DateLIstProps> = ({
-  onDateSelect,
-  selectedDate,
-}) => {
+const DateList: React.FC<DateLIstProps> = ({ onDateSelect, selectedDate }) => {
   const dates = generateDateArray();
 
   return (
