@@ -1,6 +1,7 @@
 @use "../../assets/css/variables.scss";
 
 .container {
+  position: relative;
   width: 302px;
   height: 395px;
   display: flex;
@@ -59,4 +60,20 @@
   letter-spacing: 0.0125em;
   color: variables.$dark_gray;
   white-space: nowrap;
+}
+
+.upcoming {
+  position: absolute;
+  top: 28px;
+  right: 10px;
+  border-radius: 8px 8px 0 8px;
+  padding: 6px 8px 6px 8px;
+  background-color: variables.$primary_color;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: variables.$white;
+  text-align: center;
+  z-index: 1;
 }

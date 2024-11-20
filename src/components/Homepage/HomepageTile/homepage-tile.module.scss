@@ -1,4 +1,4 @@
-@use "../../assets/css/variables.scss";
+@use "../../../assets/css/variables.scss";
 
 .container {
   display: flex;
@@ -36,9 +36,10 @@
 }
 
 .content {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(302px, 1fr));
+  gap: 40px;
+  width: 100%;
 }
 
 .pagination {

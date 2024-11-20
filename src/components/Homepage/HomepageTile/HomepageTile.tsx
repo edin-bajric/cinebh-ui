@@ -1,8 +1,8 @@
 import { useState } from "react";
 import style from "./homepage-tile.module.scss";
-import Spinner from "../Spinner";
-import Error from "../Error";
-import Card from "../Card";
+import Loading from "../../Loading";
+import Error from "../../Error";
+import Card from "../../Card";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -50,8 +50,12 @@ const HomepageTile: React.FC<Props> = ({
 
   const itemsToShow = end - start + 1;
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   if (isLoading) {
-    return <Spinner />;
+    return <Loading />;
   }
 
   if (isError) {
@@ -62,11 +66,13 @@ const HomepageTile: React.FC<Props> = ({
     <div className={style.container}>
       <div className={style.header}>
         <p className={style.title}>{title}</p>
-        <Link to={linkTo} className={style.see_all}>See All</Link>
+        <Link to={linkTo} className={style.see_all} onClick={scrollToTop}>
+          See All
+        </Link>
       </div>
       <div className={style.content}>
         {data.map((item, index) => (
-          <Card key={index} type={type} data={item} />
+          <Card key={index} type={type} data={item} page="home" />
         ))}
       </div>
       <div className={style.pagination}>

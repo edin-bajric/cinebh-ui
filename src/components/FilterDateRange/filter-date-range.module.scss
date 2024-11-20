@@ -1,0 +1,153 @@
+@use "../../assets/css/variables.scss";
+
+.container {
+  position: relative;
+  width: 100%;
+  padding-top: 24px;
+}
+
+.filter_container {
+  width: 100%;
+  height: 48px;
+  box-shadow: 0px 1px 2px -2px rgba(52, 64, 84, 0.08);
+  border: 1px solid variables.$gray;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: white;
+  cursor: pointer;
+  transition: border 0.1s;
+
+  &.active {
+    border: 2px solid variables.$primary_color;
+  }
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown_icon {
+  color: variables.$dark_gray;
+  font-size: 18px;
+  pointer-events: none;
+  transition: transform 0.1s, color 0.1s;
+
+  &.icon_active {
+    transform: rotate(180deg);
+    color: variables.$primary_color;
+  }
+}
+
+.calendar_dropdown {
+  position: absolute;
+  top: calc(100%);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border: 1px solid variables.$gray;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.date_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  gap: 12px;
+}
+
+.date {
+  min-width: 47%;
+  padding: 8px 16px 8px 8px;
+  border: 1px solid rgba(208, 213, 221, 1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+}
+
+.date_name {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  text-align: left;
+  color: variables.$dark_gray;
+}
+
+.date_value {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  text-align: left;
+  color: variables.$secondary_color;
+
+  &::placeholder {
+    color: variables.$gray;
+  }
+}
+
+.title {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$dark_gray;
+
+  &.title_active {
+    color: variables.$primary_color;
+  }
+
+  &.selected {
+    color: variables.$secondary_color;
+  }
+}
+
+.icon {
+  color: variables.$dark_gray;
+  height: 18px;
+  width: 18px;
+  padding: 1px;
+  vertical-align: middle;
+  transition: color 0.2s;
+
+  &.icon_active {
+    color: variables.$primary_color;
+  }
+}
+
+.button_container {
+  width: 100%;
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.button {
+  width: 64px;
+  height: 32px;
+  padding: 8px 16px 8px 16px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}

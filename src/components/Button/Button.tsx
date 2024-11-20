@@ -5,7 +5,7 @@ import classNames from "classnames";
 type Props = {
   text: string;
   variant?: "solid" | "outlined" | "navbar";
-  width?: string; 
+  width?: string;
   onClick?: () => void;
   className?: string;
 };

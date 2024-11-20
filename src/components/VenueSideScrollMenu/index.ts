@@ -1,1 +1,1 @@
-export { default } from './VenueSideScrollMenu';
+export { default } from "./VenueSideScrollMenu";

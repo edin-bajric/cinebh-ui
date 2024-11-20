@@ -4,7 +4,7 @@ import style from "./icon.module.css";
 
 type IconProps = {
   to?: string;
-  src?: string; 
+  src?: string;
   alt?: string;
   className?: string;
 };
@@ -12,11 +12,15 @@ type IconProps = {
 const Icon: React.FC<IconProps> = ({
   to = "/",
   src = logo,
-  alt = "Logo", 
+  alt = "Logo",
   className = "",
 }) => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <Link to={to} className={`${style.icon} ${className}`}>
+    <Link to={to} className={`${style.icon} ${className}`} onClick={scrollToTop}>
       <img src={src} alt={alt} className={style.image} />
     </Link>
   );

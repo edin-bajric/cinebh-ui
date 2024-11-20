@@ -1,14 +1,14 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
-import Button from "../Button";
-import style from "../Pricing/pricing.module.scss";
+import Button from "../../Button";
+import style from "../pricing.module.scss";
 
 interface PriceBoxProps {
   name: string;
   price: string;
   features: string[];
   buttonText: string;
-  variant: "solid" | "outlined",
+  variant: "solid" | "outlined";
   containerStyle?: string;
 }
 
@@ -34,10 +34,7 @@ const PriceBox: React.FC<PriceBoxProps> = ({
           </p>
         ))}
         <div className={style.button_container}>
-          <Button
-            text={buttonText}
-            variant={variant}
-          />
+          <Button text={buttonText} variant={variant} />
         </div>
       </div>
     </div>

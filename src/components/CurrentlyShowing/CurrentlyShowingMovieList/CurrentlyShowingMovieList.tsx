@@ -4,6 +4,8 @@ import CurrentlyShowingCard from "../CurrentlyShowingCard";
 import { Movie } from "../../../utils/types";
 import classNames from "classnames";
 import useCurrentlyShowing from "../../../hooks/useCurrentlyShowing";
+import Error from "../../Error";
+import Loading from "../../Loading";
 
 type CurrentlyShowingMovieListProps = {
   filters: {
@@ -45,14 +47,16 @@ const CurrentlyShowingMovieList: React.FC<CurrentlyShowingMovieListProps> = ({
   const movies = data?.content || [];
   const totalItems = data?.totalElements || 0;
   const isLoadMoreDisabled = movies.length >= totalItems;
-  const isNoMovies = movies.length === 0;
+  const isNoMovies = !isLoading && movies.length === 0;
 
   useEffect(() => {
-    setTotalItems(totalItems);
-  }, [totalItems, setTotalItems]);
+    if (!isLoading) {
+      setTotalItems(totalItems);
+    }
+  }, [totalItems, setTotalItems, isLoading]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading movies.</p>;
+  if (isLoading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <div className={style.container}>
@@ -73,5 +77,6 @@ const CurrentlyShowingMovieList: React.FC<CurrentlyShowingMovieListProps> = ({
     </div>
   );
 };
+
 
 export default CurrentlyShowingMovieList;

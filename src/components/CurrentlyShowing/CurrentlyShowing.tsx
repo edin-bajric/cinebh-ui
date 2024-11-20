@@ -8,6 +8,7 @@ import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
 import useProjectionTimes from "../../hooks/useProjectionTimes";
 import CurrentlyShowingFilters from "./CurrentlyShowingFilters";
+import CurrentlyShowingAndUpcomingNotFound from "../CurrentlyShowingAndUpcomingNotFound";
 
 const INITIAL_PAGE_SIZE = 2;
 
@@ -111,6 +112,7 @@ const CurrentlyShowing = () => {
           Quick reminder that our cinema schedule is on a ten-day update cycle.
         </p>
       </div>
+      {totalItems === 0 && <CurrentlyShowingAndUpcomingNotFound type="currently-showing" />}
       <CurrentlyShowingMovieList
         filters={filters}
         size={size}
@@ -119,6 +121,7 @@ const CurrentlyShowing = () => {
       />
     </div>
   );
+  
 };
 
 export default CurrentlyShowing;
