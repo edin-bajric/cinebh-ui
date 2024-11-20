@@ -7,6 +7,7 @@ import UpcomingMovieList from "./UpcomingMovieList";
 import useAllVenues from "../../hooks/useAllVenues";
 import useGenres from "../../hooks/useGenres";
 import UpcomingFilters from "./UpcomingFilters";
+import CurrentlyShowingAndUpcomingNotFound from "../CurrentlyShowingAndUpcomingNotFound";
 
 const INITIAL_PAGE_SIZE = 2;
 
@@ -101,6 +102,7 @@ const Upcoming = () => {
         cities={uniqueCities}
         genres={genresData?.map((genre) => genre.name) || []}
       />
+      {totalItems === 0 && <CurrentlyShowingAndUpcomingNotFound type="upcoming"/>}
       <UpcomingMovieList
         filters={filters}
         size={size}

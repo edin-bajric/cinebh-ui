@@ -47,11 +47,13 @@ const UpcomingMovieList: React.FC<UpcomingMovieListProps> = ({
   const movies = data?.content || [];
   const totalItems = data?.totalElements || 0;
   const isLoadMoreDisabled = movies.length >= totalItems;
-  const isNoMovies = movies.length === 0;
+  const isNoMovies = !isLoading && movies.length === 0;
 
   useEffect(() => {
-    setTotalItems(totalItems);
-  }, [totalItems, setTotalItems]);
+    if (!isLoading) {
+      setTotalItems(totalItems);
+    }
+  }, [totalItems, setTotalItems, isLoading]);
 
   if (isLoading) return <Loading />;
   if (error) return <Error />;
