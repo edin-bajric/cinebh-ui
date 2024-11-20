@@ -1,0 +1,148 @@
+@use "../../../assets/css/variables.scss";
+
+.container {
+  width: 100%;
+  min-height: 319px;
+  border: 1px solid variables.$gray;
+  border-radius: 24px;
+  box-shadow: 0px 2px 4px -2px variables.$shadow;
+  box-shadow: 0px 4px 6px -1px variables.$shadow;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.content {
+  padding: 16px;
+  display: flex;
+}
+
+.image {
+  margin-right: 24px;
+}
+
+.image img {
+  width: 270px;
+  height: 287px;
+  border-radius: 16px;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.0025em;
+  color: variables.$secondary_color;
+  padding-bottom: 20px;
+}
+
+.info {
+  max-width: 180px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+}
+
+.divider {
+  color: variables.$primary_color;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$secondary_color;
+}
+
+.genre_container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 16px;
+  align-items: start;
+}
+
+.genre {
+  border-radius: 8px;
+  background-color: variables.$gray;
+  padding: 6px 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.genre p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(52, 64, 84, 1);
+}
+
+.middle_section {
+  max-width: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.playing_until p {
+  font-weight: 400;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: variables.$dark_gray;
+}
+
+.showtimes {
+  padding-left: 128px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.showtimes_title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  color: variables.$primary_color;
+  margin-bottom: 16px;
+}
+
+.showtimes_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.showtime {
+  width: 71px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid variables.$gray;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px -2px variables.$shadow;
+  box-shadow: 0px 1px 3px -1px variables.$shadow;
+}
+
+.showtime p {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  color: variables.$secondary_color;
+}

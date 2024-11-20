@@ -19,7 +19,10 @@ export type Movie = {
     url: string;
   }>;
   ratings: Array<{ id: string; name: string; rating: string; movie: string }>;
-  projections: Array<any>;
+  projections: Array<{
+    id: string;
+    projectionTimes: Array<{ id: string; time: string }>;
+  }>;
 };
 
 export type Venue = {
@@ -47,3 +50,13 @@ export type PaginatedResponse<T> = {
   totalElements: number;
   totalPages: number;
 };
+
+export type Genre = {
+  id: string;
+  name: string;
+};
+
+export type ProjectionTime = {
+  id: string;
+  time: string;
+}

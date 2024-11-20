@@ -46,6 +46,7 @@ const Homepage = () => {
         totalItems={currentlyShowing?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
         onPageChange={setCurrentlyShowingPage}
+        linkTo="/currently-showing"
       />
       <HomepageTile
         title="Upcoming Movies"
@@ -56,6 +57,7 @@ const Homepage = () => {
         totalItems={upcoming?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
         onPageChange={setUpcomingPage} 
+        linkTo="/upcoming"
       />
       <HomepageTile
         title="Venues"
@@ -66,6 +68,7 @@ const Homepage = () => {
         totalItems={venues?.totalElements || 0}
         pageSize={DEFAULT_SIZE}
         onPageChange={setVenuesPage}
+        linkTo="/venues"
       />
     </div>
   );
