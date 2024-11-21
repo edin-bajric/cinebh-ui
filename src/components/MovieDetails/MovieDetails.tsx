@@ -2,6 +2,9 @@ import { useParams } from "react-router-dom";
 import style from "./movie-details.module.scss";
 import { FaStar } from "react-icons/fa";
 import useMovieById from "../../hooks/useMovieById";
+import SeeAlsoList from "./SeeAlsoList";
+import Loading from "../Loading";
+import Error from "../Error";
 
 const MovieDetails = () => {
   const { movieId } = useParams<{ movieId: string }>();
@@ -10,8 +13,8 @@ const MovieDetails = () => {
   const formattedStartDate = data?.startDate.replace(/-/g, "/");
   const formattedEndDate = data?.endDate.replace(/-/g, "/");
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading movie details.</div>;
+  if (isLoading) return <Loading />;
+  if (isError) return <Error />;
 
   return (
     <div className={style.container}>
@@ -102,8 +105,11 @@ const MovieDetails = () => {
               ))}
             </div>
           </div>
-          <div className={style.see_also_container}></div>
+          
         </div>
+        <div className={style.see_also_container}>
+            <SeeAlsoList movieId={data?.id}/>
+          </div>
       </div>
     </div>
   );
