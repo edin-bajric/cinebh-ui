@@ -1,0 +1,42 @@
+@use "../../assets/css/variables.scss";
+
+.pagination {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  
+  .pagination p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: variables.$secondary_color;
+  }
+  
+  #prev,
+  #next {
+    width: 48px;
+    height: 48px;
+    border: 1px solid variables.$gray;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #prev:hover,
+  #next:hover {
+    background-color: variables.$gray;
+  }
+  
+  .disabled {
+    color: variables.$gray;
+    pointer-events: none;
+  }
+  
