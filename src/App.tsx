@@ -24,7 +24,7 @@ function App() {
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/currently-showing" element={<CurrentlyShowingPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
-          <Route path="/movie" element={<MovieDetails />} />
+          <Route path="/movie/:movieId" element={<MovieDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

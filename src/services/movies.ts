@@ -64,9 +64,14 @@ const getSimilar = async (
     .then((response) => response.data);
 };
 
+const getById = async (id: string): Promise<Movie> => {
+  return appAxios.get(`/movies/${id}`).then((response) => response.data);
+};
+
 export default {
   getFeatured,
   getCurrentlyShowing,
   getUpcoming,
   getSimilar,
+  getById,
 };

@@ -1,5 +1,6 @@
 import style from "./currently-showing-card.module.scss";
 import { Movie } from "../../../utils/types";
+import { Link } from "react-router-dom";
 
 type CurrentlyShowingCardProps = {
   movie: Movie;
@@ -27,8 +28,16 @@ const CurrentlyShowingCard: React.FC<CurrentlyShowingCardProps> = ({
 
   const showtimes = projections[0]?.projectionTimes.map((p) => p.time) || [];
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className={style.container}>
+    <Link
+      to={`/movie/${movie.id}`}
+      onClick={scrollToTop}
+      className={style.container}
+    >
       <div className={style.content}>
         <div className={style.image}>
           <img
@@ -74,7 +83,7 @@ const CurrentlyShowingCard: React.FC<CurrentlyShowingCardProps> = ({
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 
