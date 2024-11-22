@@ -5,6 +5,7 @@ interface DateBoxProps {
   day: string;
   isSelected: boolean;
   onSelect: () => void;
+  type?: "currentlyShowing" | "movieDetails";
 }
 
 const DateBox: React.FC<DateBoxProps> = ({
@@ -12,9 +13,10 @@ const DateBox: React.FC<DateBoxProps> = ({
   day,
   isSelected,
   onSelect,
+  type = "currentlyShowing",
 }) => {
   return (
-    <div className={style.container}>
+    <div className={`${style.container} ${style[type]}`}>
       <div
         className={`${style.date_block} ${isSelected ? style.selected : ""}`}
         onClick={onSelect}
