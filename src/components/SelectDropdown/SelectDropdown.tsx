@@ -9,24 +9,27 @@ type SelectDropdownProps = {
   selectedValue: string;
 };
 
-const SelectDropdown: React.FC<SelectDropdownProps> = ({ title, data, onSelect, selectedValue }) => {
+const SelectDropdown: React.FC<SelectDropdownProps> = ({
+  title,
+  data,
+  onSelect,
+  selectedValue,
+}) => {
   const [isActive, setIsActive] = useState(false);
 
-  
   const toggleActive = () => {
-  
     if (!isActive) {
-      setIsActive(true);  
+      setIsActive(true);
     }
 
     if (isActive) {
-      setIsActive(false);  
+      setIsActive(false);
     }
   };
 
   const handleSelect = (value: string) => {
-    onSelect(value); 
-    setIsActive(false); 
+    onSelect(value);
+    setIsActive(false);
   };
 
   return (
@@ -36,14 +39,20 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({ title, data, onSelect, 
         onClick={toggleActive}
       >
         <div className={style.filter}>
-          <FaFilter className={`${style.icon} ${isActive ? style.icon_active : ""}`} />
+          <FaFilter
+            className={`${style.icon} ${isActive ? style.icon_active : ""}`}
+          />
         </div>
         <div className={style.dropdown}>
-          <div className={`${style.select} ${isActive ? style.select_active : ""}`}>
-            {selectedValue || `All ${title}`}
+          <div
+            className={`${style.select} ${isActive ? style.select_active : ""}`}
+          >
+            {selectedValue || `${title}`}
           </div>
           <FaChevronDown
-            className={`${style.dropdown_icon} ${isActive ? style.icon_active : ""}`}
+            className={`${style.dropdown_icon} ${
+              isActive ? style.icon_active : ""
+            }`}
           />
           {isActive && (
             <div className={style.dropdown_menu}>
@@ -51,13 +60,13 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({ title, data, onSelect, 
                 className={style.dropdown_item}
                 onClick={() => handleSelect("")}
               >
-                {`All ${title}`}
+                {`${title}`}
               </div>
               {data.map((item, index) => (
                 <div
                   key={index}
                   className={style.dropdown_item}
-                  onClick={() => handleSelect(item)} 
+                  onClick={() => handleSelect(item)}
                 >
                   {item}
                 </div>
