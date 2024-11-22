@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import style from "./ticket-section.module.scss";
 import SelectDropdown from "../../SelectDropdown";
 import DateList from "../../DateList";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Button from "../../Button";
 import { Movie } from "../../../utils/types";
+import useAllVenues from "../../../hooks/useAllVenues";
 
 interface TicketSectionProps {
   data: Movie | undefined;
@@ -14,6 +15,18 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
   const dateListRef = useRef<HTMLDivElement | null>(null);
   const [isLeftDisabled, setIsLeftDisabled] = useState(true);
   const [isRightDisabled, setIsRightDisabled] = useState(false);
+
+  const { data: venues } = useAllVenues();
+
+  const uniqueCities = useMemo(
+    () => Array.from(new Set(venues?.map((venue) => venue.city)) || []),
+    [venues]
+  );
+
+  const cinemas = useMemo(
+    () => Array.from(new Set(venues?.map((venue) => venue.name)) || []),
+    [venues]
+  );
 
   const handleScroll = (direction: "left" | "right") => {
     if (!dateListRef.current) return;
@@ -59,8 +72,8 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
     <div className={style.ticket_container}>
       <div className={style.ticket_content}>
         <div className={style.city_cinema}>
-          <SelectDropdown title="Choose City" />
-          <SelectDropdown title="Choose Cinema" />
+          <SelectDropdown title="Choose City" data={uniqueCities}/>
+          <SelectDropdown title="Choose Cinema" data={cinemas}/>
         </div>
         <div
           className={style.date}
