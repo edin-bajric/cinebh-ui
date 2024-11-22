@@ -1,0 +1,142 @@
+@use "../../../assets/css/variables.scss";
+
+.ticket_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+  height: 562px;
+  border: 1px solid variables.$gray;
+  border-radius: 16px;
+  background-color: variables.$white;
+  box-shadow: 0px 25px 50px -16px rgba(52, 64, 84, 0.16);
+  flex: 1;
+  padding: 0 24px 24px 24px;
+}
+
+.city_cinema {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.arrows {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.date {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-right: -24px;
+  padding-right: 24px;
+}
+
+.date::-webkit-scrollbar {
+  display: none;
+}
+
+.date_box {
+  width: 78px;
+  height: 72px;
+}
+
+.prev,
+.next {
+  width: 48px;
+  height: 48px;
+  border: 1px solid variables.$gray;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: variables.$gray;
+}
+
+.disabled {
+  color: variables.$gray;
+  pointer-events: none;
+}
+
+.showtimes {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.showtimes_title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  color: variables.$secondary_color;
+  margin-bottom: 16px;
+}
+
+.showtimes_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.showtime {
+  width: 71px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid variables.$gray;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px -2px variables.$shadow;
+  box-shadow: 0px 1px 3px -1px variables.$shadow;
+}
+
+.showtime p {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  color: variables.$secondary_color;
+}
+
+.button_container {
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  margin-right: -24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 2px solid variables.$gray;
+  padding: 24px 24px 0 24px;
+}
+
+.button_reserve,
+.button_buy {
+  width: 100%;
+  border-color: rgba(208, 213, 221, 1);
+  background-color: rgba(208, 213, 221, 1);
+  cursor: default;
+}
+
+.button_reserve:hover,
+.button_buy:hover {
+  filter: brightness(1);
+}
+
+.button_reserve {
+  background-color: variables.$white;
+  color: rgba(208, 213, 221, 1);
+}

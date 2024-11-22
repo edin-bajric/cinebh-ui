@@ -19,7 +19,7 @@
   gap: 20px;
   align-items: stretch;
   flex-wrap: wrap;
-  padding-bottom: 24px; 
+  padding-bottom: 24px;
 }
 
 .trailer {
@@ -31,7 +31,7 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 16px 0 0 16px;
-  display: block; 
+  display: block;
 }
 
 .images {
@@ -56,12 +56,18 @@
   }
 }
 
+.info_ticket_container {
+  display: flex;
+  gap: 100px;
+}
+
 .info {
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: start;
   gap: 24px;
-  width: 50%;
+  flex: 1;
 }
 
 .title {
@@ -79,7 +85,7 @@
 }
 
 .basic_info .divider {
-  color: variables.$primary_color; 
+  color: variables.$primary_color;
 }
 
 .basic_info p,
@@ -116,7 +122,8 @@
   color: rgba(52, 64, 84, 1);
 }
 
-.director, .writers {
+.director,
+.writers {
   display: flex;
 }
 
@@ -180,6 +187,7 @@
   padding: 16px;
   border: 1px solid variables.$gray;
   border-radius: 8px;
+  background-color: variables.$white;
 }
 
 .rating_star {
