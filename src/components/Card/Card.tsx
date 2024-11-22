@@ -22,11 +22,16 @@ const Card: React.FC<Props> = ({ type, data, page }) => {
   const getFormattedStartDate = (startDate: string) => {
     const date = new Date(startDate);
     const today = new Date();
-    const sevenDaysFromToday = addDays(today, 7);
 
+    if (date.toDateString() === today.toDateString()) {
+      return "Opens Today";
+    }
+
+    const sevenDaysFromToday = addDays(today, 7);
     if (isWithinInterval(date, { start: today, end: sevenDaysFromToday })) {
       return `Opens ${format(date, "EEEE")}`;
     }
+
     return format(date, "EEE, MMM d, yyyy");
   };
 
