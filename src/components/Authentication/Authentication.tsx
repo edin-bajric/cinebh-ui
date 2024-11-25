@@ -1,4 +1,4 @@
-import style from "./sign-in.module.scss";
+import style from "./authentication.module.scss";
 import Logo from "../Icon";
 import Button from "../Button";
 import {
@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa6";
 import { useState } from "react";
 
-const SignIn = ({
+const Authentication = ({
   closeModal,
   modalType,
   setModalType,
@@ -186,4 +186,4 @@ const SignIn = ({
   );
 };
 
-export default SignIn;
+export default Authentication;

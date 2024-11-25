@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import style from "./navbar.module.scss";
 import Icon from "../Icon";
 import Button from "../Button";
-import SignIn from "../SignIn";
+import Authentication from "../Authentication";
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -49,7 +49,7 @@ const Navbar = () => {
       {isModalOpen && (
         <div className={style.modalOverlay}>
           <div className={style.signInModal}>
-            <SignIn
+            <Authentication
               closeModal={toggleModal}
               modalType={modalType}
               setModalType={setModalType}
