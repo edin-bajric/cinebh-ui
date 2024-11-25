@@ -1,0 +1,219 @@
+@use "../../assets/css/variables.scss";
+
+.container {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  height: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 32px;
+  background-color: variables.$secondary_color;
+  padding: 166px 64px 86px 64px;
+  overflow: visible;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .back_button {
+    position: absolute;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 11px;
+    border-radius: 6px;
+    background-color: rgba(252, 252, 253, 0.1);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+  }
+
+  .back_button:hover {
+    background-color: rgba(252, 252, 253, 0.2);
+  }
+
+  .title {
+    margin: 0 auto;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: -0.0015em;
+    color: rgba(208, 213, 221, 1);
+    text-align: center;
+  }
+}
+
+.arrow {
+  color: rgba(208, 213, 221, 1);
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: variables.$white;
+  }
+
+  .inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid variables.$gray;
+      border-radius: 8px;
+      padding-left: 2rem;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: rgba(16, 24, 40, 1);
+
+      &::placeholder {
+        color: variables.$dark_gray;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      left: 0.75rem;
+      color: variables.$dark_gray;
+      font-size: 1rem;
+    }
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16px;
+
+  .remeber_label,
+  .forgot {
+    font-family: Urbanist;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: rgba(152, 162, 179, 1);
+  }
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  .sign_up {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: variables.$white;
+    }
+
+    .link {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: variables.$white;
+    }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: variables.$white;
+      white-space: nowrap;
+    }
+
+    .line {
+      flex-grow: 1;
+      height: 1px;
+      background-color: variables.$white;
+    }
+  }
+
+  .social {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: variables.$white;
+    }
+
+    .social_icons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+
+      .icon {
+        color: variables.$white;
+      }
+    }
+  }
+
+  .continue p {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: variables.$white;
+    padding-top: 16px;
+  }
+}
