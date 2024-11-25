@@ -11,6 +11,21 @@ import {
   FaEyeSlash,
 } from "react-icons/fa6";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { login, registerUser } from "../../store/authSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+
+export type RegisterFormData = {
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
+
+export type LoginFormData = {
+  email: string;
+  password: string;
+};
 
 const Authentication = ({
   closeModal,
@@ -22,17 +37,20 @@ const Authentication = ({
   setModalType: (type: "signin" | "signup") => void;
 }) => {
   const isSignUp = modalType === "signup";
+  const dispatch = useDispatch<AppDispatch>();
 
   const [activeFields, setActiveFields] = useState<{ [key: string]: boolean }>({
     email: false,
     password: false,
     repeatPassword: false,
   });
+
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     email: "",
     password: "",
     repeatPassword: "",
   });
+
   const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
     password: false,
     repeatPassword: false,
@@ -57,6 +75,32 @@ const Authentication = ({
   const isActive = (field: string) =>
     activeFields[field] || inputValues[field].length > 0;
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData | LoginFormData>();
+
+  const onSubmit = (data: RegisterFormData | LoginFormData) => {
+    if (isSignUp) {
+      const registerData = data as RegisterFormData;
+      dispatch(registerUser(registerData))
+        .unwrap()
+        .then(() => {
+          closeModal();
+        })
+        .catch((error) => console.error("Registration error:", error));
+    } else {
+      const loginData = data as LoginFormData;
+      dispatch(login(loginData))
+        .unwrap()
+        .then(() => {
+          closeModal();
+        })
+        .catch((error) => console.error("Login error:", error));
+    }
+  };
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -67,21 +111,28 @@ const Authentication = ({
           <div className={style.back_button} onClick={closeModal}>
             <FaArrowLeft className={style.arrow} />
           </div>
-          <div className={style.title}>{isSignUp ? "Hello" : "Welcome Back"}</div>
+          <div className={style.title}>
+            {isSignUp ? "Hello" : "Welcome Back"}
+          </div>
         </div>
-        <div className={style.form}>
+        <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={style.input}>
             <label>Email</label>
             <div className={style.inputWrapper}>
               <FaEnvelope
-                className={`${style.icon} ${isActive("email") ? style.iconActive : ""}`}
+                className={`${style.icon} ${
+                  isActive("email") ? style.iconActive : ""
+                }`}
               />
               <input
                 type="text"
                 placeholder="Email Address"
                 onFocus={() => handleFocus("email")}
-                onBlur={() => handleBlur("email")}
-                onChange={(e) => handleChange("email", e.target.value)}
+                {...register("email", {
+                  required: true,
+                  onChange: (e) => handleChange("email", e.target.value),
+                  onBlur: () => handleBlur("email"),
+                })}
               />
             </div>
           </div>
@@ -89,14 +140,19 @@ const Authentication = ({
             <label>Password</label>
             <div className={style.inputWrapper}>
               <FaLock
-                className={`${style.icon} ${isActive("password") ? style.iconActive : ""}`}
+                className={`${style.icon} ${
+                  isActive("password") ? style.iconActive : ""
+                }`}
               />
               <input
                 type={showPassword.password ? "text" : "password"}
                 placeholder="Password"
                 onFocus={() => handleFocus("password")}
-                onBlur={() => handleBlur("password")}
-                onChange={(e) => handleChange("password", e.target.value)}
+                {...register("password", {
+                  required: true,
+                  onChange: (e) => handleChange("password", e.target.value),
+                  onBlur: () => handleBlur("password"),
+                })}
               />
               <button
                 tabIndex={-1}
@@ -121,8 +177,12 @@ const Authentication = ({
                   type={showPassword.repeatPassword ? "text" : "password"}
                   placeholder="Confirm Password"
                   onFocus={() => handleFocus("repeatPassword")}
-                  onBlur={() => handleBlur("repeatPassword")}
-                  onChange={(e) => handleChange("repeatPassword", e.target.value)}
+                  {...register("repeatPassword", {
+                    required: true,
+                    onChange: (e) =>
+                      handleChange("repeatPassword", e.target.value),
+                    onBlur: () => handleBlur("repeatPassword"),
+                  })}
                 />
                 <button
                   tabIndex={-1}
@@ -146,7 +206,7 @@ const Authentication = ({
             <div className={style.forgot}>Forgot Password?</div>
           </div>
           <Button text={isSignUp ? "Sign Up" : "Sign In"} />
-        </div>
+        </form>
         <div className={style.footer}>
           <div className={style.sign_up}>
             <p>

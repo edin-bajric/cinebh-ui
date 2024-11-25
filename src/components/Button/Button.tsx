@@ -22,7 +22,7 @@ const Button: React.FC<Props> = ({
   return (
     <div className={styles.container}>
       <button
-        type="button"
+        type="submit"
         className={buttonClass}
         style={{ width }}
         onClick={onClick}
