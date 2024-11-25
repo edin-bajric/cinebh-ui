@@ -7,18 +7,14 @@ import SignIn from "../SignIn";
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"signin" | "signup">("signin");
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
+    document.body.style.overflow = isModalOpen ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -43,14 +39,21 @@ const Navbar = () => {
           text="Sign In"
           variant="navbar"
           className={style.button}
-          onClick={toggleModal}
+          onClick={() => {
+            setModalType("signin");
+            toggleModal();
+          }}
         />
       </div>
 
       {isModalOpen && (
         <div className={style.modalOverlay}>
           <div className={style.signInModal}>
-            <SignIn closeModal={toggleModal} />
+            <SignIn
+              closeModal={toggleModal}
+              modalType={modalType}
+              setModalType={setModalType}
+            />
           </div>
         </div>
       )}

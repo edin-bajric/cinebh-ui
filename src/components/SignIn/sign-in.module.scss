@@ -110,6 +110,26 @@
       left: 0.75rem;
       color: variables.$dark_gray;
       font-size: 1rem;
+
+      &.iconActive {
+        color: variables.$primary_color;
+      }
+    }
+  }
+
+  .togglePassword {
+    position: absolute;
+    right: 0.75rem;
+    top: 55%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: variables.$dark_gray;
+
+    &:focus {
+      outline: none;
     }
   }
 }
@@ -157,6 +177,7 @@
       line-height: 24px;
       letter-spacing: 0.005em;
       color: variables.$white;
+      text-decoration: 0.5px underline;
     }
   }
 
@@ -266,5 +287,19 @@
   line-height: 24px;
   letter-spacing: 0.005em;
   color: rgba(152, 162, 179, 1);
+}
+
+input[type="password"]::-ms-reveal, 
+input[type="password"]::-webkit-contacts-auto-fill-button {
+  display: none;
+}
+
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]:focus::-ms-reveal,
+input[type="password"]:focus::-webkit-contacts-auto-fill-button {
+  display: none;
 }
 
