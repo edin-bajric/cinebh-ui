@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import style from "./navbar.module.scss";
 import Icon from "../Icon";
 import Button from "../Button";
+import ProfileDropdown from "./ProfileDropdown";
 import Authentication from "../Authentication";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { decodeJwtToken } from "../../utils/decoder";
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"signin" | "signup">("signin");
+  const { userToken } = useSelector((state: RootState) => state.auth);
+  const [decodedToken, setDecodedToken] = useState<any>(null);
 
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
@@ -19,6 +25,15 @@ const Navbar = () => {
       document.body.style.overflow = "auto";
     };
   }, [isModalOpen]);
+
+  useEffect(() => {
+    if (userToken) {
+      const decoded = decodeJwtToken(userToken);
+      setDecodedToken(decoded);
+    } else {
+      setDecodedToken(null);
+    }
+  }, [userToken]);
 
   return (
     <>
@@ -35,15 +50,20 @@ const Navbar = () => {
             Venues
           </Link>
         </div>
-        <Button
-          text="Sign In"
-          variant="navbar"
-          className={style.button}
-          onClick={() => {
-            setModalType("signin");
-            toggleModal();
-          }}
-        />
+
+        {userToken ? (
+          <ProfileDropdown userEmail={decodedToken?.sub || "User"} />
+        ) : (
+          <Button
+            text="Sign In"
+            variant="navbar"
+            className={style.button}
+            onClick={() => {
+              setModalType("signin");
+              toggleModal();
+            }}
+          />
+        )}
       </div>
 
       {isModalOpen && (

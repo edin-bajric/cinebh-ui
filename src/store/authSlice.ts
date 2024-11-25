@@ -110,5 +110,26 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+    "auth/logout",
+    async (_, { rejectWithValue }) => {
+      try {
+        const token = localStorage.getItem("userToken");
+        if (!token) {
+          throw new Error("No token found");
+        }
+        await appAxios.delete("/auth/logout", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } catch (error: any) {
+        if (error.response && error.response.data.message) {
+          return rejectWithValue(error.response.data.message);
+        } else {
+          return rejectWithValue(error.message);
+        }
+      }
+    }
+  );
+
 export const { logout, checkTokenValidity } = authSlice.actions;
 export default authSlice.reducer;
