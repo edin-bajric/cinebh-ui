@@ -213,7 +213,58 @@
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.005em;
+    text-decoration: 0.5px underline;
     color: variables.$white;
     padding-top: 16px;
+    cursor: pointer;
   }
 }
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.customCheckbox {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 1px solid variables.$white;
+  border-radius: 4px;
+  background-color: variables.$secondary_color;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  span {
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 13px;
+    height: 13px;
+    background-color: variables.$primary_color;
+    border-radius: 2px;
+  }
+
+  input:checked + span {
+    display: block;
+  }
+}
+
+.remember_label {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: rgba(152, 162, 179, 1);
+}
+

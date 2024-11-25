@@ -35,12 +35,15 @@ const SignIn = ({ closeModal }: { closeModal: () => void }) => {
 
           <div className={style.options}>
             <div className={style.remember}>
-              <input type="checkbox" />
-              <label className={style.remeber_label}>Remember me</label>
+              <label className={style.customCheckbox}>
+                <input type="checkbox" />
+                <span></span>
+              </label>
+              <label className={style.remember_label}>Remember me</label>
             </div>
             <div className={style.forgot}>Forgot Password?</div>
           </div>
-          <Button text="Sign In"/>
+          <Button text="Sign In" />
         </div>
         <div className={style.footer}>
           <div className={style.sign_up}>
@@ -61,7 +64,7 @@ const SignIn = ({ closeModal }: { closeModal: () => void }) => {
               <FaApple className={style.icon} />
             </div>
           </div>
-          <div className={style.continue}>
+          <div className={style.continue} onClick={closeModal}>
             <p>Continue without Signing In</p>
           </div>
         </div>
