@@ -10,7 +10,7 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { login, registerUser } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
@@ -39,11 +39,13 @@ const Authentication = ({
   const isSignUp = modalType === "signup";
   const dispatch = useDispatch<AppDispatch>();
 
-  const [activeFields, setActiveFields] = useState<{ [key: string]: boolean }>({
-    email: false,
-    password: false,
-    repeatPassword: false,
-  });
+  const [activeFields, setActiveFields] = useState<{ [key: string]: boolean }>(
+    {
+      email: false,
+      password: false,
+      repeatPassword: false,
+    }
+  );
 
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     email: "",
@@ -51,10 +53,22 @@ const Authentication = ({
     repeatPassword: "",
   });
 
-  const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
-    password: false,
-    repeatPassword: false,
-  });
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
+
+  const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>(
+    {
+      password: false,
+      repeatPassword: false,
+    }
+  );
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("email");
+    if (savedEmail) {
+      setInputValues((prev) => ({ ...prev, email: savedEmail }));
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleFocus = (field: string) => {
     setActiveFields((prev) => ({ ...prev, [field]: true }));
@@ -95,9 +109,19 @@ const Authentication = ({
       dispatch(login(loginData))
         .unwrap()
         .then(() => {
+          if (rememberMe) {
+            localStorage.setItem("email", loginData.email);
+          }
           closeModal();
         })
         .catch((error) => console.error("Login error:", error));
+    }
+  };
+
+  const handleRememberMeChange = () => {
+    setRememberMe(!rememberMe);
+    if (rememberMe) {
+      localStorage.removeItem("email");
     }
   };
 
@@ -127,6 +151,7 @@ const Authentication = ({
               <input
                 type="text"
                 placeholder="Email Address"
+                value={inputValues.email}
                 onFocus={() => handleFocus("email")}
                 {...register("email", {
                   required: true,
@@ -198,7 +223,11 @@ const Authentication = ({
           <div className={style.options}>
             <div className={style.remember}>
               <label className={style.customCheckbox}>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={handleRememberMeChange}
+                />
                 <span></span>
               </label>
               <label className={style.remember_label}>Remember me</label>

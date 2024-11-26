@@ -67,9 +67,11 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(registerUser.fulfilled, (state) => {
+    builder.addCase(registerUser.fulfilled, (state, action: any) => {
       state.loading = false;
       state.success = true;
+      state.userInfo = action.payload;
+      state.userToken = action.payload.jwt;
     });
     builder.addCase(registerUser.rejected, (state, action: any) => {
       state.loading = false;
@@ -80,9 +82,11 @@ const authSlice = createSlice({
 
 export const registerUser = createAsyncThunk(
   "auth/sign-up",
-  async (data: RegisterFormData, { rejectWithValue }) => {
+  async (body: RegisterFormData, { rejectWithValue }) => {
     try {
-      await appAxios.post("/auth/sign-up", data);
+      const { data } = await appAxios.post("/auth/sign-up", body);
+      localStorage.setItem("userToken", data.jwt);
+      return data;
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
@@ -111,25 +115,25 @@ export const login = createAsyncThunk(
 );
 
 export const logoutUser = createAsyncThunk(
-    "auth/logout",
-    async (_, { rejectWithValue }) => {
-      try {
-        const token = localStorage.getItem("userToken");
-        if (!token) {
-          throw new Error("No token found");
-        }
-        await appAxios.delete("/auth/logout", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } catch (error: any) {
-        if (error.response && error.response.data.message) {
-          return rejectWithValue(error.response.data.message);
-        } else {
-          return rejectWithValue(error.message);
-        }
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("userToken");
+      if (!token) {
+        throw new Error("No token found");
+      }
+      await appAxios.delete("/auth/logout", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
       }
     }
-  );
+  }
+);
 
 export const { logout, checkTokenValidity } = authSlice.actions;
 export default authSlice.reducer;
