@@ -15,6 +15,9 @@ import { useForm } from "react-hook-form";
 import { login, registerUser } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { FieldErrors } from "react-hook-form";
 
 export type RegisterFormData = {
   email: string;
@@ -39,13 +42,11 @@ const Authentication = ({
   const isSignUp = modalType === "signup";
   const dispatch = useDispatch<AppDispatch>();
 
-  const [activeFields, setActiveFields] = useState<{ [key: string]: boolean }>(
-    {
-      email: false,
-      password: false,
-      repeatPassword: false,
-    }
-  );
+  const [activeFields, setActiveFields] = useState<{ [key: string]: boolean }>({
+    email: false,
+    password: false,
+    repeatPassword: false,
+  });
 
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     email: "",
@@ -55,12 +56,10 @@ const Authentication = ({
 
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>(
-    {
-      password: false,
-      repeatPassword: false,
-    }
-  );
+  const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
+    password: false,
+    repeatPassword: false,
+  });
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("email");
@@ -89,11 +88,32 @@ const Authentication = ({
   const isActive = (field: string) =>
     activeFields[field] || inputValues[field].length > 0;
 
+  const signInSchema = yup.object({
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup.string().required("Password is required"),
+  });
+
+  const signUpSchema = yup.object({
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
+    repeatPassword: yup
+      .string()
+      .oneOf([yup.ref("password")], "Passwords do not match")
+      .required("Confirm Password is required"),
+  });
+
+  const schema = isSignUp ? signUpSchema : signInSchema;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterFormData | LoginFormData>();
+  } = useForm<RegisterFormData | LoginFormData>({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = (data: RegisterFormData | LoginFormData) => {
     if (isSignUp) {
@@ -141,11 +161,11 @@ const Authentication = ({
         </div>
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={style.input}>
-            <label>Email</label>
-            <div className={style.inputWrapper}>
+            <label>Email</label> 
+            <div className={style.input_wrapper}>
               <FaEnvelope
                 className={`${style.icon} ${
-                  isActive("email") ? style.iconActive : ""
+                  isActive("email") ? style.icon_active : ""
                 }`}
               />
               <input
@@ -160,13 +180,16 @@ const Authentication = ({
                 })}
               />
             </div>
+            {errors.email && (
+              <p className={style.error}>{errors.email.message}</p>
+            )}
           </div>
           <div className={style.input}>
             <label>Password</label>
-            <div className={style.inputWrapper}>
+            <div className={style.input_wrapper}>
               <FaLock
                 className={`${style.icon} ${
-                  isActive("password") ? style.iconActive : ""
+                  isActive("password") ? style.icon_active : ""
                 }`}
               />
               <input
@@ -182,20 +205,31 @@ const Authentication = ({
               <button
                 tabIndex={-1}
                 type="button"
-                className={style.togglePassword}
+                className={style.toggle_password}
                 onClick={() => togglePasswordVisibility("password")}
               >
                 {showPassword.password ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+            {errors.password && (
+              <p className={style.error}>{errors.password.message}</p>
+            )}
+            {"repeatPassword" in errors && (
+              <p className={style.error}>
+                {
+                  (errors as FieldErrors<RegisterFormData>).repeatPassword
+                    ?.message
+                }
+              </p>
+            )}
           </div>
           {isSignUp && (
             <div className={style.input}>
               <label>Confirm Password</label>
-              <div className={style.inputWrapper}>
+              <div className={style.input_wrapper}>
                 <FaLock
                   className={`${style.icon} ${
-                    isActive("repeatPassword") ? style.iconActive : ""
+                    isActive("repeatPassword") ? style.icon_active : ""
                   }`}
                 />
                 <input
@@ -212,17 +246,25 @@ const Authentication = ({
                 <button
                   tabIndex={-1}
                   type="button"
-                  className={style.togglePassword}
+                  className={style.toggle_password}
                   onClick={() => togglePasswordVisibility("repeatPassword")}
                 >
                   {showPassword.repeatPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
+              {"repeatPassword" in errors && (
+                <p className={style.error}>
+                  {
+                    (errors as FieldErrors<RegisterFormData>).repeatPassword
+                      ?.message
+                  }
+                </p>
+              )}
             </div>
           )}
           <div className={style.options}>
             <div className={style.remember}>
-              <label className={style.customCheckbox}>
+              <label className={style.custom_checkbox}>
                 <input
                   type="checkbox"
                   checked={rememberMe}
