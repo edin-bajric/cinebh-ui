@@ -145,6 +145,18 @@ const Authentication = ({
     }
   };
 
+  const label_error = {
+    color: "rgba(253, 162, 155, 1)",
+  };
+
+  const error_color = {
+    color: "rgba(240, 68, 56, 1)",
+  };
+
+  const input_error = {
+    border: "2px solid rgba(253, 162, 155, 1)",
+  };
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -161,12 +173,13 @@ const Authentication = ({
         </div>
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={style.input}>
-            <label>Email</label> 
+            <label style={errors.email ? label_error : {}}>Email</label>
             <div className={style.input_wrapper}>
               <FaEnvelope
                 className={`${style.icon} ${
                   isActive("email") ? style.icon_active : ""
                 }`}
+                style={errors.email ? error_color : {}}
               />
               <input
                 type="text"
@@ -178,6 +191,7 @@ const Authentication = ({
                   onChange: (e) => handleChange("email", e.target.value),
                   onBlur: () => handleBlur("email"),
                 })}
+                style={errors.email ? { ...error_color, ...input_error } : {}}
               />
             </div>
             {errors.email && (
@@ -185,12 +199,13 @@ const Authentication = ({
             )}
           </div>
           <div className={style.input}>
-            <label>Password</label>
+            <label style={errors.password ? label_error : {}}>Password</label>
             <div className={style.input_wrapper}>
               <FaLock
                 className={`${style.icon} ${
                   isActive("password") ? style.icon_active : ""
                 }`}
+                style={errors.password ? error_color : {}}
               />
               <input
                 type={showPassword.password ? "text" : "password"}
@@ -201,6 +216,9 @@ const Authentication = ({
                   onChange: (e) => handleChange("password", e.target.value),
                   onBlur: () => handleBlur("password"),
                 })}
+                style={
+                  errors.password ? { ...error_color, ...input_error } : {}
+                }
               />
               <button
                 tabIndex={-1}
@@ -208,7 +226,11 @@ const Authentication = ({
                 className={style.toggle_password}
                 onClick={() => togglePasswordVisibility("password")}
               >
-                {showPassword.password ? <FaEyeSlash /> : <FaEye />}
+                {showPassword.password ? (
+                  <FaEye style={errors.password ? error_color : {}} />
+                ) : (
+                  <FaEyeSlash style={errors.password ? error_color : {}} />
+                )}
               </button>
             </div>
             {errors.password && (
@@ -225,12 +247,15 @@ const Authentication = ({
           </div>
           {isSignUp && (
             <div className={style.input}>
-              <label>Confirm Password</label>
+              <label style={"repeatPassword" in errors ? label_error : {}}>
+                Confirm Password
+              </label>
               <div className={style.input_wrapper}>
                 <FaLock
                   className={`${style.icon} ${
                     isActive("repeatPassword") ? style.icon_active : ""
                   }`}
+                  style={"repeatPassword" in errors ? error_color : {}}
                 />
                 <input
                   type={showPassword.repeatPassword ? "text" : "password"}
@@ -242,6 +267,11 @@ const Authentication = ({
                       handleChange("repeatPassword", e.target.value),
                     onBlur: () => handleBlur("repeatPassword"),
                   })}
+                  style={
+                    "repeatPassword" in errors
+                      ? { ...error_color, ...input_error }
+                      : {}
+                  }
                 />
                 <button
                   tabIndex={-1}
@@ -249,7 +279,15 @@ const Authentication = ({
                   className={style.toggle_password}
                   onClick={() => togglePasswordVisibility("repeatPassword")}
                 >
-                  {showPassword.repeatPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword.repeatPassword ? (
+                    <FaEye
+                      style={"repeatPassword" in errors ? error_color : {}}
+                    />
+                  ) : (
+                    <FaEyeSlash
+                      style={"repeatPassword" in errors ? error_color : {}}
+                    />
+                  )}
                 </button>
               </div>
               {"repeatPassword" in errors && (
