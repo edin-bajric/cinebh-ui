@@ -111,6 +111,7 @@ const Authentication = ({
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<RegisterFormData | LoginFormData>({
     resolver: yupResolver(schema),
   });
@@ -118,14 +119,28 @@ const Authentication = ({
   const onSubmit = (data: RegisterFormData | LoginFormData) => {
     if (isSignUp) {
       const registerData = data as RegisterFormData;
+
       dispatch(registerUser(registerData))
         .unwrap()
         .then(() => {
           closeModal();
         })
-        .catch((error) => console.error("Registration error:", error));
+        .catch((error) => {
+          if (error.response?.status === 409) {
+            setError("email", {
+              type: "server",
+              message: "An error occurred during registration.",
+            });
+          } else {
+            setError("email", {
+              type: "server",
+              message: "Email invalid or already in use.",
+            });
+          }
+        });
     } else {
       const loginData = data as LoginFormData;
+
       dispatch(login(loginData))
         .unwrap()
         .then(() => {
@@ -134,7 +149,19 @@ const Authentication = ({
           }
           closeModal();
         })
-        .catch((error) => console.error("Login error:", error));
+        .catch((error) => {
+          if (error.response?.status === 403) {
+            setError("password", {
+              type: "server",
+              message: "Incorrect email or password.",
+            });
+          } else {
+            setError("email", {
+              type: "server",
+              message: "User not found.",
+            });
+          }
+        });
     }
   };
 
