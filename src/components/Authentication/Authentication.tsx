@@ -153,12 +153,12 @@ const Authentication = ({
           if (error.response?.status === 403) {
             setError("password", {
               type: "server",
-              message: "Incorrect email or password.",
+              message: "Incorrect password",
             });
           } else {
             setError("email", {
               type: "server",
-              message: "User not found.",
+              message: "Incorrect email or password.",
             });
           }
         });
