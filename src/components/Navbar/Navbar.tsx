@@ -35,6 +35,8 @@ const Navbar = () => {
     }
   }, [userToken]);
 
+  const username = decodedToken?.sub.split("@")[0];
+
   return (
     <>
       <div className={`${style.container} ${isModalOpen ? style.blur : ""}`}>
@@ -52,7 +54,7 @@ const Navbar = () => {
         </div>
 
         {userToken ? (
-          <ProfileDropdown userEmail={decodedToken?.sub || "User"} />
+          <ProfileDropdown userEmail={username || "User"} />
         ) : (
           <Button
             text="Sign In"
