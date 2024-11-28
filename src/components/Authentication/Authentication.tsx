@@ -10,15 +10,33 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa6";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { login, registerUser } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { FieldErrors } from "react-hook-form";
 import SuccessScreen from "./SuccessScreen";
+import { signInSchema, signUpSchema } from "./validationSchema";
+import { label_error, error_color, input_error } from "./styling";
+import {
+  handleBlur,
+  handleChange,
+  handleFocus,
+  inputValues,
+  isActive,
+  isSuccessScreenVisible,
+  rememberMe,
+  setInputValues,
+  setIsSuccessScreenVisible,
+  setRememberMe,
+  setSuccessScreenType,
+  showPassword,
+  successScreenType,
+  togglePasswordVisibility,
+  handleRememberMeChange,
+} from "./authenticationUtils";
 
 export type RegisterFormData = {
   email: string;
@@ -43,30 +61,6 @@ const Authentication = ({
   const isSignUp = modalType === "signup";
   const dispatch = useDispatch<AppDispatch>();
 
-  const [activeFields, setActiveFields] = useState<{ [key: string]: boolean }>({
-    email: false,
-    password: false,
-    repeatPassword: false,
-  });
-
-  const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
-    email: "",
-    password: "",
-    repeatPassword: "",
-  });
-
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
-    password: false,
-    repeatPassword: false,
-  });
-
-  const [isSuccessScreenVisible, setIsSuccessScreenVisible] =
-    useState<boolean>(false);
-  const [successScreenType, setSuccessScreenType] = useState<
-    "signIn" | "signUp" | null
-  >(null);
-
   useEffect(() => {
     const savedEmail = localStorage.getItem("email");
     if (savedEmail) {
@@ -74,42 +68,6 @@ const Authentication = ({
       setRememberMe(true);
     }
   }, []);
-
-  const handleFocus = (field: string) => {
-    setActiveFields((prev) => ({ ...prev, [field]: true }));
-  };
-
-  const handleBlur = (field: string) => {
-    setActiveFields((prev) => ({ ...prev, [field]: false }));
-  };
-
-  const handleChange = (field: string, value: string) => {
-    setInputValues((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const togglePasswordVisibility = (field: string) => {
-    setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
-  };
-
-  const isActive = (field: string) =>
-    activeFields[field] || inputValues[field].length > 0;
-
-  const signInSchema = yup.object({
-    email: yup.string().email("Invalid email").required("Email is required"),
-    password: yup.string().required("Password is required"),
-  });
-
-  const signUpSchema = yup.object({
-    email: yup.string().email("Invalid email").required("Email is required"),
-    password: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
-    repeatPassword: yup
-      .string()
-      .oneOf([yup.ref("password")], "Passwords do not match")
-      .required("Confirm Password is required"),
-  });
 
   const schema = isSignUp ? signUpSchema : signInSchema;
 
@@ -173,28 +131,9 @@ const Authentication = ({
     }
   };
 
-  const handleRememberMeChange = () => {
-    setRememberMe(!rememberMe);
-    if (rememberMe) {
-      localStorage.removeItem("email");
-    }
-  };
-
   if (isSuccessScreenVisible && successScreenType) {
     return <SuccessScreen type={successScreenType} closeModal={closeModal} />;
   }
-
-  const label_error = {
-    color: "rgba(253, 162, 155, 1)",
-  };
-
-  const error_color = {
-    color: "rgba(240, 68, 56, 1)",
-  };
-
-  const input_error = {
-    border: "2px solid rgba(253, 162, 155, 1)",
-  };
 
   return (
     <div className={style.container}>
@@ -238,13 +177,23 @@ const Authentication = ({
             )}
           </div>
           <div className={style.input}>
-            <label style={errors.password ? label_error : {}}>Password</label>
+            <label
+              style={
+                errors.password || "repeatPassword" in errors ? label_error : {}
+              }
+            >
+              Password
+            </label>
             <div className={style.input_wrapper}>
               <FaLock
                 className={`${style.icon} ${
                   isActive("password") ? style.icon_active : ""
                 }`}
-                style={errors.password ? error_color : {}}
+                style={
+                  errors.password || "repeatPassword" in errors
+                    ? error_color
+                    : {}
+                }
               />
               <input
                 type={showPassword.password ? "text" : "password"}
@@ -256,7 +205,9 @@ const Authentication = ({
                   onBlur: () => handleBlur("password"),
                 })}
                 style={
-                  errors.password ? { ...error_color, ...input_error } : {}
+                  errors.password || "repeatPassword" in errors
+                    ? { ...error_color, ...input_error }
+                    : {}
                 }
               />
               <button
@@ -266,9 +217,21 @@ const Authentication = ({
                 onClick={() => togglePasswordVisibility("password")}
               >
                 {showPassword.password ? (
-                  <FaEye style={errors.password ? error_color : {}} />
+                  <FaEye
+                    style={
+                      errors.password || "repeatPassword" in errors
+                        ? error_color
+                        : {}
+                    }
+                  />
                 ) : (
-                  <FaEyeSlash style={errors.password ? error_color : {}} />
+                  <FaEyeSlash
+                    style={
+                      errors.password || "repeatPassword" in errors
+                        ? error_color
+                        : {}
+                    }
+                  />
                 )}
               </button>
             </div>

@@ -4,7 +4,7 @@ import signIn from "../../../assets/img/sign-in.png";
 import signUp from "../../../assets/img/sign-up.png";
 import resetPassword from "../../../assets/img/reset-password.png";
 import { FaArrowLeft } from "react-icons/fa6";
-import Logo from "../../Icon/Icon";
+import Logo from "../../Icon";
 import Button from "../../Button/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -49,7 +49,7 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ type, closeModal }) => {
         <div className={style.subtitle}>
           {isSignUp
             ? "Start exploring latest movies, venues, and ticket options!"
-            : "Please, wait. You will be redirected to the home page."}
+            : "Please, wait. You will be redirected to the homepage."}
         </div>
         <div className={style.image}>
           <img
