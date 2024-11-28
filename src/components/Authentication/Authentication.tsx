@@ -18,6 +18,7 @@ import { AppDispatch } from "../../store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FieldErrors } from "react-hook-form";
+import SuccessScreen from "./SuccessScreen";
 
 export type RegisterFormData = {
   email: string;
@@ -55,11 +56,16 @@ const Authentication = ({
   });
 
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-
   const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
     password: false,
     repeatPassword: false,
   });
+
+  const [isSuccessScreenVisible, setIsSuccessScreenVisible] =
+    useState<boolean>(false);
+  const [successScreenType, setSuccessScreenType] = useState<
+    "signIn" | "signUp" | null
+  >(null);
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("email");
@@ -123,7 +129,8 @@ const Authentication = ({
       dispatch(registerUser(registerData))
         .unwrap()
         .then(() => {
-          closeModal();
+          setSuccessScreenType("signUp");
+          setIsSuccessScreenVisible(true);
         })
         .catch((error) => {
           if (error.response?.status === 409) {
@@ -144,10 +151,11 @@ const Authentication = ({
       dispatch(login(loginData))
         .unwrap()
         .then(() => {
-          if (rememberMe) {
-            localStorage.setItem("email", loginData.email);
-          }
-          closeModal();
+          setSuccessScreenType("signIn");
+          setIsSuccessScreenVisible(true);
+          setTimeout(() => {
+            closeModal();
+          }, 3000);
         })
         .catch((error) => {
           if (error.response?.status === 403) {
@@ -171,6 +179,10 @@ const Authentication = ({
       localStorage.removeItem("email");
     }
   };
+
+  if (isSuccessScreenVisible && successScreenType) {
+    return <SuccessScreen type={successScreenType} closeModal={closeModal} />;
+  }
 
   const label_error = {
     color: "rgba(253, 162, 155, 1)",
