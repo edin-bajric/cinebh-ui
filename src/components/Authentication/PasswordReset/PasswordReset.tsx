@@ -8,7 +8,7 @@ import {
   handleChange,
   isActive,
   inputValues,
-} from "../authenticationUtils";
+} from "../AuthenticationUtils";
 import style from "../authentication.module.scss";
 import Logo from "../../Icon";
 import { FaArrowLeft, FaEnvelope } from "react-icons/fa6";
