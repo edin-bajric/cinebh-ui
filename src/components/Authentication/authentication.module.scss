@@ -148,6 +148,14 @@
     letter-spacing: 0.005em;
     color: rgba(152, 162, 179, 1);
   }
+
+  .forgot {
+    cursor: pointer;
+  }
+
+  .forgot:hover {
+    text-decoration: underline;
+  }
 }
 
 .footer {

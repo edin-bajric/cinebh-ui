@@ -2,13 +2,7 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { passwordResetSchema } from "../validationSchema";
-import {
-  handleFocus,
-  handleBlur,
-  handleChange,
-  isActive,
-  inputValues,
-} from "../authenticationUtils";
+import { useInputState } from "../authenticationUtils";
 import style from "../authentication.module.scss";
 import Logo from "../../Icon";
 import { FaArrowLeft, FaEnvelope } from "react-icons/fa6";
@@ -32,6 +26,9 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal }) => {
     resolver: yupResolver(passwordResetSchema),
   });
 
+  const { inputValues, handleFocus, handleBlur, handleChange, isActive } =
+    useInputState();
+
   const onSubmit: SubmitHandler<PasswordResetFormValues> = (data) => {
     console.log(data.email);
   };
@@ -49,7 +46,8 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal }) => {
           <div className={style.title}>Password Reset</div>
         </div>
         <div className={style.subtitle}>
-          Provide your account's email for which you want to reset your password.
+          Provide your account's email for which you want to reset your
+          password.
         </div>
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={style.input}>
