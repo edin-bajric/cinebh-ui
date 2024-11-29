@@ -8,6 +8,7 @@ import Logo from "../../Icon";
 import { FaArrowLeft, FaEnvelope } from "react-icons/fa6";
 import Button from "../../Button";
 import { label_error, error_color, input_error } from "../styling";
+import useSendPasswordResetEmail from "../../../hooks/useSendPasswordResetEmail";
 
 type PasswordResetProps = {
   closeModal: () => void;
@@ -29,8 +30,10 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal }) => {
   const { inputValues, handleFocus, handleBlur, handleChange, isActive } =
     useInputState();
 
-  const onSubmit: SubmitHandler<PasswordResetFormValues> = (data) => {
-    console.log(data.email);
+  const { mutate, isLoading, isError, isSuccess } = useSendPasswordResetEmail();
+
+  const onSubmit: SubmitHandler<PasswordResetFormValues> = async (data) => {
+    mutate(data.email);
   };
 
   return (
@@ -75,8 +78,14 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal }) => {
             {errors.email && (
               <p className={style.error}>{errors.email.message}</p>
             )}
+            {isError && (
+              <p className={style.error}>
+                Failed to send email. Please try again.
+              </p>
+            )}
           </div>
-          <Button text="Continue" />
+          <Button text={isLoading ? "Sending..." : "Continue"} />
+          {isSuccess && <p></p>}
         </form>
       </div>
     </div>
