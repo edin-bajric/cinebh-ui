@@ -36,7 +36,7 @@ import {
   successScreenType,
   togglePasswordVisibility,
   handleRememberMeChange,
-} from "./AuthenticationUtils";
+} from "./authenticationUtils";
 
 export type RegisterFormData = {
   email: string;
