@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { passwordResetSchema } from "../validationSchema";
@@ -9,6 +9,7 @@ import { FaArrowLeft, FaEnvelope } from "react-icons/fa6";
 import Button from "../../Button";
 import { label_error, error_color, input_error } from "../styling";
 import useSendPasswordResetEmail from "../../../hooks/useSendPasswordResetEmail";
+import PasswordResetCode from "./PasswordResetCode";
 
 type PasswordResetProps = {
   closeModal: () => void;
@@ -19,6 +20,9 @@ type PasswordResetFormValues = {
 };
 
 const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal }) => {
+  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
+  const [email, setEmail] = useState<string | null>(null); 
+
   const {
     register,
     handleSubmit,
@@ -33,61 +37,69 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal }) => {
   const { mutate, isLoading, isError, isSuccess } = useSendPasswordResetEmail();
 
   const onSubmit: SubmitHandler<PasswordResetFormValues> = async (data) => {
+    setEmail(data.email);
     mutate(data.email);
   };
 
+  if (isSuccess && !isCodeModalOpen) {
+    setIsCodeModalOpen(true);
+  }
+
   return (
     <div className={style.container}>
-      <div className={style.content}>
-        <div className={style.logo}>
-          <Logo />
-        </div>
-        <div className={style.welcome}>
-          <div className={style.back_button} onClick={closeModal}>
-            <FaArrowLeft className={style.arrow} />
+      {isCodeModalOpen && email ? (
+        <PasswordResetCode email={email} closeModal={closeModal}/>
+      ) : (
+        <div className={style.content}>
+          <div className={style.logo}>
+            <Logo />
           </div>
-          <div className={style.title}>Password Reset</div>
-        </div>
-        <div className={style.subtitle}>
-          Provide your account's email for which you want to reset your
-          password.
-        </div>
-        <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-          <div className={style.input}>
-            <label style={errors.email ? label_error : {}}>Email</label>
-            <div className={style.input_wrapper}>
-              <FaEnvelope
-                className={`${style.icon} ${
-                  isActive("email") ? style.icon_active : ""
-                }`}
-                style={errors.email ? error_color : {}}
-              />
-              <input
-                type="text"
-                placeholder="Email Address"
-                value={inputValues.email}
-                onFocus={() => handleFocus("email")}
-                {...register("email", {
-                  required: true,
-                  onChange: (e) => handleChange("email", e.target.value),
-                  onBlur: () => handleBlur("email"),
-                })}
-                style={errors.email ? { ...error_color, ...input_error } : {}}
-              />
+          <div className={style.welcome}>
+            <div className={style.back_button} onClick={closeModal}>
+              <FaArrowLeft className={style.arrow} />
             </div>
-            {errors.email && (
-              <p className={style.error}>{errors.email.message}</p>
-            )}
-            {isError && (
-              <p className={style.error}>
-                Failed to send email. Please try again.
-              </p>
-            )}
+            <div className={style.title}>Password Reset</div>
           </div>
-          <Button text={isLoading ? "Sending..." : "Continue"} />
-          {isSuccess && <p></p>}
-        </form>
-      </div>
+          <div className={style.subtitle}>
+            Provide your account's email for which you want to reset your
+            password.
+          </div>
+          <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={style.input}>
+              <label style={errors.email ? label_error : {}}>Email</label>
+              <div className={style.input_wrapper}>
+                <FaEnvelope
+                  className={`${style.icon} ${
+                    isActive("email") ? style.icon_active : ""
+                  }`}
+                  style={errors.email ? error_color : {}}
+                />
+                <input
+                  type="text"
+                  placeholder="Email Address"
+                  value={inputValues.email}
+                  onFocus={() => handleFocus("email")}
+                  {...register("email", {
+                    required: true,
+                    onChange: (e) => handleChange("email", e.target.value),
+                    onBlur: () => handleBlur("email"),
+                  })}
+                  style={errors.email ? { ...error_color, ...input_error } : {}}
+                />
+              </div>
+              {errors.email && (
+                <p className={style.error}>{errors.email.message}</p>
+              )}
+              {isError && (
+                <p className={style.error}>
+                  Failed to send email. Please try again.
+                </p>
+              )}
+            </div>
+            <Button text={isLoading ? "Sending..." : "Continue"} />
+          </form>
+        </div>
+      )}
     </div>
   );
 };
