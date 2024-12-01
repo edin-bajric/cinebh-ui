@@ -5,10 +5,12 @@ import { FaArrowLeft } from "react-icons/fa6";
 import Button from "../../../Button";
 import useValidateCode from "../../../../hooks/useValidateCode";
 import useSendPasswordResetEmail from "../../../../hooks/useSendPasswordResetEmail";
+import PasswordResetPassword from "../PasswordResetPassword";
 
 type PasswordResetCodeProps = {
   email: string;
   closeModal: () => void;
+  closeAllModals: () => void;
 };
 
 const maskEmail = (email: string): string => {
@@ -21,12 +23,13 @@ const maskEmail = (email: string): string => {
   )}@${domain}`;
 };
 
-const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal }) => {
+const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal, closeAllModals }) => {
   const maskedEmail = maskEmail(email);
   const [inputs, setInputs] = useState<string[]>(["", "", "", ""]);
-  const { mutate: validateCode, isLoading, isError } = useValidateCode();
+  const { mutate: validateCode, isLoading, isError, isSuccess } = useValidateCode();
   const { mutate: sendEmail } = useSendPasswordResetEmail();
   const [timer, setTimer] = useState<number>(60);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   useEffect(() => {
     if (timer > 0) {
@@ -74,8 +77,15 @@ const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal
     }
   };
 
+  if (isSuccess && !isPasswordModalOpen) {
+    setIsPasswordModalOpen(true);
+  }
+
   return (
     <div className={style.container}>
+        {isPasswordModalOpen && email ? (
+        <PasswordResetPassword email={email} closeAllModals={closeAllModals}/>
+      ) : (
       <div className={style.content}>
         <div className={style.logo}>
           <Logo />
@@ -126,6 +136,7 @@ const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal
           />
         </form>
       </div>
+      )}
     </div>
   );
 };

@@ -19,6 +19,11 @@ const Navbar = () => {
     setModalOpen((prev) => !prev);
   };
 
+  const closeAllModals = () => {
+    setModalOpen(false); 
+    setModalType("signin");
+  };
+
   useEffect(() => {
     document.body.style.overflow = isModalOpen ? "hidden" : "auto";
     return () => {
@@ -72,6 +77,7 @@ const Navbar = () => {
         <div className={style.modalOverlay}>
           <div className={style.signInModal}>
             <Authentication
+              closeAllModals={closeAllModals}
               closeModal={toggleModal}
               modalType={modalType}
               setModalType={setModalType}

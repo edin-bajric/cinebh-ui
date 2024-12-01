@@ -11,22 +11,25 @@ import { useNavigate } from "react-router-dom";
 type SuccessScreenProps = {
   type: "signIn" | "signUp" | "resetPassword";
   closeModal: () => void;
+  closeAllModals: () => void;
 };
 
-const SuccessScreen: React.FC<SuccessScreenProps> = ({ type, closeModal }) => {
+const SuccessScreen: React.FC<SuccessScreenProps> = ({ type, closeModal, closeAllModals }) => {
   const isSignIn = type === "signIn";
   const isSignUp = type === "signUp";
+  const isResetPassword = type === "resetPassword";
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isSignIn) {
+    if (isSignIn || isResetPassword) {
       const timer = setTimeout(() => {
+        closeAllModals();
         navigate("/home");
       }, 3000);
 
       return () => clearTimeout(timer);
     }
-  }, [isSignIn, navigate]);
+  }, [isSignIn, isResetPassword, navigate]);
 
   return (
     <div className={style.container}>
@@ -40,10 +43,10 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ type, closeModal }) => {
           </div>
           <div className={style.title}>
             {isSignIn
-              ? "Sign In Successful!"
+              ? "Sign In Successful!🎉"
               : isSignUp
               ? "You're all set!"
-              : "Password Reset Successful!"}
+              : "Password Reset Successful!🎉"}
           </div>
         </div>
         <div className={style.subtitle}>

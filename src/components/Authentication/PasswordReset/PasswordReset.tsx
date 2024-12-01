@@ -13,13 +13,14 @@ import PasswordResetCode from "./PasswordResetCode";
 
 type PasswordResetProps = {
   closeModal: () => void;
+  closeAllModals: () => void;
 };
 
 type PasswordResetFormValues = {
   email: string;
 };
 
-const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal }) => {
+const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal, closeAllModals }) => {
   const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
   const [email, setEmail] = useState<string | null>(null); 
 
@@ -48,7 +49,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal }) => {
   return (
     <div className={style.container}>
       {isCodeModalOpen && email ? (
-        <PasswordResetCode email={email} closeModal={closeModal}/>
+        <PasswordResetCode email={email} closeModal={closeModal} closeAllModals={closeAllModals}/>
       ) : (
         <div className={style.content}>
           <div className={style.logo}>

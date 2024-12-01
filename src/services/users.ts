@@ -18,4 +18,19 @@ const validateCode = async (email: string, code: string): Promise<void> => {
   }
 };
 
-export default { sendPasswordResetEmail, validateCode };
+const resetPassword = async (
+  email: string,
+  password: string
+): Promise<void> => {
+  try {
+    await appAxios.patch(
+      `/users/reset-password?email=${encodeURIComponent(
+        email
+      )}&newPassword=${password}`
+    );
+  } catch (error) {
+    throw new Error("Failed to reset password");
+  }
+};
+
+export default { sendPasswordResetEmail, validateCode, resetPassword };
