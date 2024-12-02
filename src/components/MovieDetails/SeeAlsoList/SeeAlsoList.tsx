@@ -11,7 +11,7 @@ type SeeAlsoListProps = {
 };
 
 const SeeAlsoList: React.FC<SeeAlsoListProps> = ({ movieId }) => {
-  const [currentPage, setCurrentPage] = useState(0); 
+  const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 6;
 
   const { data, isLoading, isError } = useSimilar(movieId ?? "", currentPage, pageSize);
@@ -22,6 +22,10 @@ const SeeAlsoList: React.FC<SeeAlsoListProps> = ({ movieId }) => {
 
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
+
+  if (data?.content?.length === 0) {
+    return <div className={style.no_data}>No similar movies found.</div>;
+  }
 
   return (
     <div className={style.container}>
