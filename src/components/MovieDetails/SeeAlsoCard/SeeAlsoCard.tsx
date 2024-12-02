@@ -18,7 +18,7 @@ const SeeAlsoCard: React.FC<SeeAlsoCardProps> = ({ movie }) => {
     <Link to={`/movie/${movie.id}`} onClick={scrollToTop} className={style.container}>
       <div className={style.card}>
         <div className={style.image}>
-          <img src={coverImage} alt={movie.title} />
+          <img src={coverImage} alt={movie.title} loading="lazy"/>
         </div>
         <div className={style.title}>
           <h3>{movie.title}</h3>
