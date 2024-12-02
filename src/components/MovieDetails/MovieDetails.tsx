@@ -14,13 +14,17 @@ const MovieDetails = () => {
   const formattedStartDate = data?.startDate.replace(/-/g, "/");
   const formattedEndDate = data?.endDate.replace(/-/g, "/");
 
+  const PAGE_TITLE = "Movie Details";
+  const SECTION_TITLE_CAST = "Cast";
+  const SECTION_TITLE_RATINGS = "Ratings";
+
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
   return (
     <div className={style.container}>
       <div className={style.content}>
-        <div className={style.page_title}>Movie Details</div>
+        <div className={style.page_title}>{PAGE_TITLE}</div>
         <div className={style.media}>
           <div className={style.trailer}>
             <iframe
@@ -79,7 +83,7 @@ const MovieDetails = () => {
             <div className={style.cast}>
               <div className={style.section_title}>
                 <p className={style.divider}>|</p>
-                <p>Cast</p>
+                <p>{SECTION_TITLE_CAST}</p>
               </div>
               <div className={style.cast_container}>
                 {data?.performers.map((performer) => (
@@ -93,7 +97,7 @@ const MovieDetails = () => {
             <div className={style.movie_rating}>
               <div className={style.section_title}>
                 <p className={style.divider}>|</p>
-                <p>Ratings</p>
+                <p>{SECTION_TITLE_RATINGS}</p>
               </div>
               <div className={style.movie_rating_container}>
                 {data?.ratings.map((rating) => (
