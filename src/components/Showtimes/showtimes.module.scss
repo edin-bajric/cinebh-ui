@@ -1,0 +1,45 @@
+@use "../../assets/css/variables.scss";
+
+.showtimes {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+  }
+  
+  .showtimes_title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.0015em;
+    color: variables.$secondary_color;
+    margin-bottom: 16px;
+  }
+  
+  .showtimes_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .showtime {
+    width: 71px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid variables.$gray;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px -2px variables.$shadow,
+      0px 1px 3px -1px variables.$shadow;
+  }
+  
+  .showtime p {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.0015em;
+    color: variables.$secondary_color;
+  }
+  

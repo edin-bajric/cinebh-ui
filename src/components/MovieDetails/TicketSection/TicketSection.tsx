@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import style from "./ticket-section.module.scss";
 import SelectDropdown from "../../SelectDropdown";
 import DateList from "../../DateList";
@@ -6,6 +6,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Button from "../../Button";
 import { Movie } from "../../../utils/types";
 import useAllVenues from "../../../hooks/useAllVenues";
+import Showtimes from "../../Showtimes";
 
 interface TicketSectionProps {
   data: Movie | undefined;
@@ -56,15 +57,19 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
     setIsRightDisabled(scrollLeft + clientWidth >= scrollWidth - tolerance);
   };
 
-  const uniqueProjectionTimes = Array.from(
-    new Set(
-      data?.projections.flatMap((projection: any) =>
-        projection.projectionTimes.map((pt: any) =>
-          pt.time.split(":").slice(0, 2).join(":")
+  const uniqueProjectionTimes = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          data?.projections.flatMap((projection: any) =>
+            projection.projectionTimes.map((pt: any) =>
+              pt.time.split(":").slice(0, 2).join(":")
+            )
+          )
         )
-      )
-    )
-  ).sort();
+      ).sort(),
+    [data]
+  );
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -72,8 +77,8 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
     <div className={style.ticket_container}>
       <div className={style.ticket_content}>
         <div className={style.city_cinema}>
-          <SelectDropdown title="Choose City" data={uniqueCities}/>
-          <SelectDropdown title="Choose Cinema" data={cinemas}/>
+          <SelectDropdown title="Choose City" data={uniqueCities} />
+          <SelectDropdown title="Choose Cinema" data={cinemas} />
         </div>
         <div
           className={style.date}
@@ -84,7 +89,9 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
         </div>
         <div className={style.arrows}>
           <div
-            className={`${style.arrow} ${isLeftDisabled ? style.disabled : ""}`}
+            className={`${style.arrow} ${
+              isLeftDisabled ? style.disabled : ""
+            }`}
             role="button"
             tabIndex={isLeftDisabled ? -1 : 0}
             aria-disabled={isLeftDisabled}
@@ -110,16 +117,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
             <FaArrowRight className={style.next} />
           </div>
         </div>
-        <div className={style.showtimes}>
-          <p className={style.showtimes_title}>Showtimes</p>
-          <div className={style.showtimes_container}>
-            {uniqueProjectionTimes.map((time, index) => (
-              <div key={index} className={style.showtime}>
-                <p>{time}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Showtimes times={uniqueProjectionTimes} />
       </div>
       <div className={style.button_container}>
         <Button
