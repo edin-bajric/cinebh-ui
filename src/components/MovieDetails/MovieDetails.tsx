@@ -11,15 +11,33 @@ const MovieDetails = () => {
   const { movieId } = useParams<{ movieId: string }>();
   const { data, isLoading, isError } = useMovieById(movieId!);
 
-  const formattedStartDate = data?.startDate.replace(/-/g, "/");
-  const formattedEndDate = data?.endDate.replace(/-/g, "/");
+  if (isLoading) return <Loading />;
+  if (isError) return <Error />;
+
+  const {
+    title,
+    rating,
+    genres,
+    images = [],
+    trailerUrl,
+    startDate,
+    endDate,
+    language,
+    length,
+    description,
+    director,
+    writers = [],
+    performers = [],
+    ratings = [],
+    id,
+  } = data || {};
+
+  const formattedStartDate = startDate?.replace(/-/g, "/");
+  const formattedEndDate = endDate?.replace(/-/g, "/");
 
   const PAGE_TITLE = "Movie Details";
   const SECTION_TITLE_CAST = "Cast";
   const SECTION_TITLE_RATINGS = "Ratings";
-
-  if (isLoading) return <Loading />;
-  if (isError) return <Error />;
 
   return (
     <div className={style.container}>
@@ -28,7 +46,7 @@ const MovieDetails = () => {
         <div className={style.media}>
           <div className={style.trailer}>
             <iframe
-              src={data?.trailerUrl || ""}
+              src={trailerUrl || ""}
               title="Movie Trailer"
               frameBorder="0"
               allowFullScreen
@@ -36,11 +54,11 @@ const MovieDetails = () => {
             ></iframe>
           </div>
           <div className={style.images}>
-            {data?.images.map((image) => (
+            {images.map((image) => (
               <img
                 key={image.id}
                 src={image.url}
-                alt={`Movie Scene`}
+                alt="Movie Scene"
                 className={style.image}
               />
             ))}
@@ -48,36 +66,36 @@ const MovieDetails = () => {
         </div>
         <div className={style.info_ticket_container}>
           <div className={style.info}>
-            <div className={style.title}>{data?.title}</div>
+            <div className={style.title}>{title}</div>
             <div className={style.basic_info}>
-              <p className={style.rating}>{data?.rating}</p>
+              <p className={style.rating}>{rating}</p>
               <p className={style.divider}>|</p>
-              <p className={style.language}>{data?.language}</p>
+              <p className={style.language}>{language}</p>
               <p className={style.divider}>|</p>
-              <p className={style.length}>{data?.length} Min</p>
+              <p className={style.length}>{length} Min</p>
               <p className={style.divider}>|</p>
               <p className={style.projection_date}>
                 Projection date: {formattedStartDate} - {formattedEndDate}
               </p>
             </div>
             <div className={style.genre_container}>
-              {data?.genres.map((genre) => (
+              {genres?.map((genre) => (
                 <div key={genre.id} className={style.genre}>
                   <p>{genre.name}</p>
                 </div>
               ))}
             </div>
             <div className={style.synopsis}>
-              <p>{data?.description}</p>
+              <p>{description}</p>
             </div>
             <div className={style.director}>
               <p className={style.creator}>Director: </p>
-              <p className={style.director_name}>{data?.director}</p>
+              <p className={style.director_name}>{director}</p>
             </div>
             <div className={style.writers}>
               <p className={style.creator}>Writers: </p>
               <p className={style.writers_name}>
-                {data?.writers.map((writer) => writer.name).join(", ")}
+                {writers.map((writer) => writer.name).join(", ")}
               </p>
             </div>
             <div className={style.cast}>
@@ -86,7 +104,7 @@ const MovieDetails = () => {
                 <p>{SECTION_TITLE_CAST}</p>
               </div>
               <div className={style.cast_container}>
-                {data?.performers.map((performer) => (
+                {performers.map((performer) => (
                   <div key={performer.id} className={style.cast_member}>
                     <p className={style.cast_name}>{performer.name}</p>
                     <p className={style.cast_role}>{performer.role}</p>
@@ -100,7 +118,7 @@ const MovieDetails = () => {
                 <p>{SECTION_TITLE_RATINGS}</p>
               </div>
               <div className={style.movie_rating_container}>
-                {data?.ratings.map((rating) => (
+                {ratings.map((rating) => (
                   <div key={rating.id} className={style.movie_rating_box}>
                     <FaStar className={style.rating_star} />
                     <div className={style.rating_info}>
@@ -116,7 +134,7 @@ const MovieDetails = () => {
         </div>
       </div>
       <div className={style.see_also_container}>
-        <SeeAlsoList movieId={data?.id} />
+        <SeeAlsoList movieId={id} />
       </div>
     </div>
   );
