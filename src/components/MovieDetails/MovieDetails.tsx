@@ -35,10 +35,12 @@ const MovieDetails = () => {
     id,
   } = data || {};
 
+  const PAGE_TITLE = "Movie Details";
+
   return (
     <div className={style.container}>
       <div className={style.content}>
-        <div className={style.page_title}>Movie Details</div>
+        <div className={style.page_title}>{PAGE_TITLE}</div>
         <MovieMedia trailerUrl={trailerUrl} images={images} />
         <div className={style.info_ticket_container}>
           <div className={style.info}>

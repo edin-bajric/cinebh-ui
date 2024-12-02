@@ -5,11 +5,12 @@ interface MovieCastProps {
 }
 
 const MovieCast = ({ performers = [] }: MovieCastProps) => {
+  const SECTION_TITLE = "Cast";
   return (
     <div className={style.cast}>
       <div className={style.section_title}>
         <p className={style.divider}>|</p>
-        <p>Cast</p>
+        <p>{SECTION_TITLE}</p>
       </div>
       <div className={style.cast_container}>
         {performers.map((performer) => (

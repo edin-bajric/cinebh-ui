@@ -6,11 +6,12 @@ interface MovieRatingsProps {
 }
 
 const MovieRatings = ({ ratings = [] }: MovieRatingsProps) => {
+  const SECTION_TITLE = "Ratings";
   return (
     <div className={style.movie_rating}>
       <div className={style.section_title}>
         <p className={style.divider}>|</p>
-        <p>Ratings</p>
+        <p>{SECTION_TITLE}</p>
       </div>
       <div className={style.movie_rating_container}>
         {ratings.map((rating) => (
