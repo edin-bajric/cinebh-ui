@@ -29,6 +29,10 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const cumulativeEnd = Math.min((currentPage + 1) * pageSize, totalItems);
 
+  if (totalItems === 0) {
+    return <p className={style.no_data}>No data available to display.</p>;
+  }
+
   return (
     <div className={style.pagination}>
       <p>
