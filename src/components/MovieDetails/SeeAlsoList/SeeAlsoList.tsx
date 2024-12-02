@@ -14,7 +14,7 @@ const SeeAlsoList: React.FC<SeeAlsoListProps> = ({ movieId }) => {
   const [currentPage, setCurrentPage] = useState(0); 
   const pageSize = 6;
 
-  const { data, isLoading, isError } = useSimilar(movieId!, currentPage, pageSize);
+  const { data, isLoading, isError } = useSimilar(movieId ?? "", currentPage, pageSize);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
