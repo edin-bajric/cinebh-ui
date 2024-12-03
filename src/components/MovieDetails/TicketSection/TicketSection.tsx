@@ -117,7 +117,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
             <FaArrowRight className={style.next} />
           </div>
         </div>
-        <Showtimes times={uniqueProjectionTimes} />
+        <Showtimes times={uniqueProjectionTimes} variant="ticket" />
       </div>
       <div className={style.button_container}>
         <Button

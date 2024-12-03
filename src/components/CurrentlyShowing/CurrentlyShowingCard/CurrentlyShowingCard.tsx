@@ -1,6 +1,7 @@
 import style from "./currently-showing-card.module.scss";
 import { Movie } from "../../../utils/types";
 import { Link } from "react-router-dom";
+import Showtimes from "../../Showtimes";
 
 type CurrentlyShowingCardProps = {
   movie: Movie;
@@ -67,21 +68,12 @@ const CurrentlyShowingCard: React.FC<CurrentlyShowingCardProps> = ({
             <p>Playing in cinema until {formattedDate}.</p>
           </div>
         </div>
-        {showtimes.length > 0 && (
-          <div className={style.showtimes}>
-            <p className={style.showtimes_title}>Showtimes</p>
-            <div className={style.showtimes_container}>
-              {showtimes.map((time) => {
-                const formattedTime = time.slice(0, 5);
-                return (
-                  <div key={formattedTime} className={style.showtime}>
-                    <p>{formattedTime}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
+        <div className={style.showtimes}>
+          <Showtimes
+            times={showtimes.map((t) => t.slice(0, 5))}
+            variant="card"
+          />
+        </div>
       </div>
     </Link>
   );
