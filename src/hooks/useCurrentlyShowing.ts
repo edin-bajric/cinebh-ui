@@ -5,12 +5,12 @@ import { Movie, PaginatedResponse } from "../utils/types";
 const useCurrentlyShowing = (
   page: number,
   size: number,
-  title: string,
-  city: string,
-  venue: string,
-  genre: string,
-  projectionTime: string,
-  date: string
+  title?: string,
+  city?: string,
+  venue?: string,
+  genre?: string,
+  projectionTime?: string,
+  date?: string
 ) => {
   return useQuery<PaginatedResponse<Movie>>(
     [
