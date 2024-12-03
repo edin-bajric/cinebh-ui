@@ -18,6 +18,24 @@ const CurrentlyShowing = () => {
 
   const today = new Date().toISOString().split("T")[0];
 
+  useEffect(() => {
+    const newParams = new URLSearchParams(searchParams);
+    let hasChanged = false;
+
+    if (!searchParams.has("size")) {
+      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
+      hasChanged = true;
+    }
+    if (!searchParams.has("date")) {
+      newParams.set("date", today);
+      hasChanged = true;
+    }
+
+    if (hasChanged) {
+      setSearchParams(newParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams, today]);
+
   const filters = {
     title: searchParams.get("title") || "",
     city: searchParams.get("city") || "",
@@ -49,14 +67,21 @@ const CurrentlyShowing = () => {
   const updateSearchParams = useCallback(
     (params: Record<string, string | number>) => {
       const newParams = new URLSearchParams(searchParams);
+      let hasChanged = false;
+
       Object.entries(params).forEach(([key, value]) => {
         if (value && `${searchParams.get(key)}` !== `${value}`) {
           newParams.set(key, `${value}`);
+          hasChanged = true;
         } else if (!value && searchParams.has(key)) {
           newParams.delete(key);
+          hasChanged = true;
         }
       });
-      setSearchParams(newParams);
+
+      if (hasChanged) {
+        setSearchParams(newParams, { replace: false });
+      }
     },
     [searchParams, setSearchParams]
   );
@@ -74,15 +99,6 @@ const CurrentlyShowing = () => {
     },
     [updateSearchParams]
   );
-
-  useEffect(() => {
-    if (!searchParams.has("size")) {
-      updateSearchParams({ size: INITIAL_PAGE_SIZE });
-    }
-    if (!searchParams.has("date")) {
-      updateSearchParams({ date: today });
-    }
-  }, [searchParams, updateSearchParams, today]);
 
   return (
     <div className={style.container}>
@@ -112,7 +128,9 @@ const CurrentlyShowing = () => {
           Quick reminder that our cinema schedule is on a ten-day update cycle.
         </p>
       </div>
-      {totalItems === 0 && <CurrentlyShowingAndUpcomingNotFound type="currently-showing" />}
+      {totalItems === 0 && (
+        <CurrentlyShowingAndUpcomingNotFound type="currently-showing" />
+      )}
       <CurrentlyShowingMovieList
         filters={filters}
         size={size}
@@ -121,7 +139,6 @@ const CurrentlyShowing = () => {
       />
     </div>
   );
-  
 };
 
 export default CurrentlyShowing;

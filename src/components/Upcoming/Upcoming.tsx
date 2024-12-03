@@ -76,9 +76,11 @@ const Upcoming = () => {
 
   useEffect(() => {
     if (!searchParams.has("size")) {
-      updateSearchParams({ size: INITIAL_PAGE_SIZE });
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set("size", `${INITIAL_PAGE_SIZE}`);
+      setSearchParams(newParams, { replace: true });
     }
-  }, [searchParams, updateSearchParams]);
+  }, [searchParams, setSearchParams]);
 
   return (
     <div className={style.container}>
@@ -102,7 +104,9 @@ const Upcoming = () => {
         cities={uniqueCities}
         genres={genresData?.map((genre) => genre.name) || []}
       />
-      {totalItems === 0 && <CurrentlyShowingAndUpcomingNotFound type="upcoming"/>}
+      {totalItems === 0 && (
+        <CurrentlyShowingAndUpcomingNotFound type="upcoming" />
+      )}
       <UpcomingMovieList
         filters={filters}
         size={size}
