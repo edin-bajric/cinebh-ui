@@ -312,6 +312,10 @@ input[type="password"]:focus::-webkit-contacts-auto-fill-button {
   display: none;
 }
 
+.button {
+  margin-top: 16px;
+}
+
 .error {
   font-size: 12px;
   font-weight: 400;

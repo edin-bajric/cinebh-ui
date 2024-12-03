@@ -205,7 +205,7 @@ const PasswordResetPassword: React.FC<PasswordResetPasswordProps> = ({
               <p className={style.error}>{errors.repeatPassword.message}</p>
             )}
           </div>
-          <Button text={isLoading ? "Loading..." : "Continue"} />
+          <Button text={isLoading ? "Loading..." : "Continue"} className={style.button}/>
         </form>
         {isError && (
           <p className={style.error}>
