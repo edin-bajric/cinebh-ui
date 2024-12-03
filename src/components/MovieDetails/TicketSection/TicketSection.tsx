@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from "react";
+import React, { useRef, useState, useMemo, useCallback } from "react";
 import style from "./ticket-section.module.scss";
 import SelectDropdown from "../../SelectDropdown";
 import DateList from "../../DateList";
@@ -19,6 +19,12 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
 
   const { data: venues } = useAllVenues();
 
+  const [filters, setFilters] = useState({
+    city: "",
+    cinema: "",
+    date: new Date().toISOString().split("T")[0],
+  });
+
   const uniqueCities = useMemo(
     () => Array.from(new Set(venues?.map((venue) => venue.city)) || []),
     [venues]
@@ -27,6 +33,20 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
   const cinemas = useMemo(
     () => Array.from(new Set(venues?.map((venue) => venue.name)) || []),
     [venues]
+  );
+
+  const uniqueProjectionTimes = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          data?.projections.flatMap((projection: any) =>
+            projection.projectionTimes.map((pt: any) =>
+              pt.time.split(":").slice(0, 2).join(":")
+            )
+          )
+        )
+      ).sort(),
+    [data]
   );
 
   const handleScroll = (direction: "left" | "right") => {
@@ -57,35 +77,37 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
     setIsRightDisabled(scrollLeft + clientWidth >= scrollWidth - tolerance);
   };
 
-  const uniqueProjectionTimes = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          data?.projections.flatMap((projection: any) =>
-            projection.projectionTimes.map((pt: any) =>
-              pt.time.split(":").slice(0, 2).join(":")
-            )
-          )
-        )
-      ).sort(),
-    [data]
-  );
-
-  const today = new Date().toISOString().split("T")[0];
+  const handleFilterChange = useCallback((filterType: string, value: string) => {
+    setFilters((prev) => ({ ...prev, [filterType]: value }));
+  }, []);
 
   return (
     <div className={style.ticket_container}>
       <div className={style.ticket_content}>
         <div className={style.city_cinema}>
-          <SelectDropdown title="Choose City" data={uniqueCities} />
-          <SelectDropdown title="Choose Cinema" data={cinemas} />
+          <SelectDropdown
+            title="Choose City"
+            data={uniqueCities}
+            onSelect={(value) => handleFilterChange("city", value)}
+            selectedValue={filters.city}
+          />
+          <SelectDropdown
+            title="Choose Cinema"
+            data={cinemas}
+            onSelect={(value) => handleFilterChange("cinema", value)}
+            selectedValue={filters.cinema}
+          />
         </div>
         <div
           className={style.date}
           ref={dateListRef}
           onScroll={handleScrollCheck}
         >
-          <DateList type="movieDetails" selectedDate={today} />
+          <DateList
+            type="movieDetails"
+            selectedDate={filters.date}
+            onDateSelect={(value) => handleFilterChange("date", value)}
+          />
         </div>
         <div className={style.arrows}>
           <div
