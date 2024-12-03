@@ -54,8 +54,24 @@ const getUpcoming = async (
     .then((response) => response.data);
 };
 
+const getSimilar = async (
+  movieId: string,
+  page: number,
+  size: number
+): Promise<PaginatedResponse<Movie>> => {
+  return appAxios
+    .get(`/movies/${movieId}/similar?page=${page}&size=${size}`)
+    .then((response) => response.data);
+};
+
+const getById = async (id: string): Promise<Movie> => {
+  return appAxios.get(`/movies/${id}`).then((response) => response.data);
+};
+
 export default {
   getFeatured,
   getCurrentlyShowing,
   getUpcoming,
+  getSimilar,
+  getById,
 };

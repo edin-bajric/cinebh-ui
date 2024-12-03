@@ -1,0 +1,211 @@
+@use "../../assets/css/variables.scss";
+
+.container {
+  padding: 40px 92px 40px 92px;
+  background-color: variables.$white;
+}
+
+.page_title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.0015em;
+  color: variables.$secondary_color;
+  padding-bottom: 24px;
+}
+
+.media {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+}
+
+.trailer {
+  flex: 1;
+  display: flex;
+}
+
+.trailer iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px 0 0 16px;
+  display: block;
+}
+
+.images {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-content: stretch;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+
+  &:nth-child(2) {
+    border-radius: 0 16px 0 0;
+  }
+
+  &:nth-child(4) {
+    border-radius: 0 0 16px 0;
+  }
+}
+
+.info_ticket_container {
+  display: flex;
+  gap: 100px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 24px;
+  flex: 1;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: -0.0025em;
+  color: variables.$secondary_color;
+}
+
+.basic_info {
+  display: flex;
+  justify-content: start;
+  gap: 16px;
+}
+
+.basic_info .divider {
+  color: variables.$primary_color;
+}
+
+.basic_info p,
+.synopsis p,
+.director_name,
+.writers_name {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$secondary_color;
+}
+
+.genre_container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.genre {
+  border-radius: 8px;
+  background-color: variables.$gray;
+  padding: 6px 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.genre p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(52, 64, 84, 1);
+}
+
+.director,
+.writers {
+  display: flex;
+}
+
+.creator {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$dark_gray;
+  padding-right: 8px;
+}
+
+.section_title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  color: variables.$dark_gray;
+  display: flex;
+  gap: 8px;
+  padding-bottom: 20px;
+}
+
+.section_title .divider {
+  font-weight: 400;
+  font-size: 24px;
+  color: variables.$primary_color;
+}
+
+.cast_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cast_name {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(16, 24, 40, 1);
+}
+
+.cast_role {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  color: variables.$dark_gray;
+}
+
+.movie_rating_container {
+  display: flex;
+  justify-content: start;
+  gap: 16px;
+}
+
+.movie_rating_box {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid variables.$gray;
+  border-radius: 8px;
+  background-color: variables.$white;
+}
+
+.rating_star {
+  font-size: 16px;
+  color: variables.$primary_color;
+}
+
+.rating_value {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(16, 24, 40, 1);
+}
+
+.rating_provider {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  color: variables.$dark_gray;
+}

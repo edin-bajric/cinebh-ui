@@ -46,3 +46,31 @@
 .selected p {
   color: variables.$white;
 }
+
+.movieDetails {
+  width: 84px;
+  height: 76px;
+}
+
+.movieDetails .date {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+}
+
+.movieDetails .day {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$secondary_color;
+}
+
+.movieDetails .selected {
+  color: variables.$primary_color;
+}
+
+.movieDetails .selected p {
+  color: variables.$white;
+}

@@ -1,0 +1,43 @@
+@use "../../../assets/css/variables.scss";
+
+.container {
+  width: 196px;
+  height: 220px;
+  border: 1p solid variables.$gray;
+  border-radius: 16px;
+  box-shadow: 0px 2px 4px -2px variables.$shadow;
+  box-shadow: 0px 4px 6px -1px variables.$shadow;
+  padding: 16px;
+  background-color: variables.$white;
+  text-decoration: none;
+
+  * {
+    text-decoration: none;
+  }
+}
+
+.container:hover {
+  transition: box-shadow 0.1s ease;
+  box-shadow: 0px 12px 16px -1px variables.$shadow;
+  box-shadow: 0px 16px 24px -2px variables.$shadow;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.image img {
+  width: 172px;
+  height: 136px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$secondary_color;
+}

@@ -1,6 +1,7 @@
 import style from "./card.module.scss";
 import { Movie, Venue } from "../../utils/types";
 import { format, isWithinInterval, addDays } from "date-fns";
+import { Link } from "react-router-dom";
 
 type Props = {
   type: "movie" | "venue";
@@ -21,16 +22,25 @@ const Card: React.FC<Props> = ({ type, data, page }) => {
   const getFormattedStartDate = (startDate: string) => {
     const date = new Date(startDate);
     const today = new Date();
-    const sevenDaysFromToday = addDays(today, 7);
 
+    if (date.toDateString() === today.toDateString()) {
+      return "Opens Today";
+    }
+
+    const sevenDaysFromToday = addDays(today, 7);
     if (isWithinInterval(date, { start: today, end: sevenDaysFromToday })) {
       return `Opens ${format(date, "EEEE")}`;
     }
+
     return format(date, "EEE, MMM d, yyyy");
   };
 
-  return (
-    <div className={style.container}>
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cardContent = (
+    <>
       <div className={style.image_container}>
         {isUpcoming && isMovie && (
           <div className={style.upcoming}>
@@ -57,7 +67,19 @@ const Card: React.FC<Props> = ({ type, data, page }) => {
           </p>
         </div>
       )}
-    </div>
+    </>
+  );
+
+  return isMovie ? (
+    <Link
+      to={`/movie/${(data as Movie).id}`}
+      onClick={scrollToTop}
+      className={style.container}
+    >
+      {cardContent}
+    </Link>
+  ) : (
+    <div className={style.container}>{cardContent}</div>
   );
 };
 

@@ -57,19 +57,19 @@ const UpcomingFilters: React.FC<FiltersProps> = ({
     <div className={style.container}>
       <div className={style.filters}>
         <SelectDropdown
-          title="Cities"
+          title="All Cities"
           data={cities}
           onSelect={(value) => handleFilterChange("city", value)}
           selectedValue={filters.city}
         />
         <SelectDropdown
-          title="Venues"
+          title="All Venues"
           data={venues}
           onSelect={(value) => handleFilterChange("cinema", value)}
           selectedValue={filters.cinema}
         />
         <SelectDropdown
-          title="Genres"
+          title="All Genres"
           data={genres}
           onSelect={(value) => handleFilterChange("genres", value)}
           selectedValue={filters.genres}
