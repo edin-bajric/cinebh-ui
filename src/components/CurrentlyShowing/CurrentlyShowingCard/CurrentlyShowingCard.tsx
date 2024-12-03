@@ -29,14 +29,9 @@ const CurrentlyShowingCard: React.FC<CurrentlyShowingCardProps> = ({
 
   const showtimes = projections[0]?.projectionTimes.map((p) => p.time) || [];
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <Link
       to={`/movie/${movie.id}`}
-      onClick={scrollToTop}
       className={style.container}
     >
       <div className={style.content}>

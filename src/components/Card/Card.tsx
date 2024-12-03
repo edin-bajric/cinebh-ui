@@ -35,10 +35,6 @@ const Card: React.FC<Props> = ({ type, data, page }) => {
     return format(date, "EEE, MMM d, yyyy");
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const cardContent = (
     <>
       <div className={style.image_container}>
@@ -73,7 +69,6 @@ const Card: React.FC<Props> = ({ type, data, page }) => {
   return isMovie ? (
     <Link
       to={`/movie/${(data as Movie).id}`}
-      onClick={scrollToTop}
       className={style.container}
     >
       {cardContent}

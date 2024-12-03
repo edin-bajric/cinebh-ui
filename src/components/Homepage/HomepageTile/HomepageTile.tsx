@@ -36,10 +36,6 @@ const HomepageTile: React.FC<Props> = ({
     onPageChange(page);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   if (isLoading) {
     return <Loading />;
   }
@@ -52,7 +48,7 @@ const HomepageTile: React.FC<Props> = ({
     <div className={style.container}>
       <div className={style.header}>
         <p className={style.title}>{title}</p>
-        <Link to={linkTo} className={style.see_all} onClick={scrollToTop}>
+        <Link to={linkTo} className={style.see_all}>
           See All
         </Link>
       </div>
