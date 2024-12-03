@@ -12,10 +12,17 @@
   box-shadow: 0px 4px 6px -1px variables.$shadow;
   padding: 16px;
   cursor: pointer;
+  text-decoration: none;
+
+  * {
+    text-decoration: none;
+  }
 }
 
 .container:hover {
-  background-color: variables.$gray;
+  transition: box-shadow 0.1s ease;
+  box-shadow: 0px 12px 16px -1px variables.$shadow;
+  box-shadow: 0px 16px 24px -2px variables.$shadow;
 }
 
 .image {

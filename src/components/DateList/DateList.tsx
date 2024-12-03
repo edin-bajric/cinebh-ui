@@ -1,9 +1,10 @@
 import DateBox from "../DateBox";
 import style from "./date-list.module.scss";
 
-interface DateLIstProps {
+interface DateListProps {
   onDateSelect: (selectedDate: string) => void;
   selectedDate: string;
+  type?: "currentlyShowing" | "movieDetails";
 }
 
 const generateDateArray = () => {
@@ -26,7 +27,11 @@ const generateDateArray = () => {
   });
 };
 
-const DateList: React.FC<DateLIstProps> = ({ onDateSelect, selectedDate }) => {
+const DateList: React.FC<DateListProps> = ({
+  onDateSelect,
+  selectedDate,
+  type = "currentlyShowing",
+}) => {
   const dates = generateDateArray();
 
   return (
@@ -38,6 +43,7 @@ const DateList: React.FC<DateLIstProps> = ({ onDateSelect, selectedDate }) => {
           day={dateObj.day}
           isSelected={selectedDate === dateObj.fullDate}
           onSelect={() => onDateSelect(dateObj.fullDate)}
+          type={type}
         />
       ))}
     </div>

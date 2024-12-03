@@ -13,23 +13,21 @@ type Props = {
 const Button: React.FC<Props> = ({
   text,
   variant = "solid",
-  width = "auto",
+  width,
   onClick,
   className,
 }) => {
   const buttonClass = classNames(styles.button, styles[variant], className);
 
   return (
-    <div className={styles.container}>
-      <button
-        type="submit"
-        className={buttonClass}
-        style={{ width }}
-        onClick={onClick}
-      >
-        {text}
-      </button>
-    </div>
+    <button
+      type="submit"
+      className={buttonClass}
+      style={{ width }}
+      onClick={onClick}
+    >
+      {text}
+    </button>
   );
 };
 

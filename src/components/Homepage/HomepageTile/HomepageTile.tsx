@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import style from "./homepage-tile.module.scss";
 import Loading from "../../Loading";
 import Error from "../../Error";
 import Card from "../../Card";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Pagination from "../../Pagination";
 
 type Props = {
   title: string;
@@ -31,24 +31,10 @@ const HomepageTile: React.FC<Props> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
-  const handlePrevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      onPageChange(currentPage - 1);
-    }
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    onPageChange(page);
   };
-
-  const handleNextPage = () => {
-    if ((currentPage + 1) * pageSize < totalItems) {
-      setCurrentPage(currentPage + 1);
-      onPageChange(currentPage + 1);
-    }
-  };
-
-  const start = currentPage * pageSize + 1;
-  const end = Math.min((currentPage + 1) * pageSize, totalItems);
-
-  const itemsToShow = end - start + 1;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -75,25 +61,12 @@ const HomepageTile: React.FC<Props> = ({
           <Card key={index} type={type} data={item} page="home" />
         ))}
       </div>
-      <div className={style.pagination}>
-        <p>
-          Showing <b>{itemsToShow}</b> out of <b>{totalItems}</b>
-        </p>
-        <div
-          id={style.prev}
-          onClick={handlePrevPage}
-          className={currentPage === 0 ? style.disabled : ""}
-        >
-          <FaArrowLeft className={style.left} />
-        </div>
-        <div
-          id={style.next}
-          onClick={handleNextPage}
-          className={end >= totalItems ? style.disabled : ""}
-        >
-          <FaArrowRight className={style.right} />
-        </div>
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        pageSize={pageSize}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
