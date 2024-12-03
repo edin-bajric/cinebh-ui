@@ -1,28 +1,32 @@
 import { useState } from "react";
 
+type FieldState = { [key: string]: boolean };
+type InputValuesState = { [key: string]: string };
+type PasswordVisibilityState = { [key: string]: boolean };
+
 export const useInputState = () => {
-  const [activeFields, setActiveFields] = useState<{ [key: string]: boolean }>({
+  const [activeFields, setActiveFields] = useState<FieldState>({
     email: false,
     password: false,
     repeatPassword: false,
   });
 
-  const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
+  const [inputValues, setInputValues] = useState<InputValuesState>({
     email: "",
     password: "",
     repeatPassword: "",
   });
 
   const handleFocus = (field: string) => {
-    setActiveFields((prev) => ({ ...prev, [field]: true }));
+    setActiveFields((prev: FieldState) => ({ ...prev, [field]: true }));
   };
 
   const handleBlur = (field: string) => {
-    setActiveFields((prev) => ({ ...prev, [field]: false }));
+    setActiveFields((prev: FieldState) => ({ ...prev, [field]: false }));
   };
 
   const handleChange = (field: string, value: string) => {
-    setInputValues((prev) => ({ ...prev, [field]: value }));
+    setInputValues((prev: InputValuesState) => ({ ...prev, [field]: value }));
   };
 
   const isActive = (field: string) =>
@@ -39,13 +43,16 @@ export const useInputState = () => {
 };
 
 export const usePasswordVisibility = () => {
-  const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
+  const [showPassword, setShowPassword] = useState<PasswordVisibilityState>({
     password: false,
     repeatPassword: false,
   });
 
   const togglePasswordVisibility = (field: string) => {
-    setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
+    setShowPassword((prev: PasswordVisibilityState) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
   };
 
   return { showPassword, togglePasswordVisibility };
@@ -70,7 +77,7 @@ export const useRememberMe = () => {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
   const handleRememberMeChange = () => {
-    setRememberMe((prev) => {
+    setRememberMe((prev: boolean) => {
       if (prev) {
         localStorage.removeItem("email");
       }
