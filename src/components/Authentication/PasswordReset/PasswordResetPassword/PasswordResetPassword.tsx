@@ -17,6 +17,7 @@ import { useState } from "react";
 type PasswordResetPasswordProps = {
   email: string;
   closeAllModals: () => void;
+  closeModal: () => void;
 };
 
 type PasswordResetFormData = {
@@ -27,6 +28,7 @@ type PasswordResetFormData = {
 const PasswordResetPassword: React.FC<PasswordResetPasswordProps> = ({
   email,
   closeAllModals,
+  closeModal,
 }) => {
   const { inputValues, handleFocus, handleBlur, handleChange, isActive } =
     useInputState();
@@ -77,7 +79,7 @@ const PasswordResetPassword: React.FC<PasswordResetPasswordProps> = ({
           <Logo />
         </div>
         <div className={style.welcome}>
-          <div className={style.back_button}>
+          <div className={style.back_button} onClick={closeModal}>
             <FaArrowLeft className={style.arrow} />
           </div>
           <div className={style.title}>Password Reset</div>

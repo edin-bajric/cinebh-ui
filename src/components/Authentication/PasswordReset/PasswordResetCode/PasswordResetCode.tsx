@@ -84,7 +84,7 @@ const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal
   return (
     <div className={style.container}>
         {isPasswordModalOpen && email ? (
-        <PasswordResetPassword email={email} closeAllModals={closeAllModals}/>
+        <PasswordResetPassword email={email} closeAllModals={closeAllModals} closeModal={closeModal}/>
       ) : (
       <div className={style.content}>
         <div className={style.logo}>
