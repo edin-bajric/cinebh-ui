@@ -2,8 +2,8 @@ import style from "./authentication.module.scss";
 import Logo from "../Icon";
 import Button from "../Button";
 import {
-  FaGoogle,
-  FaApple,
+  //FaGoogle,
+  //FaApple,
   FaArrowLeft,
   FaEnvelope,
   FaLock,
@@ -379,6 +379,7 @@ const Authentication = ({
               <p>or</p>
               <div className={style.line}></div>
             </div>
+            {/*
             <div className={style.social}>
               <p>Login with</p>
               <div className={style.social_icons}>
@@ -386,6 +387,7 @@ const Authentication = ({
                 <FaApple className={style.icon} />
               </div>
             </div>
+            */}
             <div className={style.continue} onClick={closeModal}>
               <p>Continue without Signing In</p>
             </div>
