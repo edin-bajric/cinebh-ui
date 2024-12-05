@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import style from "../../authentication.module.scss";
-import Logo from "../../../Icon";
-import { FaArrowLeft } from "react-icons/fa6";
 import Button from "../../../Button";
 import useValidateCode from "../../../../hooks/useValidateCode";
 import useSendPasswordResetEmail from "../../../../hooks/useSendPasswordResetEmail";
 import PasswordResetPassword from "../PasswordResetPassword";
+import AuthenticationHeader from "../../AuthenticationHeader";
 
 type PasswordResetCodeProps = {
   email: string;
@@ -23,10 +22,19 @@ const maskEmail = (email: string): string => {
   )}@${domain}`;
 };
 
-const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal, closeAllModals }) => {
+const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({
+  email,
+  closeModal,
+  closeAllModals,
+}) => {
   const maskedEmail = maskEmail(email);
   const [inputs, setInputs] = useState<string[]>(["", "", "", ""]);
-  const { mutate: validateCode, isLoading, isError, isSuccess } = useValidateCode();
+  const {
+    mutate: validateCode,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useValidateCode();
   const { mutate: sendEmail } = useSendPasswordResetEmail();
   const [timer, setTimer] = useState<number>(60);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -56,12 +64,7 @@ const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal
     e.preventDefault();
     const code = inputs.join("");
     if (code.length === 4) {
-      validateCode(
-        { email, code },
-        {
-          
-        }
-      );
+      validateCode({ email, code }, {});
     }
   };
 
@@ -71,8 +74,7 @@ const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal
         onSuccess: () => {
           setTimer(60);
         },
-        onError: () => {
-        },
+        onError: () => {},
       });
     }
   };
@@ -83,59 +85,55 @@ const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({ email, closeModal
 
   return (
     <div className={style.container}>
-        {isPasswordModalOpen && email ? (
-        <PasswordResetPassword email={email} closeAllModals={closeAllModals} closeModal={closeModal}/>
+      {isPasswordModalOpen && email ? (
+        <PasswordResetPassword
+          email={email}
+          closeAllModals={closeAllModals}
+          closeModal={closeModal}
+        />
       ) : (
-      <div className={style.content}>
-        <div className={style.logo}>
-          <Logo />
-        </div>
-        <div className={style.welcome}>
-          <div className={style.back_button} onClick={closeModal}>
-            <FaArrowLeft className={style.arrow} />
-          </div>
-          <div className={style.title}>Password Reset</div>
-        </div>
-        <div className={style.subtitle}>
-          We have sent a code to your email: <span>{maskedEmail}</span>. Please
-          enter the code below to verify.
-        </div>
-        <form className={style.form} onSubmit={handleSubmit}>
-          <div className={style.input} id={style.input}>
-            {inputs.map((value, index) => (
-              <input
-                key={index}
-                id={`input-${index}`}
-                type="text"
-                autoComplete="new-password"
-                maxLength={1}
-                className={style.code_input}
-                value={value}
-                onChange={(e) => handleChange(index, e.target.value)}
-              />
-            ))}
-          </div>
-          <div className={style.question}>Didn't receive the email?</div>
-          <div className={style.resend}>
-            {timer > 0 ? (
-              <>
-                You can resend the email in <span>{timer}</span> seconds.
-              </>
-            ) : (
-              <span className={style.resend_link} onClick={handleResend}>
-                Resend Email
-              </span>
-            )}
-          </div>
-          {isError && (
-            <div className={style.error}>Failed to validate the code.</div>
-          )}
-          <Button
-            text={isLoading ? "Validating..." : "Continue"}
-            className={style.button}
+        <div className={style.content}>
+          <AuthenticationHeader
+            type="passwordResetCode"
+            maskedEmail={maskedEmail}
+            closeModal={closeModal}
           />
-        </form>
-      </div>
+          <form className={style.form} onSubmit={handleSubmit}>
+            <div className={style.input} id={style.input}>
+              {inputs.map((value, index) => (
+                <input
+                  key={index}
+                  id={`input-${index}`}
+                  type="text"
+                  autoComplete="new-password"
+                  maxLength={1}
+                  className={style.code_input}
+                  value={value}
+                  onChange={(e) => handleChange(index, e.target.value)}
+                />
+              ))}
+            </div>
+            <div className={style.question}>Didn't receive the email?</div>
+            <div className={style.resend}>
+              {timer > 0 ? (
+                <>
+                  You can resend the email in <span>{timer}</span> seconds.
+                </>
+              ) : (
+                <span className={style.resend_link} onClick={handleResend}>
+                  Resend Email
+                </span>
+              )}
+            </div>
+            {isError && (
+              <div className={style.error}>Failed to validate the code.</div>
+            )}
+            <Button
+              text={isLoading ? "Validating..." : "Continue"}
+              className={style.button}
+            />
+          </form>
+        </div>
       )}
     </div>
   );

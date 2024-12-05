@@ -2,8 +2,7 @@ import { useForm, FieldErrors } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { passwordResetPasswordSchema } from "../../validationSchema";
 import style from "../../authentication.module.scss";
-import Logo from "../../../Icon";
-import { FaArrowLeft, FaLock, FaEye, FaEyeSlash } from "react-icons/fa6";
+import { FaLock, FaEye, FaEyeSlash } from "react-icons/fa6";
 import Button from "../../../Button";
 import {
   useInputState,
@@ -13,6 +12,7 @@ import { label_error, error_color, input_error } from "../../styling";
 import useResetPassword from "../../../../hooks/useResetPassword";
 import SuccessScreen from "../../SuccessScreen";
 import { useState } from "react";
+import AuthenticationHeader from "../../AuthenticationHeader";
 
 type PasswordResetPasswordProps = {
   email: string;
@@ -56,9 +56,7 @@ const PasswordResetPassword: React.FC<PasswordResetPasswordProps> = ({
       onSuccess: () => {
         setIsSubmitted(true);
       },
-      onError: () => {
-        
-      },
+      onError: () => {},
     });
   };
 
@@ -75,18 +73,10 @@ const PasswordResetPassword: React.FC<PasswordResetPasswordProps> = ({
   return (
     <div className={style.container}>
       <div className={style.content}>
-        <div className={style.logo}>
-          <Logo />
-        </div>
-        <div className={style.welcome}>
-          <div className={style.back_button} onClick={closeModal}>
-            <FaArrowLeft className={style.arrow} />
-          </div>
-          <div className={style.title}>Password Reset</div>
-        </div>
-        <div className={style.subtitle}>
-          Please, enter and confirm your new password.
-        </div>
+        <AuthenticationHeader
+          type="passwordResetPassword"
+          closeModal={closeModal}
+        />
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={style.input}>
             <label
@@ -207,7 +197,10 @@ const PasswordResetPassword: React.FC<PasswordResetPasswordProps> = ({
               <p className={style.error}>{errors.repeatPassword.message}</p>
             )}
           </div>
-          <Button text={isLoading ? "Loading..." : "Continue"} className={style.button}/>
+          <Button
+            text={isLoading ? "Loading..." : "Continue"}
+            className={style.button}
+          />
         </form>
         {isError && (
           <p className={style.error}>

@@ -4,12 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { passwordResetSchema } from "../validationSchema";
 import { useInputState } from "../authenticationUtils";
 import style from "../authentication.module.scss";
-import Logo from "../../Icon";
-import { FaArrowLeft, FaEnvelope } from "react-icons/fa6";
+import { FaEnvelope } from "react-icons/fa6";
 import Button from "../../Button";
 import { label_error, error_color, input_error } from "../styling";
 import useSendPasswordResetEmail from "../../../hooks/useSendPasswordResetEmail";
 import PasswordResetCode from "./PasswordResetCode";
+import AuthenticationHeader from "../AuthenticationHeader";
 
 type PasswordResetProps = {
   closeModal: () => void;
@@ -20,9 +20,12 @@ type PasswordResetFormValues = {
   email: string;
 };
 
-const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal, closeAllModals }) => {
+const PasswordReset: React.FC<PasswordResetProps> = ({
+  closeModal,
+  closeAllModals,
+}) => {
   const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
-  const [email, setEmail] = useState<string | null>(null); 
+  const [email, setEmail] = useState<string | null>(null);
 
   const {
     register,
@@ -49,22 +52,14 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal, closeAllModal
   return (
     <div className={style.container}>
       {isCodeModalOpen && email ? (
-        <PasswordResetCode email={email} closeModal={closeModal} closeAllModals={closeAllModals}/>
+        <PasswordResetCode
+          email={email}
+          closeModal={closeModal}
+          closeAllModals={closeAllModals}
+        />
       ) : (
         <div className={style.content}>
-          <div className={style.logo}>
-            <Logo />
-          </div>
-          <div className={style.welcome}>
-            <div className={style.back_button} onClick={closeModal}>
-              <FaArrowLeft className={style.arrow} />
-            </div>
-            <div className={style.title}>Password Reset</div>
-          </div>
-          <div className={style.subtitle}>
-            Provide your account's email for which you want to reset your
-            password.
-          </div>
+          <AuthenticationHeader type="passwordReset" closeModal={closeModal} />
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={style.input}>
               <label style={errors.email ? label_error : {}}>Email</label>
@@ -97,7 +92,10 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ closeModal, closeAllModal
                 </p>
               )}
             </div>
-            <Button text={isLoading ? "Sending..." : "Continue"} className={style.button}/>
+            <Button
+              text={isLoading ? "Sending..." : "Continue"}
+              className={style.button}
+            />
           </form>
         </div>
       )}

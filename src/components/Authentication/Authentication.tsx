@@ -1,10 +1,8 @@
 import style from "./authentication.module.scss";
-import Logo from "../Icon";
 import Button from "../Button";
 import {
   //FaGoogle,
   //FaApple,
-  FaArrowLeft,
   FaEnvelope,
   FaLock,
   FaEye,
@@ -27,6 +25,7 @@ import {
   useSuccessScreen,
   useRememberMe,
 } from "./authenticationUtils";
+import AuthenticationHeader from "./AuthenticationHeader";
 
 export type RegisterFormData = {
   email: string;
@@ -169,17 +168,10 @@ const Authentication = ({
         />
       ) : (
         <div className={style.content}>
-          <div className={style.logo}>
-            <Logo />
-          </div>
-          <div className={style.welcome}>
-            <div className={style.back_button} onClick={closeModal}>
-              <FaArrowLeft className={style.arrow} />
-            </div>
-            <div className={style.title}>
-              {isSignUp ? "Hello" : "Welcome Back"}
-            </div>
-          </div>
+          <AuthenticationHeader
+            closeModal={closeModal}
+            type={isSignUp ? "signUp" : "signIn"}
+          />
           <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={style.input}>
               <label style={errors.email ? label_error : {}}>Email</label>
@@ -354,7 +346,7 @@ const Authentication = ({
                 Forgot Password?
               </div>
             </div>
-            <Button text={isSignUp ? "Sign Up" : "Sign In"}/>
+            <Button text={isSignUp ? "Sign Up" : "Sign In"} />
           </form>
           <div className={style.footer}>
             <div className={style.sign_up}>
