@@ -34,6 +34,13 @@ const CurrentlyShowingFilters: React.FC<FiltersProps> = ({
     [onFilterChange]
   );
 
+  const projectionTimesMap = projectionTimes.reduce((acc, time) => {
+    acc[time.slice(0, 5)] = time;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const displayProjectionTimes = Object.keys(projectionTimesMap);
+
   return (
     <div className={style.container}>
       <div className={style.filters}>
@@ -57,9 +64,11 @@ const CurrentlyShowingFilters: React.FC<FiltersProps> = ({
         />
         <SelectDropdown
           title="All Projection Times"
-          data={projectionTimes}
-          onSelect={(value) => handleFilterChange("projectionTime", value)}
-          selectedValue={filters.projectionTime}
+          data={displayProjectionTimes}
+          onSelect={(value) =>
+            handleFilterChange("projectionTime", projectionTimesMap[value])
+          }
+          selectedValue={filters.projectionTime.slice(0, 5)}
         />
       </div>
       <div className={style.dates}>
