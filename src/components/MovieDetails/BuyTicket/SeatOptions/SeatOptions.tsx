@@ -4,7 +4,9 @@ import SeatSelection from "./SeatSelection";
 
 const SeatOptions = () => {
   return (
-    <div>SeatOptions</div>
+    <div className={style.container}>
+      <SeatOptionsMovieInfo />
+    </div>
   )
 }
 
