@@ -1,1 +1,64 @@
 @use "../../../../../assets/css/variables.scss";
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 24px;
+  padding: 24px 92px 24px 92px;
+  border-bottom: 1px solid variables.$gray;
+}
+
+.image img {
+  width: 134px;
+  height: 126px;
+  border-radius: 16px;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+}
+
+.movie_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  color: variables.$secondary_color;
+}
+
+.info {
+  max-width: 180px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+}
+
+.divider {
+  color: variables.$primary_color;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: variables.$secondary_color;
+}
+
+.booking_details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.time_place {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
