@@ -1,5 +1,5 @@
 import style from "./seat-options.module.scss";
-import SeatOptionsMovieDetails from "./SeatOptionsMovieDetails";
+import SeatOptionsMovieInfo from "./SeatOptionsMovieInfo";
 import SeatSelection from "./SeatSelection";
 
 const SeatOptions = () => {
