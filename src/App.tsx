@@ -6,6 +6,7 @@ import {
   NotFound,
   CurrentlyShowingPage,
   UpcomingPage,
+  BuyTicketPage,
 } from "./pages";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -27,6 +28,7 @@ function App() {
           <Route path="/currently-showing" element={<CurrentlyShowingPage />} />
           <Route path="/upcoming" element={<UpcomingPage />} />
           <Route path="/movie/:movieId" element={<MovieDetails />} />
+          <Route path="/buy-ticket" element={<BuyTicketPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
