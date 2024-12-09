@@ -25,7 +25,7 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ type, closeModal, closeAl
       const timer = setTimeout(() => {
         closeAllModals();
         navigate("/home");
-      }, 3000);
+      }, 1000);
 
       return () => clearTimeout(timer);
     }
