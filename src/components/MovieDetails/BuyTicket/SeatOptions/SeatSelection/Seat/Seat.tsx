@@ -5,11 +5,11 @@ import classNames from "classnames";
 
 type SeatProps = {
   name: string;
-  status: "available" | "reserved" | "selected";
-  type: "regular" | "vip" | "love";
+  status?: "available" | "reserved" | "selected";
+  type?: "regular" | "vip" | "love";
 };
 
-const Seat: React.FC<SeatProps> = ({ name, status, type }) => {
+const Seat: React.FC<SeatProps> = ({ name, status = "available", type = "regular" }) => {
   const seatClass = classNames(style.seat, {
     [style.available]: status === "available",
     [style.reserved]: status === "reserved",
