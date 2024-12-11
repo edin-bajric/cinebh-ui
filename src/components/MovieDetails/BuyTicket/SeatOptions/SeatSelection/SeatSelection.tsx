@@ -3,7 +3,9 @@ import SeatGuide from "./SeatGuide";
 
 const SeatSelection = () => {
   return (
-    <div>SeatSelection</div>
+    <div className={style.container}>
+      <SeatGuide />
+    </div>
   )
 }
 
