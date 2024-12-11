@@ -6,6 +6,7 @@ const SeatOptions = () => {
   return (
     <div className={style.container}>
       <SeatOptionsMovieInfo />
+      <SeatSelection />
     </div>
   )
 }
