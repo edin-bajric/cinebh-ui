@@ -5,7 +5,9 @@ const SeatArrangement = () => {
   return (
     <div className={style.container}>
         <div className={style.title}>Cinema Screen</div>
-        <div className={style.screen}></div>
+        <div className={style.screen_parent}>
+          <div className={style.screen}></div>
+        </div>
         <div className={style.seats}>
           <div className={style.left_column}>
             <div className={style.row}>
