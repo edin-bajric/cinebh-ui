@@ -393,3 +393,11 @@ input[type="password"]:focus::-webkit-contacts-auto-fill-button {
     text-decoration: underline;
   }
 }
+
+.success {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  color: variables.$white;
+}

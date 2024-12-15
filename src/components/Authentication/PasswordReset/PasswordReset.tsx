@@ -91,6 +91,11 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
                   Failed to send email. Please try again.
                 </p>
               )}
+              {isSuccess && (
+                <p className={style.success}>
+                  Email sent successfully. Please check your inbox.
+                </p>
+              )}
             </div>
             <Button
               text={isLoading ? "Sending..." : "Continue"}
