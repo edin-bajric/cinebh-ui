@@ -6,6 +6,7 @@ type Props = {
   text: string;
   variant?: "solid" | "outlined" | "navbar";
   width?: string;
+  type?: "button" | "submit";
   onClick?: () => void;
   className?: string;
 };
@@ -14,6 +15,7 @@ const Button: React.FC<Props> = ({
   text,
   variant = "solid",
   width,
+  type = "button",
   onClick,
   className,
 }) => {
@@ -21,7 +23,7 @@ const Button: React.FC<Props> = ({
 
   return (
     <button
-      type="submit"
+      type={type} 
       className={buttonClass}
       style={{ width }}
       onClick={onClick}

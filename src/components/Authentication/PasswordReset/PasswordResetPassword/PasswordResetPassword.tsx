@@ -200,6 +200,7 @@ const PasswordResetPassword: React.FC<PasswordResetPasswordProps> = ({
           <Button
             text={isLoading ? "Loading..." : "Continue"}
             className={style.button}
+            type="submit"
           />
         </form>
         {isError && (

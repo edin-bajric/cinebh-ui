@@ -95,6 +95,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
             <Button
               text={isLoading ? "Sending..." : "Continue"}
               className={style.button}
+              type="submit"
             />
           </form>
         </div>

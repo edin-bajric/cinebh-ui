@@ -131,6 +131,7 @@ const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({
             <Button
               text={isLoading ? "Validating..." : "Continue"}
               className={style.button}
+              type="submit"
             />
           </form>
         </div>

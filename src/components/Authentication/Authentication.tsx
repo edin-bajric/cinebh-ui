@@ -346,7 +346,7 @@ const Authentication = ({
                 Forgot Password?
               </div>
             </div>
-            <Button text={isSignUp ? "Sign Up" : "Sign In"} />
+            <Button text={isSignUp ? "Sign Up" : "Sign In"} type="submit"/>
           </form>
           <div className={style.footer}>
             <div className={style.sign_up}>
