@@ -8,6 +8,7 @@ import Authentication from "../Authentication";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { decodeJwtToken } from "../../utils/decoder";
+import { getUserNameFromToken } from "../../utils/getUsernameFromToken";
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -41,7 +42,7 @@ const Navbar = () => {
     }
   }, [userToken]);
 
-  const username = decodedToken?.sub.split("@")[0];
+  const username = decodedToken ? getUserNameFromToken(decodedToken) : "User";
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -71,7 +72,7 @@ const Navbar = () => {
         </div>
 
         {userToken ? (
-          <ProfileDropdown userEmail={username || "User"} />
+          <ProfileDropdown userEmail={username} />
         ) : (
           <Button
             text="Sign In"
