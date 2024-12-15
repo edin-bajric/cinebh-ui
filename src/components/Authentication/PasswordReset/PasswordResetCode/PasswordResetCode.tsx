@@ -5,21 +5,12 @@ import useValidateCode from "../../../../hooks/useValidateCode";
 import useSendPasswordResetEmail from "../../../../hooks/useSendPasswordResetEmail";
 import PasswordResetPassword from "../PasswordResetPassword";
 import AuthenticationHeader from "../../AuthenticationHeader";
+import { maskEmail } from "../../../../utils/maskEmail";
 
 type PasswordResetCodeProps = {
   email: string;
   closeModal: () => void;
   closeAllModals: () => void;
-};
-
-const maskEmail = (email: string): string => {
-  const [localPart, domain] = email.split("@");
-  if (localPart.length <= 2) {
-    return email;
-  }
-  return `${localPart[0]}${"*".repeat(localPart.length - 2)}${localPart.slice(
-    -1
-  )}@${domain}`;
 };
 
 const PasswordResetCode: React.FC<PasswordResetCodeProps> = ({
