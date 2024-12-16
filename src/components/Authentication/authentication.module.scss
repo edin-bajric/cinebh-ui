@@ -1,0 +1,403 @@
+@use "../../assets/css/variables.scss";
+
+.container {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  height: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 32px;
+  background-color: variables.$secondary_color;
+  padding: 166px 64px 86px 64px;
+  overflow: visible;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .back_button {
+    position: absolute;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 11px;
+    border-radius: 6px;
+    background-color: rgba(252, 252, 253, 0.1);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+  }
+
+  .back_button:hover {
+    background-color: rgba(252, 252, 253, 0.2);
+  }
+
+  .title {
+    margin: 0 auto;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: -0.0015em;
+    color: rgba(208, 213, 221, 1);
+    text-align: center;
+  }
+}
+
+.arrow {
+  color: rgba(208, 213, 221, 1);
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: variables.$white;
+  }
+
+  .input_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid variables.$gray;
+      border-radius: 8px;
+      padding-left: 2rem;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: rgba(16, 24, 40, 1);
+
+      &::placeholder {
+        color: variables.$dark_gray;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      left: 0.75rem;
+      color: variables.$dark_gray;
+      font-size: 1rem;
+
+      &.icon_active {
+        color: variables.$primary_color;
+      }
+    }
+  }
+
+  .toggle_password {
+    position: absolute;
+    right: 0.75rem;
+    top: 55%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: variables.$dark_gray;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16px;
+
+  .remeber_label,
+  .forgot {
+    font-family: Urbanist;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: rgba(152, 162, 179, 1);
+  }
+
+  .forgot {
+    cursor: pointer;
+  }
+
+  .forgot:hover {
+    text-decoration: underline;
+  }
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  .sign_up {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: variables.$white;
+    }
+
+    .link {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: variables.$white;
+      text-decoration: 0.5px underline;
+    }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: variables.$white;
+      white-space: nowrap;
+    }
+
+    .line {
+      flex-grow: 1;
+      height: 1px;
+      background-color: variables.$white;
+    }
+  }
+
+  .social {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: variables.$white;
+    }
+
+    .social_icons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+
+      .icon {
+        color: variables.$white;
+        font-size: 24px;
+      }
+    }
+  }
+
+  .continue p {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    text-decoration: 0.5px underline;
+    color: variables.$white;
+    padding-top: 16px;
+    cursor: pointer;
+  }
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.custom_checkbox {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 1px solid variables.$white;
+  border-radius: 4px;
+  background-color: variables.$secondary_color;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  span {
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 13px;
+    height: 13px;
+    background-color: variables.$primary_color;
+    border-radius: 2px;
+  }
+
+  input:checked + span {
+    display: block;
+  }
+}
+
+.remember_label {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: rgba(152, 162, 179, 1);
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-webkit-contacts-auto-fill-button {
+  display: none;
+}
+
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]:focus::-ms-reveal,
+input[type="password"]:focus::-webkit-contacts-auto-fill-button {
+  display: none;
+}
+
+.button {
+  margin-top: 16px;
+}
+
+.error {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  color: rgba(253, 162, 155, 1);
+}
+
+.subtitle,
+.subtitle span {
+  width: 70%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(208, 213, 221, 1);
+  text-align: center;
+}
+
+.question,
+.resend {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: rgba(208, 213, 221, 1);
+  text-align: center;
+}
+
+.resend span {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  color: variables.$white;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+}
+
+#input {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 24px;
+}
+
+.code_input {
+  width: 48px;
+  height: 64px;
+  border: 1px solid variables.$gray;
+  border-radius: 16px;
+  background-color: rgb(51, 62, 76, 1);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+  letter-spacing: -0.004em;
+  color: variables.$white;
+  text-align: center;
+}
+
+.code_input:focus {
+  outline: none;
+  border: 3px solid variables.$white;
+}
+
+.resend_link {
+  color: variables.$white;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.success {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  color: variables.$white;
+}

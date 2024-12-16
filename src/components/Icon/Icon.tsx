@@ -15,12 +15,8 @@ const Icon: React.FC<IconProps> = ({
   alt = "Logo",
   className = "",
 }) => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <Link to={to} className={`${style.icon} ${className}`} onClick={scrollToTop}>
+    <Link to={to} className={`${style.icon} ${className}`}>
       <img src={src} alt={alt} className={style.image} />
     </Link>
   );

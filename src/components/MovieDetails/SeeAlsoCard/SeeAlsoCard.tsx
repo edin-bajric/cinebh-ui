@@ -8,14 +8,10 @@ type SeeAlsoCardProps = {
 };
 
 const SeeAlsoCard: React.FC<SeeAlsoCardProps> = ({ movie }) => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const coverImage = movie.images.find((img) => img.isCoverImage)?.url || "";
 
   return (
-    <Link to={`/movie/${movie.id}`} onClick={scrollToTop} className={style.container}>
+    <Link to={`/movie/${movie.id}`} className={style.container}>
       <div className={style.card}>
         <div className={style.image}>
           <img src={coverImage} alt={movie.title} loading="lazy"/>

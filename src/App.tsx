@@ -11,10 +11,12 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import MovieDetails from "./components/MovieDetails";
+import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <div className="navbar_offset">
         <Routes>

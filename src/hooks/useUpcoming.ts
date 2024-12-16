@@ -5,12 +5,12 @@ import { Movie, PaginatedResponse } from "../utils/types";
 const useUpcoming = (
   page: number,
   size: number,
-  title: string,
-  city: string,
-  venue: string,
-  genre: string,
-  startDate: string,
-  endDate: string
+  title?: string,
+  city?: string,
+  venue?: string,
+  genre?: string,
+  startDate?: string,
+  endDate?: string
 ) => {
   return useQuery<PaginatedResponse<Movie>>(
     [
