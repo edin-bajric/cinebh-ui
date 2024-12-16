@@ -54,6 +54,7 @@ const Authentication = ({
   const [modalState, setModalState] = useState<"auth" | "passwordReset">(
     "auth"
   );
+  const [loading, setLoading] = useState(false);
 
   const {
     inputValues,
@@ -92,6 +93,7 @@ const Authentication = ({
   });
 
   const onSubmit = (data: RegisterFormData | LoginFormData) => {
+    setLoading(true);
     if (isSignUp) {
       const registerData = data as RegisterFormData;
 
@@ -118,7 +120,8 @@ const Authentication = ({
               message: "Email invalid or already in use.",
             });
           }
-        });
+        })
+        .finally(() => setLoading(false));
     } else {
       const loginData = data as LoginFormData;
 
@@ -145,7 +148,8 @@ const Authentication = ({
               message: "Incorrect email or password.",
             });
           }
-        });
+        })
+        .finally(() => setLoading(false));
     }
   };
 
@@ -346,7 +350,10 @@ const Authentication = ({
                 Forgot Password?
               </div>
             </div>
-            <Button text={isSignUp ? "Sign Up" : "Sign In"} type="submit"/>
+            <Button
+              text={loading ? "Loading..." : isSignUp ? "Sign Up" : "Sign In"}
+              type="submit"
+            />
           </form>
           <div className={style.footer}>
             <div className={style.sign_up}>
