@@ -38,6 +38,7 @@ pipeline {
             steps {
                 echo "Deploying frontend container on port ${SERVER_PORT}"
                 sh """
+                docker rm -f cinebh-frontend || true
                 docker run -d --name cinebh-frontend -p ${SERVER_PORT}:80 ${FRONTEND_IMAGE}
                 """
             }
