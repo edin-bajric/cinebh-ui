@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         FRONTEND_IMAGE = 'ahmedhamdo/cinebh-frontend:latest'
-        SERVER_PORT = '81'  
+        SERVER_PORT = '81'
+        DOCKER_NETWORK = 'cinebh-network'
     }
 
     stages {
@@ -39,7 +40,10 @@ pipeline {
                 echo "Deploying frontend container on port ${SERVER_PORT}"
                 sh """
                 docker rm -f cinebh-frontend || true
-                docker run -d --name cinebh-frontend -p ${SERVER_PORT}:80 ${FRONTEND_IMAGE}
+                docker run -d --name cinebh-frontend \
+                    --network ${DOCKER_NETWORK} \
+                    -p ${SERVER_PORT}:80 \
+                    ${FRONTEND_IMAGE}
                 """
             }
         }
@@ -50,7 +54,9 @@ pipeline {
             echo "Frontend build, push, and deployment completed successfully!"
         }
         failure {
-            echo "Frontend build or deployment failed."
+            echo "Frontend build or deployment failed. Check the logs for more details."
         }
     }
 }
+
+
