@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         FRONTEND_IMAGE = 'ahmedhamdo/cinebh-frontend:latest'
-        SERVER_PORT = '81'
+        SERVER_PORT = '8084'
         DOCKER_NETWORK = 'cinebh-network'
     }
 
