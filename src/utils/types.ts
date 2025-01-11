@@ -60,3 +60,11 @@ export type ProjectionTime = {
   id: string;
   time: string;
 };
+
+export type ProjectionDetails = {
+  cities : Array<string>;
+  cinemas: Array<string>;
+  startDate: string;
+  endDate: string;
+  projectionTimes: Array<string>;
+}

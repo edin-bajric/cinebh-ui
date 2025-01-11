@@ -5,8 +5,8 @@ import DateList from "../../DateList";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Button from "../../Button";
 import { Movie } from "../../../utils/types";
-import useAllVenues from "../../../hooks/useAllVenues";
 import Showtimes from "../../Showtimes";
+import useProjectionDetails from "../../../hooks/useProjectionDetails";
 
 interface TicketSectionProps {
   data: Movie | undefined;
@@ -17,7 +17,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
   const [isLeftDisabled, setIsLeftDisabled] = useState(true);
   const [isRightDisabled, setIsRightDisabled] = useState(false);
 
-  const { data: venues } = useAllVenues();
+  const { data: projectionDetails } = useProjectionDetails(data?.id || "");
 
   const [filters, setFilters] = useState({
     city: "",
@@ -26,27 +26,21 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
   });
 
   const uniqueCities = useMemo(
-    () => Array.from(new Set(venues?.map((venue) => venue.city)) || []),
-    [venues]
+    () => Array.from(new Set(projectionDetails?.cities || [])),
+    [projectionDetails]
   );
 
   const cinemas = useMemo(
-    () => Array.from(new Set(venues?.map((venue) => venue.name)) || []),
-    [venues]
+    () => Array.from(new Set(projectionDetails?.cinemas || [])),
+    [projectionDetails]
   );
 
   const uniqueProjectionTimes = useMemo(
     () =>
-      Array.from(
-        new Set(
-          data?.projections.flatMap((projection: any) =>
-            projection.projectionTimes.map((pt: any) =>
-              pt.time.split(":").slice(0, 2).join(":")
-            )
-          )
-        )
-      ).sort(),
-    [data]
+      Array.from(new Set(projectionDetails?.projectionTimes || []))
+        .map((time) => time.split(":").slice(0, 2).join(":"))
+        .sort(),
+    [projectionDetails]
   );
 
   const handleScroll = (direction: "left" | "right") => {
