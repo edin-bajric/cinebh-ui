@@ -7,6 +7,7 @@ import Button from "../../Button";
 import { Movie } from "../../../utils/types";
 import Showtimes from "../../Showtimes";
 import useProjectionDetails from "../../../hooks/useProjectionDetails";
+import { useNavigate } from "react-router-dom";
 
 interface TicketSectionProps {
   data: Movie | undefined;
@@ -81,6 +82,19 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
 
   const handleShowtimeSelect = (time: string) => {
     setFilters((prev) => ({ ...prev, showtime: time }));
+  };
+
+  const navigate = useNavigate();
+
+  const handleBuyTicket = () => {
+    if (!data) return;
+    navigate("/buy-ticket", {
+      state: {
+        movie: data,
+        filters,
+      },
+    });
+    console.log(data, filters);
   };
 
   return (
@@ -158,6 +172,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
           text="Buy Ticket"
           variant="solid"
           className={style.button_buy}
+          onClick={handleBuyTicket}
         />
       </div>
     </div>
