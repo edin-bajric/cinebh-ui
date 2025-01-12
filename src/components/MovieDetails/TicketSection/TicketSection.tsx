@@ -23,6 +23,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
     city: "",
     cinema: "",
     date: new Date().toISOString().split("T")[0],
+    showtime: "",
   });
 
   const uniqueCities = useMemo(
@@ -71,9 +72,16 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
     setIsRightDisabled(scrollLeft + clientWidth >= scrollWidth - tolerance);
   };
 
-  const handleFilterChange = useCallback((filterType: string, value: string) => {
-    setFilters((prev) => ({ ...prev, [filterType]: value }));
-  }, []);
+  const handleFilterChange = useCallback(
+    (filterType: string, value: string) => {
+      setFilters((prev) => ({ ...prev, [filterType]: value }));
+    },
+    []
+  );
+
+  const handleShowtimeSelect = (time: string) => {
+    setFilters((prev) => ({ ...prev, showtime: time }));
+  };
 
   return (
     <div className={style.ticket_container}>
@@ -133,7 +141,12 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
             <FaArrowRight className={style.next} />
           </div>
         </div>
-        <Showtimes times={uniqueProjectionTimes} variant="ticket" />
+        <Showtimes
+          times={uniqueProjectionTimes}
+          variant="ticket"
+          selectedTime={filters.showtime}
+          onSelectTime={handleShowtimeSelect}
+        />
       </div>
       <div className={style.button_container}>
         <Button
