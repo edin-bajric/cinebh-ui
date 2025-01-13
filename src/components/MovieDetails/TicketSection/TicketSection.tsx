@@ -87,15 +87,21 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
   const navigate = useNavigate();
 
   const handleBuyTicket = () => {
-    if (!data) return;
+    if (!data || !projectionDetails) return;
+  
     navigate("/buy-ticket", {
       state: {
         movie: data,
         filters,
+        projectionDetails: {
+          streets: projectionDetails.streets,
+          postcodes: projectionDetails.postcodes,
+          streetNumbers: projectionDetails.streetNumbers,
+          hallNames: projectionDetails.hallNames,
+        },
       },
     });
-    console.log(data, filters);
-  };
+  };  
 
   return (
     <div className={style.ticket_container}>

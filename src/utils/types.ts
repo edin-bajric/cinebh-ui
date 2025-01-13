@@ -62,9 +62,13 @@ export type ProjectionTime = {
 };
 
 export type ProjectionDetails = {
-  cities : Array<string>;
-  cinemas: Array<string>;
+  cities: string[];
+  cinemas: string[];
+  streets: string[];
+  postcodes: string[];
+  streetNumbers: string[];
+  hallNames: string[];
   startDate: string;
   endDate: string;
-  projectionTimes: Array<string>;
-}
+  projectionTimes: string[];
+};
