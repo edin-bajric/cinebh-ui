@@ -12,6 +12,7 @@ const BuyTicket = () => {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(timer);
+          window.location.reload();
           return 0;
         }
         return prevTime - 1;
