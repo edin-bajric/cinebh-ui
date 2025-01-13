@@ -68,6 +68,7 @@ export type ProjectionDetails = {
   postcodes: string[];
   streetNumbers: string[];
   hallNames: string[];
+  hallIds: string[];
   startDate: string;
   endDate: string;
   projectionTimes: string[];
