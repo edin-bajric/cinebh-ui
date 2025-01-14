@@ -2,10 +2,16 @@ import React from "react";
 import style from "./seat-arrangement.module.scss";
 import Seat from "../Seat";
 import useSeatsByHallId from "../../../../../../hooks/useSeatsByHallId";
+import { useLocation } from "react-router-dom";
 
 const SeatArrangement = () => {
+  const location = useLocation();
+  const { state } = location;
+
+  const projectionDetails = state?.projectionDetails;
+
   const { data: seats, isLoading } = useSeatsByHallId(
-    "cdf9cf64-a7fa-4b90-bf65-3422bf2c6597"
+    projectionDetails?.hallIds[0]
   );
 
   const groupedSeats = React.useMemo(() => {
