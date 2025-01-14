@@ -73,3 +73,9 @@ export type ProjectionDetails = {
   endDate: string;
   projectionTimes: string[];
 };
+
+export type Seat = {
+  id: string;
+  name: string;
+  seatProjections: string[];
+}
