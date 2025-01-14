@@ -99,6 +99,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
           streetNumbers: projectionDetails.streetNumbers,
           hallNames: projectionDetails.hallNames,
           hallIds: projectionDetails.hallIds,
+          projectionIds: projectionDetails.projectionIds,
         },
       },
     });
