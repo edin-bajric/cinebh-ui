@@ -6,7 +6,7 @@ import resetPassword from "../../../assets/img/reset-password.png";
 import { FaArrowLeft } from "react-icons/fa6";
 import Logo from "../../Icon";
 import Button from "../../Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type SuccessScreenProps = {
   type: "signIn" | "signUp" | "resetPassword";
@@ -19,17 +19,22 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ type, closeModal, closeAl
   const isSignUp = type === "signUp";
   const isResetPassword = type === "resetPassword";
   const navigate = useNavigate();
+  const location = useLocation(); 
 
   useEffect(() => {
     if (isSignIn || isResetPassword) {
       const timer = setTimeout(() => {
         closeAllModals();
-        navigate("/home");
+
+        if (location.pathname !== "/buy-ticket") {
+          navigate("/home");
+        }
+
       }, 1000);
 
       return () => clearTimeout(timer);
     }
-  }, [isSignIn, isResetPassword, navigate]);
+  }, [isSignIn, isResetPassword, navigate, closeAllModals, location]);
 
   return (
     <div className={style.container}>

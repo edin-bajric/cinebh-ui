@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import style from "./navbar.module.scss";
 import Icon from "../Icon";
@@ -10,21 +10,27 @@ import { RootState } from "../../store";
 import { decodeJwtToken } from "../../utils/decoder";
 import { getUserNameFromToken } from "../../utils/getUsernameFromToken";
 
-const Navbar = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<"signin" | "signup">("signin");
+type NavbarProps = {
+  isModalOpen: boolean;
+  modalType: "signin" | "signup";
+  openModal: () => void;
+  closeModal: () => void;
+  setModalType: (type: "signin" | "signup") => void;
+};
+
+const Navbar: React.FC<NavbarProps> = ({
+  isModalOpen,
+  modalType,
+  openModal,
+  closeModal,
+  setModalType,
+}) => {
   const { userToken } = useSelector((state: RootState) => state.auth);
-  const [decodedToken, setDecodedToken] = useState<any>(null);
   const location = useLocation();
+  const decodedToken = userToken ? decodeJwtToken(userToken) : null;
+  const username = decodedToken ? getUserNameFromToken(decodedToken) : "User";
 
-  const toggleModal = () => {
-    setModalOpen((prev) => !prev);
-  };
-
-  const closeAllModals = () => {
-    setModalOpen(false);
-    setModalType("signin");
-  };
+  const isActive = (path: string) => location.pathname === path;
 
   useEffect(() => {
     document.body.style.overflow = isModalOpen ? "hidden" : "auto";
@@ -32,19 +38,6 @@ const Navbar = () => {
       document.body.style.overflow = "auto";
     };
   }, [isModalOpen]);
-
-  useEffect(() => {
-    if (userToken) {
-      const decoded = decodeJwtToken(userToken);
-      setDecodedToken(decoded);
-    } else {
-      setDecodedToken(null);
-    }
-  }, [userToken]);
-
-  const username = decodedToken ? getUserNameFromToken(decodedToken) : "User";
-
-  const isActive = (path: string) => location.pathname === path;
 
   return (
     <>
@@ -78,10 +71,7 @@ const Navbar = () => {
             text="Sign In"
             variant="navbar"
             className={style.button}
-            onClick={() => {
-              setModalType("signin");
-              toggleModal();
-            }}
+            onClick={openModal}
           />
         )}
       </div>
@@ -90,8 +80,8 @@ const Navbar = () => {
         <div className={style.modalOverlay}>
           <div className={style.signInModal}>
             <Authentication
-              closeAllModals={closeAllModals}
-              closeModal={toggleModal}
+              closeAllModals={closeModal}
+              closeModal={closeModal}
               modalType={modalType}
               setModalType={setModalType}
             />
