@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import style from "./buy-ticket.module.scss";
 import SeatOptions from "./SeatOptions";
+import SessionExpiredPopup from "./SessionExpiredPopup";
 import { FaCircleInfo } from "react-icons/fa6";
 import { Tooltip } from "antd";
 
 const BuyTicket = () => {
   const [timeLeft, setTimeLeft] = useState(300);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(timer);
-          window.location.reload();
+          setIsPopupVisible(true);
           return 0;
         }
         return prevTime - 1;
@@ -28,6 +30,11 @@ const BuyTicket = () => {
     return `${minutes.toString().padStart(2, "0")}:${secs
       .toString()
       .padStart(2, "0")}`;
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupVisible(false);
+    window.location.reload();
   };
 
   return (
@@ -56,6 +63,7 @@ const BuyTicket = () => {
           <SeatOptions />
         </div>
       </div>
+      {isPopupVisible && <SessionExpiredPopup onClose={handleClosePopup} />}
     </div>
   );
 };
