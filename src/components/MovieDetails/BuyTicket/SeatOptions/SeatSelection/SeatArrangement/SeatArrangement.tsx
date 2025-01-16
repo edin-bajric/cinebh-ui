@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from "./seat-arrangement.module.scss";
 import Seat from "../Seat";
 import useSeatsByHallId from "../../../../../../hooks/useSeatsByHallId";
 import { useLocation } from "react-router-dom";
 import { SeatType } from "../../../../../../utils/types";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../../../../store";
+import { decodeJwtToken } from "../../../../../../utils/decoder";
+import { setSelectedSeats, setTotalPrice, setUserEmail } from "../../../../../../store/selectedSeatsSlice";
 
 const SeatArrangement = () => {
   const location = useLocation();
   const { state } = location;
-
   const projectionDetails = state?.projectionDetails;
+  const { data: seats, isLoading } = useSeatsByHallId(projectionDetails?.hallIds[0]);
+  
+  const [selectedSeats, setSelectedSeatsState] = useState<SeatType[]>([]);
+  const [totalPrice, setTotalPriceState] = useState(0);
 
-  const { data: seats, isLoading } = useSeatsByHallId(
-    projectionDetails?.hallIds[0]
-  );
+  const { userToken } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  
+  const decodedToken = userToken ? decodeJwtToken(userToken) : null;
+  const userEmail = decodedToken ? decodedToken.sub : "";
+
+  useEffect(() => {
+    dispatch(setSelectedSeats(selectedSeats));
+    dispatch(setTotalPrice(totalPrice));
+    dispatch(setUserEmail(userEmail));
+  }, [selectedSeats, totalPrice, userEmail, dispatch]);
 
   const groupedSeats = React.useMemo(() => {
     if (!seats) return {};
@@ -25,6 +40,25 @@ const SeatArrangement = () => {
       return acc;
     }, {});
   }, [seats]);
+
+  const handleSeatSelect = (seat: SeatType) => {
+    if (seat.status.status === "available") {
+      const isSelected = selectedSeats.find((selectedSeat) => selectedSeat.id === seat.id);
+      let newSelectedSeats;
+      let newTotalPrice = totalPrice;
+
+      if (isSelected) {
+        newSelectedSeats = selectedSeats.filter((selectedSeat) => selectedSeat.id !== seat.id);
+        newTotalPrice -= seat.type.price;
+      } else {
+        newSelectedSeats = [...selectedSeats, { ...seat, status: { ...seat.status, status: "selected" } }];
+        newTotalPrice += seat.type.price;
+      }
+
+      setSelectedSeatsState(newSelectedSeats);
+      setTotalPriceState(newTotalPrice);
+    }
+  };
 
   if (isLoading) {
     return <div>Loading seats...</div>;
@@ -43,10 +77,10 @@ const SeatArrangement = () => {
               {seats.slice(0, row === "I" ? 2 : 4).map((seat) => (
                 <Seat
                   key={seat.id}
-                  name={seat.name}
-                  status={
-                    seat.status.status as "available" | "reserved" | "selected"
-                  }
+                  seat={seat}
+                  onSelect={handleSeatSelect}
+                  isSelected={selectedSeats.some(selectedSeat => selectedSeat.id === seat.id)}
+                  status={seat.status.status as "available" | "reserved" | "selected"}
                   type={seat.type.type as "Regular" | "VIP" | "Love"}
                 />
               ))}
@@ -62,10 +96,10 @@ const SeatArrangement = () => {
               {seats.slice(row === "I" ? 2 : 4).map((seat) => (
                 <Seat
                   key={seat.id}
-                  name={seat.name}
-                  status={
-                    seat.status.status as "available" | "reserved" | "selected"
-                  }
+                  seat={seat}
+                  onSelect={handleSeatSelect}
+                  isSelected={selectedSeats.some(selectedSeat => selectedSeat.id === seat.id)}
+                  status={seat.status.status as "available" | "reserved" | "selected"}
                   type={seat.type.type as "Regular" | "VIP" | "Love"}
                 />
               ))}

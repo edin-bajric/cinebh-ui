@@ -12,6 +12,7 @@
 
   &.available {
     border: 1px solid variables.$gray;
+    transition: background-color 0.1s;
   }
 
   &.reserved {
@@ -23,9 +24,16 @@
   &.selected {
     border: 1px solid variables.$primary_color;
     background-color: variables.$primary_color;
+    transition: background-color 0.1s;
 
     .name {
       color: variables.$white;
+      transition: background-color 0.1s;
+    }
+    
+    .star {
+      color: variables.$white;
+      transition: background-color 0.1s;
     }
   }
 

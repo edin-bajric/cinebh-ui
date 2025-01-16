@@ -2,32 +2,43 @@ import React from "react";
 import style from "./seat.module.scss";
 import { FaStar } from "react-icons/fa6";
 import classNames from "classnames";
+import { SeatType } from "../../../../../../utils/types";
 
 type SeatProps = {
-  name: string;
+  seat: SeatType;
+  onSelect: (seat: SeatType) => void;
+  isSelected: boolean;
   status?: "available" | "reserved" | "selected";
   type?: "Regular" | "VIP" | "Love";
 };
 
-const Seat: React.FC<SeatProps> = ({ name, status = "available", type = "Regular" }) => {
+const Seat: React.FC<SeatProps> = ({ seat, onSelect, isSelected, status, type }) => {
+  if (!seat) {
+    return null;
+  }
+
   const seatClass = classNames(style.seat, {
-    [style.available]: status === "available",
+    [style.available]: status === "available" && !isSelected,
     [style.reserved]: status === "reserved",
-    [style.selected]: status === "selected",
+    [style.selected]: isSelected,
     [style.regular]: type === "Regular",
     [style.vip]: type === "VIP",
     [style.love]: type === "Love",
   });
 
+  const handleSelect = () => {
+    onSelect(seat);
+  };
+
   return (
-      <div className={seatClass}>
-        {type === "VIP" && (
-          <div className={style.star}>
-            <FaStar />
-          </div>
-        )}
-        <p className={style.name}>{name}</p>
-      </div>
+    <div className={seatClass} onClick={handleSelect}>
+      {type === "VIP" && (
+        <div className={style.star}>
+          <FaStar />
+        </div>
+      )}
+      <p className={style.name}>{seat.name}</p>
+    </div>
   );
 };
 
