@@ -75,8 +75,21 @@ export type ProjectionDetails = {
   projectionIds: string[];
 };
 
-export type Seat = {
+export type SeatType = {
   id: string;
   name: string;
-  seatProjections: string[];
-}
+  hall: {
+    id: string;
+    name: string;
+  };
+  type: {
+    id: string;
+    type: string;
+    price: number;
+  };
+  status: {
+    id: string;
+    status: string;
+  };
+};
+

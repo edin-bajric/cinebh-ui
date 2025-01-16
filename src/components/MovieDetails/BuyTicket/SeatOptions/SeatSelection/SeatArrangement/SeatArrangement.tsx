@@ -3,6 +3,7 @@ import style from "./seat-arrangement.module.scss";
 import Seat from "../Seat";
 import useSeatsByHallId from "../../../../../../hooks/useSeatsByHallId";
 import { useLocation } from "react-router-dom";
+import { SeatType } from "../../../../../../utils/types";
 
 const SeatArrangement = () => {
   const location = useLocation();
@@ -17,24 +18,12 @@ const SeatArrangement = () => {
   const groupedSeats = React.useMemo(() => {
     if (!seats) return {};
 
-    return seats.reduce(
-      (acc: Record<string, any[]>, seat: { name: string; type?: string }) => {
-        const row = seat.name[0];
-
-        if (row === "G" || row === "H") {
-          seat.type = "vip";
-        } else if (row === "I") {
-          seat.type = "love";
-        } else {
-          seat.type = seat.type || "regular";
-        }
-
-        if (!acc[row]) acc[row] = [];
-        acc[row].push(seat);
-        return acc;
-      },
-      {}
-    );
+    return seats.reduce((acc: Record<string, SeatType[]>, seat) => {
+      const row = seat.name[0];
+      if (!acc[row]) acc[row] = [];
+      acc[row].push(seat);
+      return acc;
+    }, {});
   }, [seats]);
 
   if (isLoading) {
@@ -53,25 +42,31 @@ const SeatArrangement = () => {
             <div key={row} className={style.row}>
               {seats.slice(0, row === "I" ? 2 : 4).map((seat) => (
                 <Seat
-                  key={seat.name}
+                  key={seat.id}
                   name={seat.name}
-                  status={seat.status as "available" | "reserved" | "selected"}
-                  type={seat.type as "regular" | "vip" | "love"}
+                  status={
+                    seat.status.status as "available" | "reserved" | "selected"
+                  }
+                  type={seat.type.type as "Regular" | "VIP" | "Love"}
                 />
               ))}
             </div>
           ))}
         </div>
+
         <div className={style.middle_column}></div>
+
         <div className={style.right_column}>
           {Object.entries(groupedSeats).map(([row, seats]) => (
             <div key={row} className={style.row}>
               {seats.slice(row === "I" ? 2 : 4).map((seat) => (
                 <Seat
-                  key={seat.name}
+                  key={seat.id}
                   name={seat.name}
-                  status={seat.status as "available" | "reserved" | "selected"}
-                  type={seat.type as "regular" | "vip" | "love"}
+                  status={
+                    seat.status.status as "available" | "reserved" | "selected"
+                  }
+                  type={seat.type.type as "Regular" | "VIP" | "Love"}
                 />
               ))}
             </div>
