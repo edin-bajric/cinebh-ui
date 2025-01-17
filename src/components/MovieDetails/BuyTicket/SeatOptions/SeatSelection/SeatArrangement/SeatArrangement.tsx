@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../../../store";
 import { decodeJwtToken } from "../../../../../../utils/decoder";
 import { setSelectedSeats, setTotalPrice, setUserEmail } from "../../../../../../store/selectedSeatsSlice";
+import Loading from "../../../../../../components/Loading";
 
 const SeatArrangement = () => {
   const location = useLocation();
@@ -61,7 +62,7 @@ const SeatArrangement = () => {
   };
 
   if (isLoading) {
-    return <div>Loading seats...</div>;
+    return <Loading />;
   }
 
   return (
