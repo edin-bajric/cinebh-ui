@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SeatType } from "../utils/types";
+import { Movie, SeatType } from "../utils/types";
 
 type SelectedSeatsState = {
   selectedSeats: SeatType[];
   totalPrice: number;
   userEmail: string;
+  movie: Movie | null;
 };
 
 const initialState: SelectedSeatsState = {
   selectedSeats: [],
   totalPrice: 0,
   userEmail: "",
+  movie: null,
 };
 
 const selectedSeatsSlice = createSlice({
@@ -26,9 +28,12 @@ const selectedSeatsSlice = createSlice({
     setUserEmail: (state, action: PayloadAction<string>) => {
       state.userEmail = action.payload;
     },
+    setMovie: (state, action: PayloadAction<Movie>) => {
+      state.movie = action.payload;
+    },
   },
 });
 
-export const { setSelectedSeats, setTotalPrice, setUserEmail } =
+export const { setSelectedSeats, setTotalPrice, setUserEmail, setMovie } =
   selectedSeatsSlice.actions;
 export default selectedSeatsSlice.reducer;
