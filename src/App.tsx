@@ -7,6 +7,7 @@ import {
   CurrentlyShowingPage,
   UpcomingPage,
   BuyTicketPage,
+  BuyTicketPaymentPage
 } from "./pages";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -60,6 +61,7 @@ function App() {
             element={<ProtectedRoute openLoginModal={openLoginModal} />}
           >
             <Route path="/buy-ticket" element={<BuyTicketPage />} />
+            <Route path="/buy-ticket-payment" element={<BuyTicketPaymentPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

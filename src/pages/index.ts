@@ -5,3 +5,4 @@ export { default as NotFound } from "./NotFound";
 export { default as CurrentlyShowingPage } from "./CurrentlyShowingPage";
 export { default as UpcomingPage } from "./UpcomingPage";
 export { default as BuyTicketPage } from "./BuyTicketPage";
+export { default as BuyTicketPaymentPage } from "./BuyTicketPaymentPage";

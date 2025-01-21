@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import style from "./buy-ticket.module.scss";
 import SeatOptions from "./SeatOptions";
+import PaymentDetails from "./PaymentDetails";
 import SessionExpiredPopup from "./SessionExpiredPopup";
 import { FaCircleInfo } from "react-icons/fa6";
 import { Tooltip } from "antd";
 
 const BuyTicket = () => {
-  const [timeLeft, setTimeLeft] = useState(300);
+  const location = useLocation();
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const storedTimeLeft = localStorage.getItem("timeLeft");
+    return storedTimeLeft ? parseInt(storedTimeLeft, 10) : 300;
+  });
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const isPaymentRoute = location.pathname === "/buy-ticket-payment";
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -17,7 +25,9 @@ const BuyTicket = () => {
           setIsPopupVisible(true);
           return 0;
         }
-        return prevTime - 1;
+        const newTime = prevTime - 1;
+        localStorage.setItem("timeLeft", newTime.toString());
+        return newTime;
       });
     }, 1000);
 
@@ -34,13 +44,17 @@ const BuyTicket = () => {
 
   const handleClosePopup = () => {
     setIsPopupVisible(false);
+    setTimeLeft(300);
+    localStorage.setItem("timeLeft", "300");
     window.location.reload();
   };
 
   return (
     <div className={style.container}>
       <div className={style.header}>
-        <div className={style.title}>Seat Options</div>
+        <div className={style.title}>
+          {isPaymentRoute ? "Payment Details" : "Seat Options"}
+        </div>
         <div className={style.session}>
           <div className={style.reminder}>
             <Tooltip
@@ -57,10 +71,10 @@ const BuyTicket = () => {
           </div>
         </div>
       </div>
-      <div className={style.border}></div>
+      <div className={style.border} style={{ width: isPaymentRoute ? "100%" : "50%" }}></div>
       <div className={style.content}>
         <div className={style.seat_options}>
-          <SeatOptions />
+          {isPaymentRoute ? <PaymentDetails /> : <SeatOptions />}
         </div>
       </div>
       {isPopupVisible && <SessionExpiredPopup onClose={handleClosePopup} />}

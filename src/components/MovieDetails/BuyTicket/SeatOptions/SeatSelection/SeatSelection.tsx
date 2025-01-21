@@ -3,7 +3,28 @@ import SeatGuide from "./SeatGuide";
 import SeatArrangement from "./SeatArrangement";
 import ChoosenSeats from "./ChoosenSeats";
 import Button from "../../../../Button";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../store";
+
 const SeatSelection = () => {
+  const navigate = useNavigate();
+
+  const { selectedSeats, totalPrice, userEmail, movie } = useSelector((state: RootState) => state.selectedSeats);
+
+  const handleContinueToPayment = () => {
+    if (selectedSeats.length === 0) return;
+
+    navigate("/buy-ticket-payment", {
+      state: {
+        selectedSeats,
+        totalPrice,
+        userEmail,
+        movie,
+      },
+    });
+  };
+
   return (
     <div className={style.container}>
       <div className={style.arrangement}>
@@ -11,10 +32,14 @@ const SeatSelection = () => {
       </div>
       <div className={style.guide_choosen_button}>
         <div className={style.guide_choosen}>
-        <SeatGuide />
-        <ChoosenSeats />
+          <SeatGuide />
+          <ChoosenSeats />
         </div>
-        <Button text="Continue to Payment" />
+        <Button
+          text="Continue to Payment"
+          onClick={handleContinueToPayment}
+          className={selectedSeats.length === 0 ? style.disabledButton : ""}
+        />
       </div>
     </div>
   );
