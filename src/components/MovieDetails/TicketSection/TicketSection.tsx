@@ -27,6 +27,8 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
     showtime: "",
   });
 
+  const [error, setError] = useState("");
+
   const uniqueCities = useMemo(
     () => Array.from(new Set(projectionDetails?.cities || [])),
     [projectionDetails]
@@ -76,19 +78,27 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
   const handleFilterChange = useCallback(
     (filterType: string, value: string) => {
       setFilters((prev) => ({ ...prev, [filterType]: value }));
+      setError(""); 
     },
     []
   );
 
   const handleShowtimeSelect = (time: string) => {
     setFilters((prev) => ({ ...prev, showtime: time }));
+    setError("");
   };
 
   const navigate = useNavigate();
 
   const handleBuyTicket = () => {
     if (!data || !projectionDetails) return;
-  
+
+    const { city, cinema, date, showtime } = filters;
+    if (!city || !cinema || !date || !showtime) {
+      setError("Please select a city, cinema, date, and projection time.");
+      return;
+    }
+
     navigate("/buy-ticket", {
       state: {
         movie: data,
@@ -103,7 +113,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
         },
       },
     });
-  };  
+  };
 
   return (
     <div className={style.ticket_container}>
@@ -135,9 +145,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
         </div>
         <div className={style.arrows}>
           <div
-            className={`${style.arrow} ${
-              isLeftDisabled ? style.disabled : ""
-            }`}
+            className={`${style.arrow} ${isLeftDisabled ? style.disabled : ""}`}
             role="button"
             tabIndex={isLeftDisabled ? -1 : 0}
             aria-disabled={isLeftDisabled}
@@ -149,9 +157,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
             <FaArrowLeft className={style.prev} />
           </div>
           <div
-            className={`${style.arrow} ${
-              isRightDisabled ? style.disabled : ""
-            }`}
+            className={`${style.arrow} ${isRightDisabled ? style.disabled : ""}`}
             role="button"
             tabIndex={isRightDisabled ? -1 : 0}
             aria-disabled={isRightDisabled}
@@ -170,6 +176,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
           onSelectTime={handleShowtimeSelect}
         />
       </div>
+      {error && <div className={style.error}>{error}</div>}
       <div className={style.button_container}>
         <Button
           text="Reserve Ticket"
