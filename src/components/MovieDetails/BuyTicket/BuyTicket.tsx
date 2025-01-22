@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import style from "./buy-ticket.module.scss";
 import SeatOptions from "./SeatOptions";
 import PaymentDetails from "./PaymentDetails";
@@ -9,6 +9,7 @@ import { Tooltip } from "antd";
 
 const BuyTicket = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(() => {
     const storedTimeLeft = localStorage.getItem("timeLeft");
     return storedTimeLeft ? parseInt(storedTimeLeft, 10) : 300;
@@ -64,6 +65,9 @@ const BuyTicket = () => {
     setTimeLeft(300);
     localStorage.setItem("timeLeft", "300");
     window.location.reload();
+    if (isPaymentRoute) {
+      navigate(-1);
+    }
   };
 
   return (
@@ -88,7 +92,10 @@ const BuyTicket = () => {
           </div>
         </div>
       </div>
-      <div className={style.border} style={{ width: isPaymentRoute ? "100%" : "50%" }}></div>
+      <div
+        className={style.border}
+        style={{ width: isPaymentRoute ? "100%" : "50%" }}
+      ></div>
       <div className={style.content}>
         <div className={style.seat_options}>
           {isPaymentRoute ? <PaymentDetails /> : <SeatOptions />}
