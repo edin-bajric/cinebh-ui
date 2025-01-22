@@ -34,6 +34,23 @@ const BuyTicket = () => {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (!isPaymentRoute) {
+        localStorage.removeItem("timeLeft");
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      if (!isPaymentRoute) {
+        localStorage.removeItem("timeLeft");
+      }
+    };
+  }, [isPaymentRoute]);
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
