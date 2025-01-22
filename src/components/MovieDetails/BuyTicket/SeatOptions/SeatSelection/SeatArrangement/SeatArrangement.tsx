@@ -7,7 +7,7 @@ import { SeatType } from "../../../../../../utils/types";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../../../store";
 import { decodeJwtToken } from "../../../../../../utils/decoder";
-import { setSelectedSeats, setTotalPrice, setUserEmail, setMovie } from "../../../../../../store/selectedSeatsSlice";
+import { setSelectedSeats, setTotalPrice, setUserEmail, setMovie, setProjectionDetails } from "../../../../../../store/selectedSeatsSlice";
 import Loading from "../../../../../../components/Loading";
 
 const SeatArrangement = () => {
@@ -16,7 +16,6 @@ const SeatArrangement = () => {
   const projectionDetails = state?.projectionDetails;
   const movie = state?.movie;
   const { data: seats, isLoading } = useSeatsByHallId(projectionDetails?.hallIds[0]);
-  
   const [selectedSeats, setSelectedSeatsState] = useState<SeatType[]>([]);
   const [totalPrice, setTotalPriceState] = useState(0);
 
@@ -31,7 +30,8 @@ const SeatArrangement = () => {
     dispatch(setTotalPrice(totalPrice));
     dispatch(setUserEmail(userEmail));
     dispatch(setMovie(movie));
-  }, [selectedSeats, totalPrice, userEmail, movie, dispatch]);
+    dispatch(setProjectionDetails(projectionDetails));
+  }, [selectedSeats, totalPrice, userEmail, movie, projectionDetails, dispatch]);
 
   const groupedSeats = React.useMemo(() => {
     if (!seats) return {};

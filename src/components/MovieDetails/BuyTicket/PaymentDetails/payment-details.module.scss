@@ -1,1 +1,48 @@
 @use "../../../../assets/css/variables.scss";
+
+.container {
+  padding: 32px 92px 32px 92px;
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.card {
+  flex: 2;
+}
+
+.booking_summary {
+  flex: 1;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  color: variables.$dark_gray;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: variables.$dark_gray;
+    white-space: nowrap;
+  }
+
+  .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: variables.$gray;
+  }
+}
+
+
