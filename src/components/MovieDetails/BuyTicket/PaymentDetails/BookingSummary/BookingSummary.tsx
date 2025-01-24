@@ -9,10 +9,12 @@ type BookingSummaryProps = {
 };
 
 const BookingSummary: React.FC<BookingSummaryProps> = ({
+  /*
   selectedSeats,
   totalPrice,
   movie,
   projectionDetails,
+  */
 }) => {
   return <div className={style.container}></div>;
 };
