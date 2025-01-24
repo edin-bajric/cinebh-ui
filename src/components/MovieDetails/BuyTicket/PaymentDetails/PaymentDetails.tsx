@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 
 const PaymentDetails = () => {
   const location = useLocation();
-  const { selectedSeats, totalPrice, movie, projectionDetails } = location.state || {};
+  const { selectedSeats, totalPrice, movie, projectionDetails, filters } = location.state || {};
 
   return (
     <div className={style.container}>
@@ -32,6 +32,7 @@ const PaymentDetails = () => {
           totalPrice={totalPrice} 
           movie={movie} 
           projectionDetails={projectionDetails}
+          filters={filters}
         />
       </div>
     </div>

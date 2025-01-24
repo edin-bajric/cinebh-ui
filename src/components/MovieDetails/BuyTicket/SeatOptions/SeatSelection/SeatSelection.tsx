@@ -10,7 +10,7 @@ import { RootState } from "../../../../../store";
 const SeatSelection = () => {
   const navigate = useNavigate();
 
-  const { selectedSeats, totalPrice, userEmail, movie } = useSelector((state: RootState) => state.selectedSeats);
+  const { selectedSeats, totalPrice, userEmail, movie, projectionDetails, filters } = useSelector((state: RootState) => state.selectedSeats);
 
   const handleContinueToPayment = () => {
     if (selectedSeats.length === 0) return;
@@ -21,6 +21,8 @@ const SeatSelection = () => {
         totalPrice,
         userEmail,
         movie,
+        projectionDetails,
+        filters,
       },
     });
   };
@@ -38,7 +40,7 @@ const SeatSelection = () => {
         <Button
           text="Continue to Payment"
           onClick={handleContinueToPayment}
-          disabled={selectedSeats.length === 0}
+          className={selectedSeats.length === 0 ? style.disabledButton : ""}
         />
       </div>
     </div>

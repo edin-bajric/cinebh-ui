@@ -5,6 +5,8 @@
   display: flex;
   justify-content: space-between;
   gap: 32px;
+  margin-bottom: 100px;
+  height: 100%;
 }
 
 .card {
@@ -21,6 +23,7 @@
   line-height: 24px;
   letter-spacing: -0.0015em;
   color: variables.$dark_gray;
+  margin-bottom: 22px;
 }
 
 .divider {
@@ -44,5 +47,3 @@
     background-color: variables.$gray;
   }
 }
-
-

@@ -13,17 +13,15 @@ import {
   setUserEmail,
   setMovie,
   setProjectionDetails,
+  setFilters,
 } from "../../../../../../store/selectedSeatsSlice";
 import Loading from "../../../../../../components/Loading";
 
 const SeatArrangement = () => {
   const location = useLocation();
   const { state } = location;
-  const projectionDetails = state?.projectionDetails;
-  const movie = state?.movie;
-  const { data: seats, isLoading } = useSeatsByHallId(
-    projectionDetails?.hallIds[0]
-  );
+  const { projectionDetails, filters, movie } = state || {};
+  const { data: seats, isLoading } = useSeatsByHallId(projectionDetails?.hallIds[0]);
   const [selectedSeats, setSelectedSeatsState] = useState<SeatType[]>([]);
   const [totalPrice, setTotalPriceState] = useState(0);
 
@@ -39,12 +37,14 @@ const SeatArrangement = () => {
     dispatch(setUserEmail(userEmail));
     dispatch(setMovie(movie));
     dispatch(setProjectionDetails(projectionDetails));
+    dispatch(setFilters(filters));
   }, [
     selectedSeats,
     totalPrice,
     userEmail,
     movie,
     projectionDetails,
+    filters,
     dispatch,
   ]);
 

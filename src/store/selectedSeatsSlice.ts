@@ -7,6 +7,7 @@ type SelectedSeatsState = {
   userEmail: string;
   movie: Movie | null;
   projectionDetails: any;
+  filters: any;
 };
 
 const initialState: SelectedSeatsState = {
@@ -15,6 +16,7 @@ const initialState: SelectedSeatsState = {
   userEmail: "",
   movie: null,
   projectionDetails: null,
+  filters: null,
 };
 
 const selectedSeatsSlice = createSlice({
@@ -36,9 +38,12 @@ const selectedSeatsSlice = createSlice({
     setProjectionDetails: (state, action: PayloadAction<any>) => {
       state.projectionDetails = action.payload;
     },
+    setFilters: (state, action: PayloadAction<any>) => {
+      state.filters = action.payload;
+    },
   },
 });
 
-export const { setSelectedSeats, setTotalPrice, setUserEmail, setMovie, setProjectionDetails } =
+export const { setSelectedSeats, setTotalPrice, setUserEmail, setMovie, setProjectionDetails, setFilters } =
   selectedSeatsSlice.actions;
 export default selectedSeatsSlice.reducer;
