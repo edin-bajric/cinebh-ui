@@ -1,29 +1,23 @@
 import { useLocation } from "react-router-dom";
 import style from "./seat-options-movie-info.module.scss";
+import { formatDate, findCoverImage } from "../../../../../utils/dateFormatImageExtract";
 
 const SeatOptionsMovieInfo = () => {
   const location = useLocation();
-  const { state } = location;
-
-  const movie = state?.movie;
-  const filters = state?.filters;
-  const projectionDetails = state?.projectionDetails;
+  const { movie, filters, projectionDetails } = location.state || {};
 
   if (!movie || !projectionDetails) {
     return <div>No data available</div>;
   }
 
-  const formattedDate = new Date(filters.date).toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "short",
-    day: "numeric",
-  });
+  const formattedDate = formatDate(filters.date);
   const formattedTime = filters.showtime;
+  const coverImage = findCoverImage(movie.images);
 
   return (
     <div className={style.container}>
       <div className={style.image}>
-        <img src={movie.images.find((img: { isCoverImage: any; }) => img.isCoverImage)?.url} alt="movie poster" />
+        <img src={coverImage} alt="movie poster" />
       </div>
       <div className={style.movie_info}>
         <div className={style.title}>{movie.title}</div>
@@ -42,7 +36,7 @@ const SeatOptionsMovieInfo = () => {
             {formattedDate} at {formattedTime}
           </p>
           <p className={style.text}>
-           {filters.cinema}: Cinebh, {projectionDetails.streets[0]} {projectionDetails.streetNumbers[0]}, {filters.city} {projectionDetails.postcodes[0]}
+            {filters.cinema}: Cinebh, {projectionDetails.streets[0]} {projectionDetails.streetNumbers[0]}, {filters.city} {projectionDetails.postcodes[0]}
           </p>
         </div>
         <div className={style.hall}>
