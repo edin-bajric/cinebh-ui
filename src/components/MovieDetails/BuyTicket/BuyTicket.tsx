@@ -1,56 +1,17 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import style from "./buy-ticket.module.scss";
 import SeatOptions from "./SeatOptions";
 import PaymentDetails from "./PaymentDetails";
 import SessionExpiredPopup from "./SessionExpiredPopup";
 import { FaCircleInfo } from "react-icons/fa6";
 import { Tooltip } from "antd";
+import useTimer from "../../../hooks/useTimer";
 
 const BuyTicket = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const storedTimeLeft = localStorage.getItem("timeLeft");
-    return storedTimeLeft ? parseInt(storedTimeLeft, 10) : 300;
-  });
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-
   const isPaymentRoute = location.pathname === "/buy-ticket-payment";
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(timer);
-          setIsPopupVisible(true);
-          return 0;
-        }
-        const newTime = prevTime - 1;
-        localStorage.setItem("timeLeft", newTime.toString());
-        return newTime;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (!isPaymentRoute) {
-        localStorage.removeItem("timeLeft");
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      if (!isPaymentRoute) {
-        localStorage.removeItem("timeLeft");
-      }
-    };
-  }, [isPaymentRoute]);
+  const { timeLeft, isPopupVisible, resetTimer } = useTimer(300, isPaymentRoute);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -61,13 +22,7 @@ const BuyTicket = () => {
   };
 
   const handleClosePopup = () => {
-    setIsPopupVisible(false);
-    setTimeLeft(300);
-    localStorage.setItem("timeLeft", "300");
-    window.location.reload();
-    if (isPaymentRoute) {
-      navigate(-1);
-    }
+    resetTimer();
   };
 
   return (
