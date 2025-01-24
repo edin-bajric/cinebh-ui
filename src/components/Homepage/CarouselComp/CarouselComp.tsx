@@ -4,9 +4,11 @@ import useFeaturedMovies from "../../../hooks/useFeaturedMovies";
 import Loading from "../../Loading";
 import Error from "../../Error";
 import Button from "../../Button";
+import { useNavigate } from "react-router-dom";
 
 const CarouselComp: React.FC = () => {
   const { data: movies = [], isLoading, isError } = useFeaturedMovies();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <Loading />;
@@ -15,6 +17,10 @@ const CarouselComp: React.FC = () => {
   if (isError) {
     return <Error />;
   }
+
+  const handleBuyTicket = (movieId: string) => {
+    navigate(`/movie/${movieId}`);
+  };
 
   return (
     <ConfigProvider
@@ -52,7 +58,11 @@ const CarouselComp: React.FC = () => {
                   </div>
                   <h2 className={style.title}>{movie.title}</h2>
                   <p className={style.description}>{shortDescription}</p>
-                  <Button variant="solid" text="Buy Ticket" />
+                  <Button
+                    variant="solid"
+                    text="Buy Ticket"
+                    onClick={() => handleBuyTicket(movie.id)}
+                  />
                 </div>
               </div>
             );

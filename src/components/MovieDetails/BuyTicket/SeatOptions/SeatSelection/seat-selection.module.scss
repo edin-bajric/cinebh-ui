@@ -1,0 +1,24 @@
+@use "../../../../../assets/css/variables.scss";
+
+.container {
+  padding: 12px 92px 12px 92px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrangement,
+.guide_choosen_button {
+  flex: 1;
+}
+
+.guide_choosen_button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.guide_choosen {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}

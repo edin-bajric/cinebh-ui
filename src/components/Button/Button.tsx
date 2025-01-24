@@ -9,6 +9,7 @@ type Props = {
   type?: "button" | "submit";
   onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 };
 
 const Button: React.FC<Props> = ({
@@ -18,15 +19,22 @@ const Button: React.FC<Props> = ({
   type = "button",
   onClick,
   className,
+  disabled = false,
 }) => {
-  const buttonClass = classNames(styles.button, styles[variant], className);
+  const buttonClass = classNames(
+    styles.button,
+    styles[variant],
+    className,
+    disabled && styles.disabledButton 
+  );
 
   return (
     <button
-      type={type} 
+      type={type}
       className={buttonClass}
       style={{ width }}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </button>

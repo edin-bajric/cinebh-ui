@@ -60,3 +60,36 @@ export type ProjectionTime = {
   id: string;
   time: string;
 };
+
+export type ProjectionDetails = {
+  cities: string[];
+  cinemas: string[];
+  streets: string[];
+  postcodes: string[];
+  streetNumbers: string[];
+  hallNames: string[];
+  hallIds: string[];
+  startDate: string;
+  endDate: string;
+  projectionTimes: string[];
+  projectionIds: string[];
+};
+
+export type SeatType = {
+  id: string;
+  name: string;
+  hall: {
+    id: string;
+    name: string;
+  };
+  type: {
+    id: string;
+    type: string;
+    price: number;
+  };
+  status: {
+    id: string;
+    status: string;
+  };
+};
+

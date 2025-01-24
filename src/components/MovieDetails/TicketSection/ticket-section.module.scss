@@ -83,9 +83,6 @@
 .button_reserve,
 .button_buy {
   width: 100%;
-  border-color: rgba(208, 213, 221, 1);
-  background-color: rgba(208, 213, 221, 1);
-  cursor: default;
 }
 
 .button_reserve:hover,
@@ -95,5 +92,4 @@
 
 .button_reserve {
   background-color: variables.$white;
-  color: rgba(208, 213, 221, 1);
 }

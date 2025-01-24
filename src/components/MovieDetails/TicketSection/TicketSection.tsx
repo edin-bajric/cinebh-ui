@@ -5,8 +5,9 @@ import DateList from "../../DateList";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Button from "../../Button";
 import { Movie } from "../../../utils/types";
-import useAllVenues from "../../../hooks/useAllVenues";
 import Showtimes from "../../Showtimes";
+import useProjectionDetails from "../../../hooks/useProjectionDetails";
+import { useNavigate } from "react-router-dom";
 
 interface TicketSectionProps {
   data: Movie | undefined;
@@ -17,36 +18,33 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
   const [isLeftDisabled, setIsLeftDisabled] = useState(true);
   const [isRightDisabled, setIsRightDisabled] = useState(false);
 
-  const { data: venues } = useAllVenues();
+  const { data: projectionDetails } = useProjectionDetails(data?.id || "");
 
   const [filters, setFilters] = useState({
     city: "",
     cinema: "",
     date: new Date().toISOString().split("T")[0],
+    showtime: "",
   });
 
+  const [error, setError] = useState("");
+
   const uniqueCities = useMemo(
-    () => Array.from(new Set(venues?.map((venue) => venue.city)) || []),
-    [venues]
+    () => Array.from(new Set(projectionDetails?.cities || [])),
+    [projectionDetails]
   );
 
   const cinemas = useMemo(
-    () => Array.from(new Set(venues?.map((venue) => venue.name)) || []),
-    [venues]
+    () => Array.from(new Set(projectionDetails?.cinemas || [])),
+    [projectionDetails]
   );
 
   const uniqueProjectionTimes = useMemo(
     () =>
-      Array.from(
-        new Set(
-          data?.projections.flatMap((projection: any) =>
-            projection.projectionTimes.map((pt: any) =>
-              pt.time.split(":").slice(0, 2).join(":")
-            )
-          )
-        )
-      ).sort(),
-    [data]
+      Array.from(new Set(projectionDetails?.projectionTimes || []))
+        .map((time) => time.split(":").slice(0, 2).join(":"))
+        .sort(),
+    [projectionDetails]
   );
 
   const handleScroll = (direction: "left" | "right") => {
@@ -77,9 +75,45 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
     setIsRightDisabled(scrollLeft + clientWidth >= scrollWidth - tolerance);
   };
 
-  const handleFilterChange = useCallback((filterType: string, value: string) => {
-    setFilters((prev) => ({ ...prev, [filterType]: value }));
-  }, []);
+  const handleFilterChange = useCallback(
+    (filterType: string, value: string) => {
+      setFilters((prev) => ({ ...prev, [filterType]: value }));
+      setError(""); 
+    },
+    []
+  );
+
+  const handleShowtimeSelect = (time: string) => {
+    setFilters((prev) => ({ ...prev, showtime: time }));
+    setError("");
+  };
+
+  const navigate = useNavigate();
+
+  const handleBuyTicket = () => {
+    if (!data || !projectionDetails) return;
+
+    const { city, cinema, date, showtime } = filters;
+    if (!city || !cinema || !date || !showtime) {
+      setError("Please select a city, cinema, date, and projection time.");
+      return;
+    }
+
+    navigate("/buy-ticket", {
+      state: {
+        movie: data,
+        filters,
+        projectionDetails: {
+          streets: projectionDetails.streets,
+          postcodes: projectionDetails.postcodes,
+          streetNumbers: projectionDetails.streetNumbers,
+          hallNames: projectionDetails.hallNames,
+          hallIds: projectionDetails.hallIds,
+          projectionIds: projectionDetails.projectionIds,
+        },
+      },
+    });
+  };
 
   return (
     <div className={style.ticket_container}>
@@ -111,9 +145,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
         </div>
         <div className={style.arrows}>
           <div
-            className={`${style.arrow} ${
-              isLeftDisabled ? style.disabled : ""
-            }`}
+            className={`${style.arrow} ${isLeftDisabled ? style.disabled : ""}`}
             role="button"
             tabIndex={isLeftDisabled ? -1 : 0}
             aria-disabled={isLeftDisabled}
@@ -125,9 +157,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
             <FaArrowLeft className={style.prev} />
           </div>
           <div
-            className={`${style.arrow} ${
-              isRightDisabled ? style.disabled : ""
-            }`}
+            className={`${style.arrow} ${isRightDisabled ? style.disabled : ""}`}
             role="button"
             tabIndex={isRightDisabled ? -1 : 0}
             aria-disabled={isRightDisabled}
@@ -139,8 +169,14 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
             <FaArrowRight className={style.next} />
           </div>
         </div>
-        <Showtimes times={uniqueProjectionTimes} variant="ticket" />
+        <Showtimes
+          times={uniqueProjectionTimes}
+          variant="ticket"
+          selectedTime={filters.showtime}
+          onSelectTime={handleShowtimeSelect}
+        />
       </div>
+      {error && <div className={style.error}>{error}</div>}
       <div className={style.button_container}>
         <Button
           text="Reserve Ticket"
@@ -151,6 +187,7 @@ const TicketContainer: React.FC<TicketSectionProps> = ({ data }) => {
           text="Buy Ticket"
           variant="solid"
           className={style.button_buy}
+          onClick={handleBuyTicket}
         />
       </div>
     </div>
