@@ -1,4 +1,4 @@
-// import style from "./saved-cards.module.scss";
+import style from "./saved-cards.module.scss";
 
 const SavedCards = () => {
   return (
