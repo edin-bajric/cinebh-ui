@@ -21,10 +21,10 @@ export const handleExpiryDateChange = (
   setExpiryDate(inputValue);
 };
 
-export const handleCvvChange = (
+export const handleCvcChange = (
   e: React.ChangeEvent<HTMLInputElement>,
-  setCvv: React.Dispatch<React.SetStateAction<string>>
+  setCvc: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const inputValue = e.target.value.replace(/\D/g, "");
-  if (inputValue.length <= 3) setCvv(inputValue);
+  if (inputValue.length <= 3) setCvc(inputValue);
 };
