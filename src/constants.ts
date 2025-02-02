@@ -1,1 +1,1 @@
-export const BASE_URL = "http://63.176.2.136:8081/api";
+export const BASE_URL = "https://team2.backend.praksa.abhapp.com/api";
