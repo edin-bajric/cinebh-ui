@@ -1,66 +1,130 @@
 import style from "./new-card.module.scss";
 import Button from "../../../../Button";
-import { FaCreditCard } from "react-icons/fa6";
 import { useState } from "react";
-import {
-  handleCardNumberChange,
-  handleExpiryDateChange,
-  handleCvcChange,
-} from "./newCardUtils";
 import { useLocation } from "react-router-dom";
-import FormInput from "./FormInput";
+import {
+  CardNumberElement,
+  CardCvcElement,
+  CardExpiryElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import { BASE_URL } from "../../../../../constants";
+import { SeatType } from "../../../../../utils/types";
 
 const NewCard = () => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvc, setCvc] = useState("");
+  const stripe = useStripe();
+  const elements = useElements();
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const appearance = {
+    base: {
+      fontSize: "16px",
+      color: "#344054",
+      fontFamily: "Urbanist, sans-serif",
+      "::placeholder": {
+        color: "#667085",
+      },
+    },
+  };
 
   const location = useLocation();
   const { state } = location;
-  const { totalPrice } = state || {};
+  const { totalPrice, userEmail, projectionDetails, selectedSeats } =
+    state || {};
 
-  const isFormValid =
-    cardNumber.length === 19 && expiryDate.length === 5 && cvc.length === 3;
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      setMessage("Stripe has not loaded yet. Please try again later.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const cardElement = elements.getElement(CardNumberElement);
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement!,
+      });
+
+      if (error) {
+        setMessage(
+          error.message ||
+            "An error occurred while creating the payment method."
+        );
+        setLoading(false);
+        return;
+      }
+
+      const paymentResponse = await fetch(`${BASE_URL}/payments/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paymentMethodId: paymentMethod.id,
+          amount: totalPrice * 100,
+        }),
+      });
+
+      const paymentResult = await paymentResponse.json();
+
+      if (paymentResponse.ok) {
+        const ticketResponse = await fetch(`${BASE_URL}/tickets/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userEmail,
+            projectionId: projectionDetails.projectionIds[0],
+            selectedSeats: selectedSeats.map((seat: SeatType) => seat.id),
+            totalPrice: totalPrice,
+          }),
+        });
+
+        const ticketResult = await ticketResponse.json();
+
+        if (ticketResponse.ok) {
+          setMessage(
+            ticketResult.message || "Payment and ticket creation successful!"
+          );
+          console.log(message);
+        } else {
+          setMessage(ticketResult.error || "Ticket creation failed.");
+        }
+      } else {
+        setMessage(paymentResult.error || "Payment failed.");
+      }
+    } catch (err) {
+      setMessage("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={style.container}>
-      <form className={style.card_form}>
-        <FormInput
-          label="Card Number"
-          id="card_number"
-          type="text"
-          value={cardNumber}
-          onChange={(e) => handleCardNumberChange(e, setCardNumber)}
-          placeholder="**** **** **** ****"
-          maxLength={19}
-          icon={FaCreditCard}
-        />
+      <form className={style.card_form} onSubmit={handleSubmit}>
+        <CardNumberElement options={{ style: appearance }} />
         <div className={style.expiry_cvc}>
-          <FormInput
-            label="Expiry Date"
-            id="expiry_date"
-            type="text"
-            value={expiryDate}
-            onChange={(e) => handleExpiryDateChange(e, setExpiryDate)}
-            placeholder="MM/YY"
-            maxLength={5}
-          />
-          <FormInput
-            label="CVC"
-            id="cvc"
-            type="text"
-            value={cvc}
-            onChange={(e) => handleCvcChange(e, setCvc)}
-            placeholder="000"
-            maxLength={3}
-          />
+          <div className={style.expiry}>
+            <CardExpiryElement options={{ style: appearance }} />
+          </div>
+          <div className={style.cvc}>
+            <CardCvcElement options={{ style: appearance }} />
+          </div>
         </div>
         <Button
-          text={`Make Payment - ${totalPrice ? `${totalPrice} KM` : ""}`}
+          text={
+            loading
+              ? "Processing..."
+              : `Make Payment - ${totalPrice ? `${totalPrice} KM` : ""}`
+          }
           type="submit"
           variant="solid"
           width="100%"
-          disabled={!isFormValid}
+          disabled={loading || !stripe || !elements}
         />
       </form>
     </div>

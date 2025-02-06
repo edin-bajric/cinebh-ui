@@ -51,7 +51,19 @@ const SeatArrangement = () => {
   const groupedSeats = React.useMemo(() => {
     if (!seats) return {};
 
-    return seats.reduce((acc: Record<string, SeatType[]>, seat) => {
+    const sortedSeats = seats.sort((a, b) => {
+      const rowA = a.name[0];
+      const rowB = b.name[0];
+      if (rowA !== rowB) {
+        return rowA.localeCompare(rowB);
+      }
+
+      const seatNumberA = parseInt(a.name.slice(1), 10);
+      const seatNumberB = parseInt(b.name.slice(1), 10);
+      return seatNumberA - seatNumberB;
+    });
+
+    return sortedSeats.reduce((acc: Record<string, SeatType[]>, seat) => {
       const row = seat.name[0];
       if (!acc[row]) acc[row] = [];
       acc[row].push(seat);

@@ -58,4 +58,10 @@
 .expiry_cvc {
   display: flex;
   gap: 16px;
+
+  .expiry,
+  .cvc {
+    flex-grow: 1; 
+    flex-shrink: 0; 
+  }
 }

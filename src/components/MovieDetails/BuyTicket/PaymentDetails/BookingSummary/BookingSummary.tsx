@@ -23,7 +23,6 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
   });
   const formattedTime = filters?.showtime;
 
-  console.log(filters);
   return (
     <div className={style.container}>
       <div className={style.movie_details}>
