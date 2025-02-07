@@ -1,7 +1,7 @@
 import style from "./new-card.module.scss";
 import Button from "../../../../Button";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   CardNumberElement,
   CardCvcElement,
@@ -11,12 +11,15 @@ import {
 } from "@stripe/react-stripe-js";
 import { BASE_URL } from "../../../../../constants";
 import { SeatType } from "../../../../../utils/types";
+import Popup from "../../Popup";
 
 const NewCard = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const navigate = useNavigate();
 
   const appearance = {
     base: {
@@ -90,6 +93,7 @@ const NewCard = () => {
             ticketResult.message || "Payment and ticket creation successful!"
           );
           console.log(message);
+          setIsPopupVisible(true);
         } else {
           setMessage(ticketResult.error || "Ticket creation failed.");
         }
@@ -101,6 +105,10 @@ const NewCard = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleBackToHome = () => {
+    navigate("/");
   };
 
   return (
@@ -127,6 +135,16 @@ const NewCard = () => {
           disabled={loading || !stripe || !elements}
         />
       </form>
+
+      {isPopupVisible && (
+        <Popup
+          title="Payment Successful!"
+          subtitle="The receipt and ticket have been sent to your email."
+          buttonText="Back to Home"
+          buttonAction={handleBackToHome}
+          className={style.popup_button}
+        />
+      )}
     </div>
   );
 };
