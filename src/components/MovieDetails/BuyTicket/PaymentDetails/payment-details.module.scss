@@ -26,24 +26,3 @@
   margin-bottom: 22px;
 }
 
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-
-  p {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0.005em;
-    color: variables.$dark_gray;
-    white-space: nowrap;
-  }
-
-  .line {
-    flex-grow: 1;
-    height: 1px;
-    background-color: variables.$gray;
-  }
-}
