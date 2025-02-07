@@ -40,7 +40,7 @@ const SeatSelection = () => {
         <Button
           text="Continue to Payment"
           onClick={handleContinueToPayment}
-          className={selectedSeats.length === 0 ? style.disabledButton : ""}
+          disabled={selectedSeats.length === 0}
         />
       </div>
     </div>

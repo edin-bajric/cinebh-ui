@@ -19,23 +19,32 @@ const NewCard = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [cardComplete, setCardComplete] = useState(false);
+  const [expiryComplete, setExpiryComplete] = useState(false);
+  const [cvcComplete, setCvcComplete] = useState(false);
+
   const navigate = useNavigate();
-
-  const appearance = {
-    base: {
-      fontSize: "16px",
-      color: "#344054",
-      fontFamily: "Urbanist, sans-serif",
-      "::placeholder": {
-        color: "#667085",
-      },
-    },
-  };
-
   const location = useLocation();
   const { state } = location;
   const { totalPrice, userEmail, projectionDetails, selectedSeats } =
     state || {};
+
+  const appearance = {
+    base: {
+      fontSize: "16px",
+      color: "rgba(52, 64, 84, 1)",
+      fontFamily: "Urbanist, sans-serif",
+      "::placeholder": {
+        color: "rgba(102, 112, 133, 1)",
+      },
+    },
+  };
+
+  const handleCardChange = (event: any) => setCardComplete(event.complete);
+  const handleExpiryChange = (event: any) => setExpiryComplete(event.complete);
+  const handleCvcChange = (event: any) => setCvcComplete(event.complete);
+
+  const isFormComplete = cardComplete && expiryComplete && cvcComplete;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -114,13 +123,37 @@ const NewCard = () => {
   return (
     <div className={style.container}>
       <form className={style.card_form} onSubmit={handleSubmit}>
-        <CardNumberElement options={{ style: appearance }} />
+        <label>Card Number</label>
+        <div className={style.stripe_element_wrapper}>
+          <div className={style.stripe_element}>
+            <CardNumberElement
+              options={{ style: appearance }}
+              onChange={handleCardChange}
+            />
+          </div>
+        </div>
         <div className={style.expiry_cvc}>
           <div className={style.expiry}>
-            <CardExpiryElement options={{ style: appearance }} />
+            <label>Expiry Date</label>
+            <div className={style.stripe_element_wrapper}>
+              <div className={style.stripe_element}>
+                <CardExpiryElement
+                  options={{ style: appearance }}
+                  onChange={handleExpiryChange}
+                />
+              </div>
+            </div>
           </div>
           <div className={style.cvc}>
-            <CardCvcElement options={{ style: appearance }} />
+            <label>CVC</label>
+            <div className={style.stripe_element_wrapper}>
+              <div className={style.stripe_element}>
+                <CardCvcElement
+                  options={{ style: appearance }}
+                  onChange={handleCvcChange}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <Button
@@ -132,7 +165,7 @@ const NewCard = () => {
           type="submit"
           variant="solid"
           width="100%"
-          disabled={loading || !stripe || !elements}
+          disabled={loading || !isFormComplete || !stripe || !elements}
         />
       </form>
 
