@@ -40,38 +40,48 @@ const NewCard = () => {
     },
   };
 
-  const handleCardChange = (event: any) => setCardComplete(event.complete);
-  const handleExpiryChange = (event: any) => setExpiryComplete(event.complete);
-  const handleCvcChange = (event: any) => setCvcComplete(event.complete);
+  const handleCardChange = (event: any) => {
+    setCardComplete(event.complete);
+    if (message) setMessage(null); 
+  };
+  
+  const handleExpiryChange = (event: any) => {
+    setExpiryComplete(event.complete);
+    if (message) setMessage(null); 
+  };
+  
+  const handleCvcChange = (event: any) => {
+    setCvcComplete(event.complete);
+    if (message) setMessage(null); 
+  };
 
   const isFormComplete = cardComplete && expiryComplete && cvcComplete;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     if (!stripe || !elements) {
       setMessage("Stripe has not loaded yet. Please try again later.");
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
       const cardElement = elements.getElement(CardNumberElement);
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: "card",
         card: cardElement!,
       });
-
+  
       if (error) {
         setMessage(
-          error.message ||
-            "An error occurred while creating the payment method."
+          error.message || "An error occurred while creating the payment method."
         );
         setLoading(false);
         return;
       }
-
+  
       const paymentResponse = await fetch(`${BASE_URL}/payments/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -80,9 +90,9 @@ const NewCard = () => {
           amount: totalPrice * 100,
         }),
       });
-
+  
       const paymentResult = await paymentResponse.json();
-
+  
       if (paymentResponse.ok) {
         const ticketResponse = await fetch(`${BASE_URL}/tickets/`, {
           method: "POST",
@@ -94,14 +104,13 @@ const NewCard = () => {
             totalPrice: totalPrice,
           }),
         });
-
+  
         const ticketResult = await ticketResponse.json();
-
+  
         if (ticketResponse.ok) {
-          setMessage(
-            ticketResult.message || "Payment and ticket creation successful!"
-          );
-          console.log(message);
+          if (ticketResult.message && ticketResult.message !== "Ticket created successfully") {
+            setMessage(ticketResult.message);
+          }
           setIsPopupVisible(true);
         } else {
           setMessage(ticketResult.error || "Ticket creation failed.");
@@ -114,7 +123,7 @@ const NewCard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   const handleBackToHome = () => {
     navigate("/");
@@ -168,6 +177,12 @@ const NewCard = () => {
           disabled={loading || !isFormComplete || !stripe || !elements}
         />
       </form>
+
+      {message && (
+        <div className={style.message}>
+          <p>{message.split(";")[0]} Please check your card details or try a different payment method.</p>
+        </div>
+      )}
 
       {isPopupVisible && (
         <Popup
