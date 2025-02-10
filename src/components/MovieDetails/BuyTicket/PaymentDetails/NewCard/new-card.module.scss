@@ -1,5 +1,46 @@
 @use "../../../../../assets/css/variables.scss";
 
-.expiry_cvv {
-    display: flex;
+label {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: rgba(52, 64, 84, 1);
+  margin-bottom: 8px;
+}
+
+.expiry_cvc {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 64px;
+
+  .expiry,
+  .cvc {
+    flex-grow: 1;
+    flex-shrink: 0;
   }
+}
+
+.popup_button {
+  width: 120px;
+  height: 32px;
+  padding: 8px 16px 8px 16px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.stripe_element_wrapper {
+  padding: 16px;
+  border: 1px solid variables.$gray;
+  border-radius: 8px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.message p {
+  color: red;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 16px;
+}

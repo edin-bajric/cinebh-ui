@@ -4,7 +4,9 @@
   padding: 32px 92px 32px 92px;
   display: flex;
   justify-content: space-between;
-  gap: 32px;
+  gap: 16px;
+  margin-bottom: 100px;
+  height: 100%;
 }
 
 .card {
@@ -21,28 +23,6 @@
   line-height: 24px;
   letter-spacing: -0.0015em;
   color: variables.$dark_gray;
+  margin-bottom: 22px;
 }
-
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-
-  p {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0.005em;
-    color: variables.$dark_gray;
-    white-space: nowrap;
-  }
-
-  .line {
-    flex-grow: 1;
-    height: 1px;
-    background-color: variables.$gray;
-  }
-}
-
 
